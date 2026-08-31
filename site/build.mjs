@@ -9,9 +9,48 @@ import path from 'node:path';
 import { marked } from 'marked';
 import { toJstDateString } from './lib/date.mjs';
 
+/**
+ * **テスト専用の環境変数を、テスト以外では決定論的に落とす。**
+ *
+ * なぜコメントでは足りないか:
+ *   - `KAKEI_DIST` が環境に残っていると、`node build.mjs` は別ディレクトリへ書き、
+ *     続く `wrangler deploy` は `assets.directory: ./dist` 固定なので**古い `dist/` を
+ *     そのままアップロードする。** ビルドもデプロイも成功し、誰も気づかない
+ *     （`dist/` は .gitignore 済みなので、ローカルには常に前回の生成物が残っている）
+ *   - `KAKEI_TODAY` が残っていれば期限切れガードが黙り、
+ *     `KAKEI_CONTENT` が残っていれば fixture がデプロイされる
+ *
+ * テストからは `KAKEI_TEST=1` を併せて渡す（test/guards.test.mjs の runBuild）。
+ */
+const TEST_MODE = process.env.KAKEI_TEST === '1';
+for (const k of ['KAKEI_TODAY', 'KAKEI_CONTENT', 'KAKEI_DIST']) {
+  if (process.env[k] && !TEST_MODE) {
+    throw new Error(
+      `${k} が設定されています。これはテスト専用の上書きで、ビルド・デプロイでは使えません` +
+        '（テストからは KAKEI_TEST=1 を併せて渡す）',
+    );
+  }
+}
+
+/**
+ * `YYYY-MM-DD` の書式で、かつ**実在する日付**かを判定する。
+ *
+ * 桁数だけを見ると `2026-13-40` が通り、`Date.parse` が NaN になって
+ * 経過日数の警告（warnIfStale）が黙って死ぬ。
+ */
+function isRealDate(s) {
+  const v = String(s ?? '');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
+  const d = new Date(`${v}T00:00:00Z`);
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v;
+}
+
+if (process.env.KAKEI_TODAY && !isRealDate(process.env.KAKEI_TODAY)) {
+  throw new Error(`KAKEI_TODAY は実在する日付を YYYY-MM-DD で指定します → ${process.env.KAKEI_TODAY}`);
+}
+
 const ROOT = import.meta.dirname;
-// テストから content と出力先を差し替えられるようにする。
-// ⚠️ 本番のビルド・デプロイでは絶対に設定しない。
+// テストから content と出力先を差し替えられるようにする（KAKEI_TEST=1 が要る。上のガードを参照）。
 const CONTENT = process.env.KAKEI_CONTENT ? path.resolve(process.env.KAKEI_CONTENT) : path.join(ROOT, 'content');
 const DIST = process.env.KAKEI_DIST ? path.resolve(process.env.KAKEI_DIST) : path.join(ROOT, 'dist');
 
@@ -24,8 +63,7 @@ const baseTpl = fs.readFileSync(path.join(ROOT, 'templates/base.html'), 'utf8');
 const ORIGIN = site.origin.replace(/\/$/, '');
 const catName = (slug) => site.categories.find((c) => c.slug === slug)?.name;
 
-// ビルド日。テストから固定するために上書きできる。
-// ⚠️ 本番のビルド・デプロイでは絶対に設定しない。設定すると期限切れガードが無効化される。
+// ビルド日。テストから KAKEI_TODAY で固定できる（KAKEI_TEST=1 が要る。上のガードを参照）。
 const BUILD_DATE = process.env.KAKEI_TODAY || toJstDateString(Date.now());
 const CHECKED_WARN_DAYS = 180;
 
@@ -59,8 +97,8 @@ const disclosureHtml = site.affiliateEnabled
   : '';
 
 /**
- * Cloudflare Web Analytics のビーコン。ここで測るのは分母のセッション数だけで、
- * クリック数と注文数はアソシエイト・セントラルのレポートから取る。
+ * Cloudflare Web Analytics のビーコン。ここで測るのは訪問の数だけ。
+ * site.json の webAnalyticsToken が空のうちは出力しない（＝計測しない）。
  * トークンはHTMLに出る公開値で、秘密情報ではない。
  */
 const analyticsHtml = site.webAnalyticsToken
@@ -77,8 +115,8 @@ const analyticsHtml = site.webAnalyticsToken
  *   - **未登録のキーはビルドを落とす。**「リンクのつもりが素のテキストだった」は起きない
  *
  * 書き方:
- *   [[AF:moshimo]]                … links.json の label をそのまま出す
- *   [[AF:moshimo::無料で登録する]] … 表示文言だけ差し替える
+ *   [[AF:example]]                … links.json の label をそのまま出す
+ *   [[AF:example::無料で申し込む]] … 表示文言だけ差し替える
  *
  * ⚠️ 区切りは `|` ではなく `::`。resolveLinks は Markdown → HTML の**後**に走るので、
  * 表の行に `|` を書くとセルの区切りとして先に解釈され、表が壊れる。
@@ -153,8 +191,8 @@ function renderSeidoCards(body, file) {
     if (!source.startsWith('https://')) {
       throw new Error(`${file}: seido の 根拠 は https:// で始まる公式ページのURLにします → ${source}`);
     }
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(checked)) {
-      throw new Error(`${file}: seido の 確認日 は YYYY-MM-DD で書きます → ${checked}`);
+    if (!isRealDate(checked)) {
+      throw new Error(`${file}: seido の 確認日 は実在する日付を YYYY-MM-DD で書きます → ${checked}`);
     }
     if (!spec.length) throw new Error(`${file}: seido に数字が1つもありません（${name}）`);
     assertCardNumbers(name, spec, body, file);
@@ -177,20 +215,26 @@ function renderSeidoCards(body, file) {
  * 制度の金額・要件・上限は改定される。表だけ直してカードに古い数字が残る事故は、
  * 目視では見つからない。転記ミスはビルドで落とす。
  * 判定は「カードの数字（数値トークン）が、その制度名を含む表の行にすべて現れるか」。
+ *
+ * ⚠️ **突き合わせは数値トークンの集合で行う。文字列の部分一致にしてはいけない。**
+ * 連結した文字列に `includes` をかけると、表が `123万円` のときカードの `12万円` も
+ * `1万円` も `23万円` も通ってしまう。**桁落ち・桁増し（103万 → 1030万、150万 → 15万）は
+ * 制度記事でいちばん起きやすい転記ミス**で、それがこのガードの主戦場である。
  */
-function assertCardNumbers(service, spec, body, file) {
+function assertCardNumbers(seidoName, spec, body, file) {
   const rows = body
     .split(/\r?\n/)
-    .filter((l) => l.trimStart().startsWith('|') && l.includes(service));
+    .filter((l) => l.trimStart().startsWith('|') && l.includes(seidoName));
   if (!rows.length) {
-    throw new Error(`${file}: カードのサービス「${service}」が、この記事のどの表にもありません`);
+    throw new Error(`${file}: カードの制度「${seidoName}」が、この記事のどの表にもありません`);
   }
-  const hay = rows.join(' ').replace(/[\s,]/g, '');
+  // カンマ区切り（1,230）を落としてから数値トークンだけを取り出し、集合で比較する。
+  const hayNums = new Set(rows.join(' ').replace(/,/g, '').match(/\d+(?:\.\d+)?/g) || []);
   for (const [k, v] of spec) {
     for (const num of v.replace(/,/g, '').match(/\d+(?:\.\d+)?/g) || []) {
-      if (!hay.includes(num)) {
+      if (!hayNums.has(num)) {
         throw new Error(
-          `${file}: カードの数字が表にありません → ${service} の「${k}: ${v}」の ${num}` +
+          `${file}: カードの数字が表にありません → ${seidoName} の「${k}: ${v}」の ${num}` +
             ' / 対処: 表の値と合わせるか、表のほうを直す',
         );
       }
@@ -235,8 +279,17 @@ function assertSources(meta, file) {
       );
     }
   }
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(meta.checkedAt)) {
-    throw new Error(`${file}: checkedAt は YYYY-MM-DD で書きます → ${meta.checkedAt}`);
+  // 桁数だけを見ると 2026-13-40 が通り、Date.parse が NaN になって warnIfStale が黙る。
+  if (!isRealDate(meta.checkedAt)) {
+    throw new Error(`${file}: checkedAt は実在する日付を YYYY-MM-DD で書きます → ${meta.checkedAt}`);
+  }
+  // **未来日はもっと重い。** checkedAt: 2099-01-01 と書くと warnIfStale が永久に沈黙する。
+  // 陳腐化のシグナルはこれしか無いので、死なせない。
+  if (meta.checkedAt > BUILD_DATE) {
+    throw new Error(
+      `${file}: checkedAt（${meta.checkedAt}）がビルド日（${BUILD_DATE}）より未来です` +
+        ' / 対処: 実際に出典ページを確認した日を書く（未来日は経過日数の警告を永久に黙らせる）',
+    );
   }
 }
 
@@ -251,9 +304,12 @@ function assertSources(meta, file) {
  * revisionAt だけを先に進めると、このガードは意味を失う。
  */
 function assertNotExpired(meta, file) {
-  if (!meta.revisionAt) return;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(meta.revisionAt)) {
-    throw new Error(`${file}: revisionAt は YYYY-MM-DD で書きます → ${meta.revisionAt}`);
+  // **「書き忘れ」と「書いたが空」は別の事故。** 後者はエディタで値を消したときに起きる。
+  // キーが無いときだけ許す（改定日が公表されていない制度があるため revisionAt は任意項目）。
+  // `revisionAt:` とだけ書いた記事は、この下の書式検査で落ちる。
+  if (!('revisionAt' in meta)) return;
+  if (!isRealDate(meta.revisionAt)) {
+    throw new Error(`${file}: revisionAt は実在する日付を YYYY-MM-DD で書きます → ${meta.revisionAt}`);
   }
   if (meta.revisionAt <= BUILD_DATE) {
     throw new Error(
@@ -389,8 +445,8 @@ for (const a of articles) {
   warnIfStale(a, a.file);
 }
 
+// category が空でないことは readDocs の必須キー検査が済ませている。ここでは値の妥当性だけ見る。
 for (const a of articles) {
-  if (!a.category) throw new Error(`${a.file}: front matter に category がありません`);
   if (!catName(a.category)) throw new Error(`${a.file}: 未定義のカテゴリ「${a.category}」（site.json の categories に追加してください）`);
 }
 
@@ -401,8 +457,11 @@ const byRecent = [...articles].sort((a, b) => (a.updated < b.updated ? 1 : -1));
 /**
  * カテゴリが1つしかない間は、ナビにもサイドバーにもカテゴリを出さない。
  *
- * 「寸法で選ぶ」の中に「クーラーボックス」しか無い状態では、カテゴリ名はサイト名と
- * ほぼ同義で情報量がゼロになる。2つ目のカテゴリを site.json に足した時点で自動的に出る。
+ * カテゴリが1つしか無い状態では、カテゴリ名はサイト名とほぼ同義で情報量がゼロになる。
+ * 2つ目のカテゴリを site.json に足した時点で自動的に出る。
+ *
+ * ⚠️ この値が false の間、カテゴリページは noindex になり sitemap.xml にも載らない
+ * （下の robots / urls を参照）。Search Console にカテゴリページが出てこないのは仕様。
  */
 const showCategoryNav = site.categories.length >= 2;
 
@@ -588,7 +647,9 @@ for (const c of site.categories) {
     render(baseTpl, {
       ...common,
       title: `${esc(c.name)}の記事一覧 | ${esc(site.name)}`,
-      description: `${c.name}について、メーカー公式の寸法から計算して比べた記事の一覧です。`,
+      // サイト固有の文言は site.json から引く（ハードコードすると、サイトを増やしたとき
+      // 姉妹サイトの文言がそのまま残る事故が起きる）。
+      description: `${esc(c.name)}に関する記事の一覧です。${esc(site.tagline)}——金額・要件には、出典URLと確認日を添えています。`,
       canonical: url,
       ogType: 'website',
       jsonLd: JSON.stringify({
@@ -606,7 +667,7 @@ for (const c of site.categories) {
       sidebar: aboutWidget + widget('新着記事', postListHtml(byRecent.slice(0, 5))) + categoryWidget,
       content:
         `<h1>${esc(c.name)}の記事一覧</h1>` +
-        `<p class="lead">${esc(c.name)}について、メーカー公式の寸法から計算して比べた記事です。</p>` +
+        `<p class="lead">${esc(c.name)}に関する記事の一覧です。金額・要件には、出典URLと確認日を添えています。</p>` +
         articleCards(list),
       year: String(new Date().getFullYear()),
     }),
@@ -664,7 +725,7 @@ writeFile(
   render(baseTpl, {
     ...common,
     title: `サイトマップ | ${esc(site.name)}`,
-    description: '「寸法で選ぶ」の全ページ一覧です。',
+    description: `${esc(site.name)}の全ページ一覧です。`,
     canonical: `${ORIGIN}/sitemap/`,
     ogType: 'website',
     jsonLd: '',
