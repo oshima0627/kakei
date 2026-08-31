@@ -71,8 +71,16 @@ git add -A && git commit -m "<何を変えたか>" && git push
 
 ## 検証
 
-**「実装しました、動くはずです」は報告として不成立。** 変更したら必ず実際にビルドを通し、出力を見る。
+**「実装しました、動くはずです」は報告として不成立。** 変更したら必ず実際にビルドとテストを通し、出力を見る。
 
 ```bash
-cd site && npm run build
+cd site && npm run build   # 本番の content でビルドする
+cd site && npm test        # ビルドガードの回帰テスト（test/guards.test.mjs）
 ```
+
+`build.mjs` のガードを触ったら、**必ず `npm test` も走らせる。**
+ガードは「落ちるべきものが落ちること」で初めて意味を持つので、ビルドが通っただけでは検証にならない。
+
+⚠️ `KAKEI_TODAY` / `KAKEI_CONTENT` / `KAKEI_DIST` は**テスト専用**。
+これらが環境に残った状態で `npm run build` / `npm run deploy` を打つとビルドが落ちる（意図的な安全弁）。
+テストからは `KAKEI_TEST=1` を併せて渡している。
