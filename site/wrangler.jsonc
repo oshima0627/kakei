@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kakei-log",
+  "compatibility_date": "2026-08-31",
+
+  // Worker のコードは無い（アセット配信のみ）。
+  "assets": {
+    "directory": "./dist",
+
+    // 404 は dist/404.html を返す。SPA ではないので
+    // "single-page-application" にしてはいけない（存在しないURLが200を返し、
+    // Google に重複コンテンツとして拾われる）。
+    "not_found_handling": "404-page",
+
+    // /moshimo/kantan-link → /moshimo/kantan-link/ に正規化。canonical と URL を一致させる。
+    "html_handling": "auto-trailing-slash"
+  },
+
+  // カスタムドメイン。custom_domain: true にすると、DNSレコードと証書は
+  // Cloudflare 側で自動作成される（zone は同一アカウント内）。
+  // ⚠️ content/site.json の origin と必ず同じ値にすること（ずれると canonical が実URLと食い違う）。
+  "routes": [
+    { "pattern": "kakei.nexeed-lab.com", "custom_domain": true }
+  ],
+
+  "observability": {
+    "enabled": true
+  }
+}

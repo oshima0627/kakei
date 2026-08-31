@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="アフィリエイト実測ログ">
+  <rect width="64" height="64" rx="10" fill="#0f4c3a"/>
+  <!-- 公式ページの本文に見立てた3本の行 -->
+  <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.55">
+    <line x1="14" y1="19" x2="46" y2="19"/>
+    <line x1="14" y1="30" x2="40" y2="30"/>
+    <line x1="14" y1="41" x2="30" y2="41"/>
+  </g>
+  <!-- 確認済みのチェック -->
+  <polyline points="30,44 38,52 52,26" fill="none" stroke="#ffffff" stroke-width="7"
+            stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
