@@ -25,3 +25,15 @@ test('記事が0本のカテゴリが site.json にあるとビルドが落ち�
   assert.match(r.stderr, /記事が0本のカテゴリ/);
   assert.match(r.stderr, /zeikin/);
 });
+
+test('記事に sources が無いとビルドが落ちる', () => {
+  const r = runBuild('no-sources');
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /sources がありません/);
+});
+
+test('sources が https のURLでないとビルドが落ちる', () => {
+  const r = runBuild('bad-source-url');
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /https:\/\/ で始まるURL/);
+});

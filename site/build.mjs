@@ -212,6 +212,30 @@ function assertNoEmptyCategories(articles) {
   }
 }
 
+/**
+ * **記事の数字に、出典URLと確認日が付いているかを検査する。**
+ *
+ * 制度の金額・要件は改定される。出典が書かれていない数字は、あとから
+ * 「どこで確かめたのか」が復元できず、古いのか正しいのかを判定できなくなる。
+ */
+function assertSources(meta, file) {
+  const urls = meta.sources.split('|').map((s) => s.trim()).filter(Boolean);
+  if (!urls.length) {
+    throw new Error(`${file}: sources が空です / 対処: 出典URLを | 区切りで並べる`);
+  }
+  for (const u of urls) {
+    if (!u.startsWith('https://')) {
+      throw new Error(
+        `${file}: sources は https:// で始まるURLだけを | で区切って並べます → ${u}` +
+          ' / 対処: 公的機関の公式ページのURLを入れる（まとめ記事は根拠にしない）',
+      );
+    }
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(meta.checkedAt)) {
+    throw new Error(`${file}: checkedAt は YYYY-MM-DD で書きます → ${meta.checkedAt}`);
+  }
+}
+
 /** 表は横スクロールできる箱に入れる（スマホで本文が横に伸びるのを防ぐ）。 */
 const wrapTables = (html) =>
   html.replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>');
@@ -288,7 +312,7 @@ function copyDir(from, to) {
   fs.cpSync(from, to, { recursive: true });
 }
 
-function readDocs(dir) {
+function readDocs(dir, extraRequired = []) {
   const full = path.join(CONTENT, dir);
   if (!fs.existsSync(full)) return [];
   return fs
@@ -297,7 +321,7 @@ function readDocs(dir) {
     .sort()
     .map((file) => {
       const { meta, body } = parseFrontMatter(fs.readFileSync(path.join(full, file), 'utf8'));
-      for (const key of ['title', 'description', 'slug', 'published', 'updated']) {
+      for (const key of ['title', 'description', 'slug', 'published', 'updated', ...extraRequired]) {
         if (!meta[key]) throw new Error(`${file}: front matter に ${key} がありません`);
       }
       const slug = meta.slug.replace(/^\/|\/$/g, '');
@@ -320,9 +344,10 @@ for (const entry of fs.readdirSync(DIST)) {
 
 marked.setOptions({ gfm: true, breaks: false });
 
-const articles = readDocs('articles');
+const articles = readDocs('articles', ['category', 'sources', 'checkedAt']);
 const pages = readDocs('pages');
 assertNoEmptyCategories(articles);
+for (const a of articles) assertSources(a, a.file);
 
 for (const a of articles) {
   if (!a.category) throw new Error(`${a.file}: front matter に category がありません`);
