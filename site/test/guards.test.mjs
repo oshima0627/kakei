@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import fs from 'node:fs';
+import { toJstDateString } from '../lib/date.mjs';
 
 const SITE = path.resolve(import.meta.dirname, '..');
 
@@ -54,4 +55,18 @@ test('checkedAt が古い記事は警告が出るが、ビルドは通る', () =
   const r = runBuild('expired', { KAKEI_TODAY: '2026-12-31' });
   assert.equal(r.code, 0, r.stderr);
   assert.match(r.stderr + r.stdout, /最終確認から/);
+});
+
+test('BUILD_DATE の既定値はUTCではなくJSTで日付を決める（UTCでは前日、JSTでは当日の時刻）', () => {
+  // 2026-08-31T23:30:00Z は JST では 2026-09-01T08:30:00（+9時間）。
+  // toISOString() をそのまま使う実装だと、ここが 2026-08-31 のままになる
+  // （＝日本時間の朝、期限切れガードが素通りするバグの再現ケース）。
+  const ms = Date.parse('2026-08-31T23:30:00Z');
+  assert.equal(toJstDateString(ms), '2026-09-01');
+});
+
+test('BUILD_DATE の既定値はUTCとJSTが同じ日になる時刻でも正しい', () => {
+  // 2026-09-01T05:00:00Z は JST では 2026-09-01T14:00:00。UTC の日付も 2026-09-01 で一致する。
+  const ms = Date.parse('2026-09-01T05:00:00Z');
+  assert.equal(toJstDateString(ms), '2026-09-01');
 });

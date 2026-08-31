@@ -7,6 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { marked } from 'marked';
+import { toJstDateString } from './lib/date.mjs';
 
 const ROOT = import.meta.dirname;
 // テストから content と出力先を差し替えられるようにする。
@@ -25,7 +26,7 @@ const catName = (slug) => site.categories.find((c) => c.slug === slug)?.name;
 
 // ビルド日。テストから固定するために上書きできる。
 // ⚠️ 本番のビルド・デプロイでは絶対に設定しない。設定すると期限切れガードが無効化される。
-const BUILD_DATE = process.env.KAKEI_TODAY || new Date().toISOString().slice(0, 10);
+const BUILD_DATE = process.env.KAKEI_TODAY || toJstDateString(Date.now());
 const CHECKED_WARN_DAYS = 180;
 
 // ---------------------------------------------------------------- utilities
