@@ -125,49 +125,47 @@ function assertNoRawEmphasis(html, file) {
 }
 
 /**
- * サービスカード。asp のフェンス（```asp）を HTML に変える。**marked に渡す前**に走らせる。
+ * ```seido フェンスを制度カードに変換する。
  *
- * なぜ要るか: 比較記事のリンクは早見表のセルの中に埋もれる。表は一覧するための形で、
- * 決めた人が押す形ではない。**決め手の数字と申込み口を、表の外にもう一度置く。**
- *
- * 書き方（フェンスの中）:
- *   service: もしもアフィリエイト
- *   link: moshimo
- *   lead: Amazon・楽天・Yahoo!を1つのリンクにまとめられる
- *   最低支払額: 1000円
- *   振込手数料: 0円
- *
- * service / link / lead 以外の行は、そのまま数字の欄になる。
+ * 制度 / 根拠 / 確認日 は必須。それ以外の行は数字の spec として扱い、
+ * assertCardNumbers で同じ記事の表と突き合わせる。
  */
-function renderCards(body, file) {
-  return body.replace(/^```asp\r?\n([\s\S]*?)^```[ \t]*$/gm, (_, block) => {
+function renderSeidoCards(body, file) {
+  return body.replace(/^```seido\r?\n([\s\S]*?)^```[ \t]*$/gm, (_, block) => {
     const spec = [];
-    let service = '';
-    let link = '';
+    let name = '';
+    let source = '';
+    let checked = '';
     let lead = '';
     for (const line of block.split(/\r?\n/)) {
       if (!line.trim()) continue;
       const i = line.indexOf(':');
-      if (i < 0) throw new Error(`${file}: asp の行に : がありません → ${line}`);
+      if (i < 0) throw new Error(`${file}: seido の行に : がありません → ${line}`);
       const k = line.slice(0, i).trim();
       const v = line.slice(i + 1).trim();
-      if (k === 'service') service = v;
-      else if (k === 'link') link = v;
+      if (k === '制度') name = v;
+      else if (k === '根拠') source = v;
+      else if (k === '確認日') checked = v;
       else if (k === 'lead') lead = v;
       else spec.push([k, v]);
     }
-    if (!service) throw new Error(`${file}: asp に service がありません`);
-    if (!link) throw new Error(`${file}: asp に link（content/links.json のキー）がありません`);
-    if (!spec.length) throw new Error(`${file}: asp に数字が1つもありません（${service}）`);
-    assertCardNumbers(service, spec, body, file);
+    if (!name) throw new Error(`${file}: seido に 制度 がありません`);
+    if (!source.startsWith('https://')) {
+      throw new Error(`${file}: seido の 根拠 は https:// で始まる公式ページのURLにします → ${source}`);
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(checked)) {
+      throw new Error(`${file}: seido の 確認日 は YYYY-MM-DD で書きます → ${checked}`);
+    }
+    if (!spec.length) throw new Error(`${file}: seido に数字が1つもありません（${name}）`);
+    assertCardNumbers(name, spec, body, file);
     const dl = spec.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
     return (
       `<aside class="pcard">` +
       (lead ? `<p class="pcard__lead">${esc(lead)}</p>` : '') +
-      `<p class="pcard__name">${esc(service)}</p>` +
+      `<p class="pcard__name">${esc(name)}</p>` +
       `<dl class="pcard__spec">${dl}</dl>` +
-      `<p class="pcard__go">[[AF:${link}]]</p>` +
-      `<p class="pcard__note">条件は各社の公式ページの記載です。改定されることがあるので、申し込む前に必ず公式で確認してください。</p>` +
+      `<p class="pcard__note">出典: <a href="${esc(source)}" rel="nofollow noopener">${esc(source)}</a>` +
+      `（${esc(checked)} 確認）。制度は改定されます。手続きの前に必ず出典ページで確認してください。</p>` +
       `</aside>\n`
     );
   });
@@ -176,9 +174,9 @@ function renderCards(body, file) {
 /**
  * **カードの数字が、その記事の表と食い違っていないかを検査する。**
  *
- * 報酬率・最低支払額・振込手数料は改定される。表だけ直してカードに古い数字が残る事故は、
+ * 制度の金額・要件・上限は改定される。表だけ直してカードに古い数字が残る事故は、
  * 目視では見つからない。転記ミスはビルドで落とす。
- * 判定は「カードの数字（数値トークン）が、そのサービスの表の行にすべて現れるか」。
+ * 判定は「カードの数字（数値トークン）が、その制度名を含む表の行にすべて現れるか」。
  */
 function assertCardNumbers(service, spec, body, file) {
   const rows = body
@@ -473,7 +471,7 @@ function crumbs(items) {
 // ---- 記事ページ
 
 for (const a of articles) {
-  const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderCards(a.body, a.file)))));
+  const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(a.body, a.file)))));
   assertNoRawEmphasis(parsed.html, a.file);
   const html = resolveLinks(parsed.html);
   const cname = catName(a.category);

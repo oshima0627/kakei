@@ -70,3 +70,9 @@ test('BUILD_DATE の既定値はUTCとJSTが同じ日になる時刻でも正し
   const ms = Date.parse('2026-09-01T05:00:00Z');
   assert.equal(toJstDateString(ms), '2026-09-01');
 });
+
+test('seido カードの数字が表と食い違うとビルドが落ちる', () => {
+  const r = runBuild('seido-mismatch', { KAKEI_TODAY: '2026-09-01' });
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /カードの数字が表にありません/);
+});
