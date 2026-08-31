@@ -9,12 +9,15 @@ import path from 'node:path';
 import { marked } from 'marked';
 
 const ROOT = import.meta.dirname;
-const DIST = path.join(ROOT, 'dist');
+// テストから content と出力先を差し替えられるようにする。
+// ⚠️ 本番のビルド・デプロイでは絶対に設定しない。
+const CONTENT = process.env.KAKEI_CONTENT ? path.resolve(process.env.KAKEI_CONTENT) : path.join(ROOT, 'content');
+const DIST = process.env.KAKEI_DIST ? path.resolve(process.env.KAKEI_DIST) : path.join(ROOT, 'dist');
 
-const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site.json'), 'utf8'));
+const site = JSON.parse(fs.readFileSync(path.join(CONTENT, 'site.json'), 'utf8'));
 
 // 広告リンクの台帳。ASPが発行したURLだけをここに置く（本文には直書きさせない）。
-const links = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/links.json'), 'utf8'));
+const links = JSON.parse(fs.readFileSync(path.join(CONTENT, 'links.json'), 'utf8'));
 const baseTpl = fs.readFileSync(path.join(ROOT, 'templates/base.html'), 'utf8');
 
 const ORIGIN = site.origin.replace(/\/$/, '');
@@ -191,6 +194,24 @@ function assertCardNumbers(service, spec, body, file) {
   }
 }
 
+/**
+ * **記事が1本も無いカテゴリが site.json に残っていないかを検査する。**
+ *
+ * 空のカテゴリページが sitemap に載り、Google に薄いページとして拾われる。
+ * 2026-08-31 に affi サイトで実際に起きた（記事0本の asp カテゴリが sitemap に載っていた）。
+ * 目視では気づけないのでビルドで落とす。
+ */
+function assertNoEmptyCategories(articles) {
+  const used = new Set(articles.map((a) => a.category));
+  const empty = site.categories.filter((c) => !used.has(c.slug));
+  if (empty.length) {
+    throw new Error(
+      `content/site.json に記事が0本のカテゴリがあります → ${empty.map((c) => c.slug).join(', ')}` +
+        ' / 対処: 1本目が書けるまで site.json の categories から外す',
+    );
+  }
+}
+
 /** 表は横スクロールできる箱に入れる（スマホで本文が横に伸びるのを防ぐ）。 */
 const wrapTables = (html) =>
   html.replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>');
@@ -268,7 +289,7 @@ function copyDir(from, to) {
 }
 
 function readDocs(dir) {
-  const full = path.join(ROOT, dir);
+  const full = path.join(CONTENT, dir);
   if (!fs.existsSync(full)) return [];
   return fs
     .readdirSync(full)
@@ -299,8 +320,9 @@ for (const entry of fs.readdirSync(DIST)) {
 
 marked.setOptions({ gfm: true, breaks: false });
 
-const articles = readDocs('content/articles');
-const pages = readDocs('content/pages');
+const articles = readDocs('articles');
+const pages = readDocs('pages');
+assertNoEmptyCategories(articles);
 
 for (const a of articles) {
   if (!a.category) throw new Error(`${a.file}: front matter に category がありません`);
