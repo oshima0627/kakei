@@ -37,3 +37,21 @@ test('sources が https のURLでないとビルドが落ちる', () => {
   assert.notEqual(r.code, 0);
   assert.match(r.stderr, /https:\/\/ で始まるURL/);
 });
+
+test('revisionAt を過ぎているとビルドが落ちる', () => {
+  const r = runBuild('expired', { KAKEI_TODAY: '2027-01-02' });
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /revisionAt/);
+  assert.match(r.stderr, /2027-01-01/);
+});
+
+test('revisionAt がまだ先ならビルドは通る', () => {
+  const r = runBuild('expired', { KAKEI_TODAY: '2026-12-31' });
+  assert.equal(r.code, 0, r.stderr);
+});
+
+test('checkedAt が古い記事は警告が出るが、ビルドは通る', () => {
+  const r = runBuild('expired', { KAKEI_TODAY: '2026-12-31' });
+  assert.equal(r.code, 0, r.stderr);
+  assert.match(r.stderr + r.stdout, /最終確認から/);
+});

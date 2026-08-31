@@ -23,6 +23,11 @@ const baseTpl = fs.readFileSync(path.join(ROOT, 'templates/base.html'), 'utf8');
 const ORIGIN = site.origin.replace(/\/$/, '');
 const catName = (slug) => site.categories.find((c) => c.slug === slug)?.name;
 
+// ビルド日。テストから固定するために上書きできる。
+// ⚠️ 本番のビルド・デプロイでは絶対に設定しない。設定すると期限切れガードが無効化される。
+const BUILD_DATE = process.env.KAKEI_TODAY || new Date().toISOString().slice(0, 10);
+const CHECKED_WARN_DAYS = 180;
+
 // ---------------------------------------------------------------- utilities
 
 const esc = (s) =>
@@ -236,6 +241,38 @@ function assertSources(meta, file) {
   }
 }
 
+/**
+ * **改定予定日を過ぎた記事があると、ビルドを落とす。**
+ *
+ * 「確認日が古い」は主観だが、「改定日を過ぎた」は事実として判定できる。
+ * 育休給付金の上限は毎年8月1日、扶養の壁は税制改正、児童手当は改正法の施行日——
+ * 改定日が分かっている制度なら、機械が「この記事はもう嘘かもしれない」と言える。
+ *
+ * ⚠️ 対処は「出典を取得し直して本文を確認し、checkedAt と revisionAt を両方更新する」。
+ * revisionAt だけを先に進めると、このガードは意味を失う。
+ */
+function assertNotExpired(meta, file) {
+  if (!meta.revisionAt) return;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(meta.revisionAt)) {
+    throw new Error(`${file}: revisionAt は YYYY-MM-DD で書きます → ${meta.revisionAt}`);
+  }
+  if (meta.revisionAt <= BUILD_DATE) {
+    throw new Error(
+      `${file}: revisionAt（${meta.revisionAt}）を過ぎています。記事の数字が古い可能性があります` +
+        ' / 対処: sources のページを取得し直して本文を確認し、checkedAt と revisionAt を両方更新する。' +
+        'revisionAt だけを先に進めない',
+    );
+  }
+}
+
+/** 最終確認から日数が経った記事を警告する（落とさない）。 */
+function warnIfStale(meta, file) {
+  const days = Math.round((Date.parse(BUILD_DATE) - Date.parse(meta.checkedAt)) / 86400000);
+  if (days >= CHECKED_WARN_DAYS) {
+    console.warn(`注意: ${file} は最終確認から ${days} 日経過しています（checkedAt: ${meta.checkedAt}）`);
+  }
+}
+
 /** 表は横スクロールできる箱に入れる（スマホで本文が横に伸びるのを防ぐ）。 */
 const wrapTables = (html) =>
   html.replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>');
@@ -347,7 +384,11 @@ marked.setOptions({ gfm: true, breaks: false });
 const articles = readDocs('articles', ['category', 'sources', 'checkedAt']);
 const pages = readDocs('pages');
 assertNoEmptyCategories(articles);
-for (const a of articles) assertSources(a, a.file);
+for (const a of articles) {
+  assertSources(a, a.file);
+  assertNotExpired(a, a.file);
+  warnIfStale(a, a.file);
+}
 
 for (const a of articles) {
   if (!a.category) throw new Error(`${a.file}: front matter に category がありません`);
