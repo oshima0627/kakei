@@ -76,3 +76,34 @@ test('seido カードの数字が表と食い違うとビルドが落ちる', ()
   assert.notEqual(r.code, 0);
   assert.match(r.stderr, /カードの数字が表にありません/);
 });
+
+test('seido フェンスに 制度 が無いとビルドが落ちる', () => {
+  const r = runBuild('seido-missing-name', { KAKEI_TODAY: '2026-09-01' });
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /seido に 制度 がありません/);
+});
+
+test('seido フェンスの 根拠 が https で始まらないとビルドが落ちる', () => {
+  const r = runBuild('seido-bad-source', { KAKEI_TODAY: '2026-09-01' });
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /seido の 根拠 は https:\/\/ で始まる公式ページのURLにします/);
+});
+
+test('seido フェンスの 確認日 が YYYY-MM-DD でないとビルドが落ちる', () => {
+  const r = runBuild('seido-bad-date', { KAKEI_TODAY: '2026-09-01' });
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /seido の 確認日 は YYYY-MM-DD で書きます/);
+});
+
+test('正しい seido フェンスは、出典URL・確認日・制度名・数字を含むカードとして出力される', () => {
+  const r = runBuild('seido-ok', { KAKEI_TODAY: '2026-09-01' });
+  assert.equal(r.code, 0, r.stderr);
+  const html = fs.readFileSync(
+    path.join(SITE, 'test/.out/seido-ok/zeikin/seido-ok/index.html'),
+    'utf8',
+  );
+  assert.match(html, /<a href="https:\/\/www\.nta\.go\.jp\/example"[^>]*>https:\/\/www\.nta\.go\.jp\/example<\/a>/);
+  assert.match(html, /2026-09-01 確認/);
+  assert.match(html, /基礎控除の壁/);
+  assert.match(html, /123万円/);
+});
