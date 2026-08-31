@@ -12,7 +12,7 @@
     // Google に重複コンテンツとして拾われる）。
     "not_found_handling": "404-page",
 
-    // /moshimo/kantan-link → /moshimo/kantan-link/ に正規化。canonical と URL を一致させる。
+    // /about → /about/ に正規化。canonical と実URLを一致させる。
     "html_handling": "auto-trailing-slash"
   },
 

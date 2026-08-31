@@ -1,4 +1,4 @@
-/* 寸法で選ぶ
+/* 家計の制度ログ
  *
  * デザインの参考：tsuzukiblog.org（SWELL テーマ）から設計パターンを取り込んでいる。
  *   - 2カラム（本文 ~716px ＋ サイドバー ~304px）
@@ -282,23 +282,19 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 /* 審査合格までのリンク位置。読者の邪魔をしない程度に留める */
 .link-todo { color: var(--muted); border-bottom: 1px dotted var(--muted); }
 
-/* ---------------------------------------------------------------- Amazonリンク */
+/* ---------------------------------------------------------------- 広告リンク */
 
-/* 収益リンク（build.mjs の resolveLinks が付ける .buy）。
+/* 広告リンク（build.mjs の resolveLinks が付ける .buy）。
  *
- * 2026-08-26 まで **.buy の指定が1行も無く**、324本が記事内リンクとまったく同じ
- * 見た目（--link・太字・下線）で出ていた。押した先がAmazonだと読者に分からない。
- *
- * 設計の制約が2つある：
- *   1. **表のセルは white-space: nowrap。** 横幅を増やす装飾は表をそのまま広げる
- *      （99%のリンクが表の中にある）。だからパディングは最小限に留める。
- *   2. **商品画像も価格も規約上使えない**（Creators API が要り、その条件は
- *      「過去30日間に適格販売10件」。docs/link-appearance-2026-08-26.md）。
- *      装飾はテキストと色だけで完結させる。
- *
+ * 記事内の普通のリンクと同じ見た目にすると、押した先が広告だと読者に分からない。
  * 色は PR表記と同じ琥珀系（--warn-bg / --warn-line）を土台にしている。
- * サイトの主色（青・紺）と衝突せず、**「ここから外に出る」を色で示せる**ため。
- * Amazon のロゴ・商標は使わない（規約上の制限があり、色だけで用は足りる）。 */
+ * サイトの主色（青・紺）と衝突せず、「ここから外に出る」を色で示せるため。
+ *
+ * 表のセルは white-space: nowrap なので、横幅を増やす装飾は表をそのまま広げる。
+ * だからパディングは最小限に留める。
+ *
+ * ⚠️ site.json の affiliateEnabled が false の間、resolveLinks は .buy を出さず
+ * .link-todo のプレースホルダを出す。現在このサイトに広告リンクは1本も無い。 */
 .buy {
   display: inline-block;
   padding: .08em .5em;
@@ -326,13 +322,13 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .post p > .buy,
 .post li > .buy { margin: 0 .15em; }
 
-/* ---------------------------------------------------------------- 製品カード */
+/* ---------------------------------------------------------------- 制度カード */
 
-/* 早見表の外に置く「決めた人が押す場所」。build.mjs の renderCards が出力する。
+/* 本文中に置く「この制度の数字」のまとめ。build.mjs の renderSeidoCards が
+ * ```seido フェンスから出力する。
  *
- * ⚠️ **画像も価格も無い。** 規約上 Creators API が要り、その条件は「過去30日間に適格販売10件」
- * （docs/link-appearance-2026-08-26.md）。だから主役は**自前の計算値**にしてある。
- * 表と同じ数字であることはビルド時に検査している（assertCardNumbers）。 */
+ * 主役は制度名・数字・出典URL・確認日の4つ。数字が同じ記事の表と一致していることは
+ * ビルド時に検査している（assertCardNumbers）。 */
 .pcard {
   margin: 1.8rem 0;
   padding: 1rem 1.15rem 0.9rem;
@@ -368,8 +364,6 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 }
 .pcard__spec dt { color: var(--muted-on-surface); }
 .pcard__spec dd { margin: 0; font-weight: 700; color: var(--fg-strong); }
-
-.pcard__go { margin: 0 0 .55rem; }
 
 /* カードの中のボタンは、表の中より大きくする（ここは横幅の制約が無い） */
 .pcard .buy {
