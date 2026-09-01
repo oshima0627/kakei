@@ -57,6 +57,25 @@ test('sources が https のURLでないとビルドが落ちる', () => {
   assert.match(r.stderr, /https:\/\/ で始まるURL/);
 });
 
+test('記事に eyecatch が無いとビルドが落ちる（記事画像の作り忘れ）', () => {
+  const r = runBuild('no-eyecatch');
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /eyecatch がありません/);
+});
+
+test('eyecatch の画像が public に無いとビルドが落ちる（パスの打ち間違い・作り忘れ）', () => {
+  const r = runBuild('eyecatch-missing-file');
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /public にありません/);
+  assert.match(r.stderr, /dare-mo-tsukutte-inai\.png/);
+});
+
+test('og:image になる画像が PNG でないとビルドが落ちる（SNSのカードは SVG を受け付けない）', () => {
+  const r = runBuild('eyecatch-not-png');
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /PNG ではありません/);
+});
+
 test('revisionAt を過ぎているとビルドが落ちる', () => {
   const r = runBuild('expired', { KAKEI_TODAY: '2027-01-02' });
   assert.notEqual(r.code, 0);

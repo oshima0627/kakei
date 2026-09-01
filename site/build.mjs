@@ -404,6 +404,40 @@ function copyDir(from, to) {
   fs.cpSync(from, to, { recursive: true });
 }
 
+/**
+ * 記事のアイキャッチ（eyecatch）が実在し、SNSのカードとして使える形かを見る。
+ *
+ * 記事画像は tools/article-images/build.py が作る。front matter に書いただけで
+ * 画像を作り忘れると、記事一覧のサムネイルと og:image が壊れたまま公開される。
+ * パスの打ち間違いは目視では気づけないので、**実ファイルの存在まで見る。**
+ *
+ * 寸法（1200×630）は生成側 build.py が書き出す前に検査している。ここでは見ない。
+ */
+function assertEyecatch(meta, file) {
+  const src = meta.eyecatch;
+  if (!src.startsWith('/')) {
+    throw new Error(
+      `${file}: eyecatch はサイト内の絶対パスで書きます → ${src}` +
+        ' / 対処: /img/og/<slug>.png のように / から始める',
+    );
+  }
+  const abs = path.join(ROOT, 'public', src.replace(/^\//, ''));
+  if (!fs.existsSync(abs)) {
+    throw new Error(
+      `${file}: eyecatch の画像が public にありません → ${src}` +
+        ' / 対処: python tools/article-images/build.py で作る（SLIDES に記事を足す）',
+    );
+  }
+  // og:image は front matter の ogImage が優先。実際にSNSへ出るほうを見る。
+  const card = meta.ogImage || src;
+  if (!card.toLowerCase().endsWith('.png')) {
+    throw new Error(
+      `${file}: og:image になる画像が PNG ではありません → ${card}` +
+        ' / 対処: SNSのカードは SVG を受け付けない。PNG を指す（本文の図版だけ SVG にしたいなら ogImage に PNG を書く）',
+    );
+  }
+}
+
 function readDocs(dir, extraRequired = []) {
   const full = path.join(CONTENT, dir);
   if (!fs.existsSync(full)) return [];
@@ -436,11 +470,12 @@ for (const entry of fs.readdirSync(DIST)) {
 
 marked.setOptions({ gfm: true, breaks: false });
 
-const articles = readDocs('articles', ['category', 'sources', 'checkedAt']);
+const articles = readDocs('articles', ['category', 'sources', 'checkedAt', 'eyecatch']);
 const pages = readDocs('pages');
 assertNoEmptyCategories(articles);
 for (const a of articles) {
   assertSources(a, a.file);
+  assertEyecatch(a, a.file);
   assertNotExpired(a, a.file);
   warnIfStale(a, a.file);
 }

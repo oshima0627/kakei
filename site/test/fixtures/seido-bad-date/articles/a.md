@@ -3,6 +3,7 @@ title: 確認日の桁が揃っていない記事
 description: ガードの検査用。
 slug: zeikin/seido-bad-date
 category: zeikin
+eyecatch: /img/og/site.png
 published: 2026-09-01
 updated: 2026-09-01
 sources: https://www.nta.go.jp/example

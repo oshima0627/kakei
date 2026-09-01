@@ -3,6 +3,7 @@ title: カードと表が食い違う記事
 description: ガードの検査用。
 slug: zeikin/seido-mismatch
 category: zeikin
+eyecatch: /img/og/site.png
 published: 2026-09-01
 updated: 2026-09-01
 sources: https://www.nta.go.jp/example
