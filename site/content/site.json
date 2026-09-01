@@ -29,7 +29,7 @@
   "affiliateEnabled": false,
 
   "//webAnalyticsToken": "Cloudflare Web Analytics のビーコントークン。クライアント側HTMLに出るので秘密情報ではない。⚠️ 未発行。ダッシュボードでのみ発行できる（APIには RUM スコープが無く Authentication error になる）。",
-  "webAnalyticsToken": "",
+  "webAnalyticsToken": "b6fa8119b49a44f5bde1f57e383bd689",
 
   "//xHandle": "X（旧Twitter）のハンドル。@ は付けない。⚠️ 未開設。",
   "xHandle": "",
