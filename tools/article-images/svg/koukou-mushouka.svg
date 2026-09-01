@@ -4,19 +4,18 @@
        それぞれ別の制度が受け止めていることを表す。
        高さは大小関係だけで、実際の比率ではない。 -->
 
-  <!-- 左: 授業料 → 高等学校等就学支援金 -->
+  <!-- 数字は私立高校の年額だけを1つずつ載せる。
+       公立の額も並べると、どちらが何の数字か画像だけでは分からなくなる。 -->
+
+  <!-- 左: 授業料 → 高等学校等就学支援金（私立の支給限度額） -->
   <rect x="42" y="120" width="180" height="150" rx="8" fill="#ffffff" opacity="0.9"/>
-  <text x="132" y="205" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-        font-size="34" font-weight="700" fill="#014172">457,200</text>
-  <text x="132" y="238" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-        font-size="19" font-weight="700" fill="#014172">118,800</text>
+  <text x="132" y="209" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="38" font-weight="700" fill="#014172">457,200</text>
 
   <!-- 右: 授業料以外 → 高校生等奨学給付金 -->
   <rect x="278" y="120" width="180" height="150" rx="8" fill="#8ec5e8" opacity="0.95"/>
-  <text x="368" y="205" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-        font-size="34" font-weight="700" fill="#014172">152,000</text>
-  <text x="368" y="238" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-        font-size="19" font-weight="700" fill="#014172">143,700</text>
+  <text x="368" y="209" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="38" font-weight="700" fill="#014172">152,000</text>
 
   <!-- 2つに割れていることを示す切れ目 -->
   <g stroke="#e7cd7a" stroke-width="5" stroke-linecap="round">
