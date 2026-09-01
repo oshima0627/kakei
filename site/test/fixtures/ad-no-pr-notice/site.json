@@ -3,49 +3,42 @@
   "tagline": "お金の制度を、公式の原文で確かめて書く",
   "description": "税・社会保険・教育費・資産形成の制度を、国税庁や厚生労働省などの公式ページの文言で確認して書いているサイトです。金額・要件・期限を、出典URLと確認日つきで載せています。",
   "lang": "ja",
-
   "//origin": "本番の公開URL。canonical と sitemap がこの値を使う。wrangler.jsonc の routes と必ず同じ値にする。",
   "origin": "https://kakei.nexeed-lab.com",
-
   "//categories": "記事の front matter の category は、この slug のどれかでなければビルドが落ちる。⚠️ 記事が0本のカテゴリをここに置くとビルドが落ちる（assertNoEmptyCategories）。1本目が書けた時点で足す。最終形は zeikin / kyoikuhi / shisan の3つ。",
   "categories": [
-    { "slug": "zeikin", "name": "税と社会保険" },
-    { "slug": "kyoikuhi", "name": "教育費" }
+    {
+      "slug": "zeikin",
+      "name": "税と社会保険"
+    }
   ],
-
   "//nav": "ヘッダーとフッターのナビ。カテゴリは自動で先頭に入るので、ここには固定ページだけ書く。",
   "nav": [
-    { "path": "/about/", "label": "運営者情報" },
-    { "path": "/privacy/", "label": "プライバシーポリシー" },
-    { "path": "/sitemap/", "label": "サイトマップ" }
+    {
+      "path": "/about/",
+      "label": "運営者情報"
+    },
+    {
+      "path": "/privacy/",
+      "label": "プライバシーポリシー"
+    },
+    {
+      "path": "/sitemap/",
+      "label": "サイトマップ"
+    }
   ],
-
   "//affiliateDisclosure": "フッターに常時出す開示。affiliateEnabled が true のときだけ出力される。",
   "affiliateDisclosure": "当サイトはアフィリエイトプログラムに参加しており、リンク経由の申し込みにより収入を得ることがあります。",
-
   "//prLabel": "景品表示法のステマ規制（2023-10-01 施行）向けの表記。ASP側の開示文言とは別物で、両方必要。",
   "prLabel": "この記事には広告（アフィリエイトリンク）が含まれます。",
-
-  "//disclosureOnlyPhrases": "affiliateEnabled=false のあいだ、記事・固定ページの原稿に書いてあったらビルドを落とす言い回し（assertNoPrematureDisclosure）。フラグは『リンクを出すか』しか見ておらず、原稿に書いた文章は素通りしていた（2026-09-01 のレビューで affi の about.md と privacy.md が実際にそうなっていた）。affiliateDisclosure 自体も自動で対象に入る。⚠️ わざと素朴な部分一致にしてある。誤検知したら、その文を事実に合わせて書き直すほうが正しい。",
-  "disclosureOnlyPhrases": [
-    "アフィリエイトプログラムに参加しています",
-    "アフィリエイトプログラムに参加しており",
-    "収入を得ています",
-    "収入を得ることがあります"
-  ],
-
   "//affiliateEnabled": "⚠️ ASPで実際にリンクを発行し content/links.json に入れるまで false のままにする。リンクが1本も無いのに『収入を得ています』と書くのは事実に反する。提携申請は記事が10本たまってから行う。",
   "affiliateEnabled": false,
-
   "//webAnalyticsToken": "Cloudflare Web Analytics のビーコントークン。クライアント側HTMLに出るので秘密情報ではない。⚠️ 未発行。ダッシュボードでのみ発行できる（APIには RUM スコープが無く Authentication error になる）。",
-  "webAnalyticsToken": "b6fa8119b49a44f5bde1f57e383bd689",
-
+  "webAnalyticsToken": "",
   "//xHandle": "X（旧Twitter）のハンドル。@ は付けない。⚠️ 未開設。",
   "xHandle": "",
-
   "//defaultOgImage": "og:image の既定値。SNSのカードはSVGを受け付けないので必ずPNGにする。⚠️ 未作成（Task 7）。",
   "defaultOgImage": "/img/og/site.png",
-
   "//robots": "robots.txt のAIクローラ方針。allowAI に入れたものだけ明示的に許可する。",
   "robots": {
     "//allowAI": "許可すると何が返ってくるかで判断する。現状ゼロ（見返りのある提携が無い）。",
