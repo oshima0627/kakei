@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。記事2本。** 2本目（ふるさと納税）と記事画像は**ローカルで検証済みだが、まだ本番へデプロイしていない**（判断待ち）。
+**公開済み。記事2本。2本目と記事画像は 2026-09-01 に本番へデプロイして、実URLで確認済み。**
 
 | | |
 |---|---|
@@ -22,20 +22,13 @@
 | 計測 | Cloudflare Web Analytics 稼働中（トークン `b6fa8119b49a44f5bde1f57e383bd689`） |
 | Search Console | `sc-domain:nexeed-lab.com` にサイトマップ送信済み |
 
-## ★ いちばん先にやること
-
-```bash
-cd site && npm run deploy
-```
-
-**2本目の記事と記事画像2枚が、まだ本番に出ていない。** ローカルのビルド・テスト・
-ブラウザ表示は下記のとおり通っている。デプロイしたら本番URLを curl して確認する。
-
-そのあと（本人のダッシュボード操作）:
+## ★ いちばん先にやること（**本人のダッシュボード操作**）
 
 1. Search Console に **`https://kakei.nexeed-lab.com/zeikin/furusato-nozei-jogen/`** のインデックス登録をリクエスト
 2. 残り4URL（`/`・`/about/`・`/privacy/`・`/sitemap/`）のリクエスト。
    2026-09-01 は1日の割り当てを使い切っていた。**急がなくてよい**（サイトマップを送ってあるのでクロール対象にはなる）
+
+⚠️ **リクエストは順番待ちに入れるだけで、登録を保証しない。**
 
 ## 今回やったこと（2026-09-01・実行して出力を見たものだけ）
 
@@ -114,12 +107,27 @@ $ cd site && npm test
 - コンソールのエラーは **Cloudflare Web Analytics の CORS だけ**（localhost から叩いているため。本番では出ない）
 - `og:image` が `https://kakei.nexeed-lab.com/img/og/furusato-nozei-jogen.png` になっている
 
+### 本番（2026-09-01 デプロイ後に curl した実際の出力）
+
+```
+/                                 200 text/html        5995
+/zeikin/furusato-nozei-jogen/     200 text/html       36398
+/zeikin/fuyou-no-kabe/            200 text/html       38022
+/img/og/furusato-nozei-jogen.png  200 image/png       58523
+/img/og/fuyou-no-kabe.png         200 image/png       48593
+/sitemap.xml                      200 application/xml   679
+```
+
+- 記事の canonical は `https://kakei.nexeed-lab.com/zeikin/furusato-nozei-jogen/`、
+  og:image は同じホストの `/img/og/furusato-nozei-jogen.png`（**どちらも実URLと一致**）
+- `sitemap.xml` は **6URL**（トップ・記事2本・about・privacy・sitemap）。カテゴリページは載っていない
+- デプロイ: `Deployed kakei-log triggers` / Version ID `0421f72d-7b49-4dbb-8965-922d7bf92128`
+
 **ビルドガードが実際に落ちたことも確認した。** 執筆中に `assertNoRawEmphasis` が
 「`**…です。**` の閉じの `**` が句点の直後」を4か所で検出してビルドを止めた。直して通した。
 
 ## 未検証（確かめていない。確かめたように書かないこと）
 
-- **本番へのデプロイ。まだしていない**（上の「いちばん先にやること」）
 - **`article-images.pptx` を PowerPoint で開いていない。** SVG が入っていることは zip を開いて確認したが、
   **PowerPoint が実際にベクタとして表示・編集できるかは未確認**。LibreOffice 経由の PDF 書き出しは通っている
 - **インデックスされたかどうか。** 1本目も 2026-09-01 時点で「検出 - インデックス未登録」
