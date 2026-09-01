@@ -8,7 +8,9 @@
   "origin": "https://kakei.nexeed-lab.com",
 
   "//categories": "記事の front matter の category は、この slug のどれかでなければビルドが落ちる。⚠️ 記事が0本のカテゴリをここに置くとビルドが落ちる（assertNoEmptyCategories）。1本目が書けた時点で足す。最終形は zeikin / kyoikuhi / shisan の3つ。",
-  "categories": [],
+  "categories": [
+    { "slug": "zeikin", "name": "税と社会保険" }
+  ],
 
   "//nav": "ヘッダーとフッターのナビ。カテゴリは自動で先頭に入るので、ここには固定ページだけ書く。",
   "nav": [
