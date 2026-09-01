@@ -163,6 +163,34 @@ test('カードの数字が桁落ちしていてもビルドが落ちる（123�
   assert.match(r.stderr, /12万円/);
 });
 
+// ---- 広告まわり（affi サイトから移植したガード）
+
+test('リンクが0本なのに原稿に開示文言を書くとビルドが落ちる', () => {
+  // affiliateEnabled が止めていたのは「リンクを出すか」だけで、原稿に書いた文章は素通りしていた。
+  // 2026-09-01 のレビューで、affi の固定ページ2枚が実際にこの状態だった。
+  const r = runBuild('premature-disclosure', { KAKEI_TODAY: '2026-09-01' });
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /広告リンク0本）なのに/);
+  assert.match(r.stderr, /収入を得ています/);
+});
+
+test('広告リンクがあるのにPR表記が無いページはビルドが落ちる（ステマ規制）', () => {
+  // links.json の台帳を迂回して生HTMLで <a class="buy"> を直書きした場合の経路。
+  // 表記の有無を人の記憶に任せず、出力されたHTMLを見て機械が判定する。
+  const r = runBuild('ad-no-pr-notice', { KAKEI_TODAY: '2026-09-01' });
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /広告リンクがあるのにPR表記がありません/);
+});
+
+test('[[AF:]] を置いた固定ページには、広告リンクとPR表記の両方が出る', () => {
+  // 記事と違い固定ページは常時PR表記を出さない。リンクを置いたときだけ付くことを確かめる。
+  const r = runBuild('page-af-link', { KAKEI_TODAY: '2026-09-01' });
+  assert.equal(r.code, 0, r.stderr);
+  const html = fs.readFileSync(path.join(SITE, 'test/.out/page-af-link/about/index.html'), 'utf8');
+  assert.match(html, /class="buy"/);
+  assert.match(html, /class="pr-notice"/);
+});
+
 test('checkedAt が実在しない日付だとビルドが落ちる', () => {
   const r = runBuild('checked-bad-date', { KAKEI_TODAY: '2026-09-01' });
   assert.notEqual(r.code, 0);
