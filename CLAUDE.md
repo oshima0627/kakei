@@ -68,6 +68,32 @@ git add -A && git commit -m "<何を変えたか>" && git push
 5. 原稿の正は **`site/content/articles/`**。別の場所に下書きを置かない
 6. `category` は `site.json` の `categories` にある slug でなければビルドが落ちる。
    **記事が0本のカテゴリを `site.json` に置いてもビルドが落ちる**
+7. **記事画像（アイキャッチ）を必ず作る。** front matter の `eyecatch` は必須で、
+   指したファイルが `site/public/` に無いとビルドが落ちる（`assertEyecatch`）
+
+## 記事画像の作り方
+
+**画像は PowerPoint で作る。図版のイラストは SVG で描いて PowerPoint に入れる。**
+書き出しは 1200×630 の PNG。
+
+```bash
+python tools/article-images/build.py
+```
+
+1. `tools/article-images/svg/<slug>.svg` に図版を描く。
+   **日本語は SVG に入れない**（ラスタライズをフォントに依存させないため）。
+   見出し・凡例はすべて PowerPoint のテキストボックス側に置く
+2. `tools/article-images/build.py` の `SLIDES` に1件足す（`svg` / `png` / `category` /
+   `title` / `title_size` / `subtitle` / `legend` / `note`）
+3. `build.py` を走らせる。`tools/article-images/article-images.pptx` にスライドが増え、
+   `site/public/img/og/<slug>.png` が出る
+4. 記事の front matter に `eyecatch: /img/og/<slug>.png` を書く
+5. **できた PNG を必ず目で見る。** タイトルの折り返し・要素の重なりは実際に見ないと分からない
+
+- **色は `site/public/styles.css` のカスタムプロパティに合わせる。**
+  背景 `--navy` `#014172` ／ アクセント `#8ec5e8`（`--link` を紺の上で読める明るさに）／
+  注意 `--warn-line` `#e7cd7a`。**画面と画像で別々に色を決めない**
+- **PNG を手で描き換えない。** 正は SVG と `.pptx`。PNG は `build.py` の出力
 
 ## 検証
 

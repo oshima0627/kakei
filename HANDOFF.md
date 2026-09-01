@@ -110,6 +110,21 @@ python tools/article-images/build.py
 ⚠️ **`--accent: #213555`（H2 の縦棒・制度カードの左罫）は画像に使っていない。**
 画像で主役にしたのは `--navy` のほう。
 
+### 5. 記事画像を**必ず作る**ようにした（本人の指示）
+
+「これから作成する記事にも画像を作る」を、指示書だけでなく**ビルドガード**にした。
+
+- `build.mjs` に `assertEyecatch` を追加し、`eyecatch` を記事の必須 front matter にした
+- 落とすもの: `eyecatch` が無い ／ 指した画像が `site/public/` に無い ／ og:image になる画像が PNG でない
+- 回帰テストを3件追加（**23 → 26 件**）。fixture は `no-eyecatch` / `eyecatch-missing-file` / `eyecatch-not-png`
+- 既存 fixture 12本の記事にも `eyecatch` を足した
+- `CLAUDE.md` に「記事画像の作り方」の手順（SVG を描く → `SLIDES` に足す → `build.py` → `eyecatch` を書く → **目で見る**）を書いた
+
+**寸法（1200×630）は生成側の `build.py` が書き出す前に検査している**ので、ガードでは見ていない。
+
+⚠️ **これ以降、画像の無い記事はビルドできない。** 下書きを content に置いたままにもできない。
+邪魔になったら `readDocs('articles', [...])` から `eyecatch` を外すのが最小の戻し方。
+
 ## 検証済みの事実（実際に画面に出した出力）
 
 ```
@@ -119,7 +134,7 @@ built: 2 article(s), 2 page(s), 1 category page(s)
   /zeikin/fuyou-no-kabe/  扶養の壁（103万・106万・130万・150万・160万）を公式ページの原文で確かめる
 
 $ cd site && npm test
-ℹ tests 23 / ℹ pass 23 / ℹ fail 0
+ℹ tests 26 / ℹ pass 26 / ℹ fail 0
 ```
 
 ローカルの `dist` を `python -m http.server` で配って、ブラウザで実際に開いて確認した:
@@ -203,7 +218,7 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## ビルドガードの一覧（何を落とすか）
 
-すべて `site/build.mjs`。回帰テストは `site/test/guards.test.mjs`（23ケース）。
+すべて `site/build.mjs`。回帰テストは `site/test/guards.test.mjs`（26ケース）。
 
 | ガード | 落とすもの |
 |---|---|
@@ -215,6 +230,7 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 | `assertSources` | `sources` が空 ／ `https://` で始まらない URL がある ／ `checkedAt` が実在しない日付 ／ `checkedAt` がビルド日より未来 |
 | `assertNotExpired` | `revisionAt` を**書いてある**記事が、その日以降。キーごと書いていない記事は許す |
 | `assertCardNumbers` | `seido` カードの数値トークンが、同じ記事の表の行に無い |
+| `assertEyecatch` | 記事に `eyecatch` が無い ／ 指した画像が `site/public/` に無い ／ og:image になる画像が PNG でない。**記事画像の作り忘れとパスの打ち間違いを止める** |
 | `renderSeidoCards` | `seido` に `制度` が無い ／ `根拠` が `https://` で始まらない ／ `確認日` が実在しない日付 ／ 数字が1つも無い |
 | `assertNoRawEmphasis` | 解釈されずに残った `**`（日本語の約物と CommonMark の flanking ルール） |
 | `resolveLinks` | `content/links.json` に無い `[[AF:キー]]` |
