@@ -91,10 +91,23 @@ const render = (tpl, vars) => tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => (k in vars
 /**
  * フッターの開示文言。affiliateEnabled=false のうちは出さない。
  * リンクが1本も無いのに「適格販売により収入を得ています」と書くのは事実に反するため。
+ *
+ * ⚠️ ここが止めるのは**出力側だけ**。原稿に同じことを書いたら素通りするので、
+ * 原稿側は assertNoPrematureDisclosure が見ている。
  */
 const disclosureHtml = site.affiliateEnabled
   ? `<p class="disclosure">${esc(site.affiliateDisclosure)}</p>`
   : '';
+
+/**
+ * 広告であることの表示（ステマ規制）。**広告リンクを含むページに必ず付ける。**
+ * affiliateEnabled=false のあいだは、リンクが無いことをそのまま書く。
+ *
+ * 付け忘れは assertAdDisclosure が出力HTMLを見て落とす。
+ */
+const prNoticeHtml = site.affiliateEnabled
+  ? `<p class="pr-notice">${esc(site.prLabel)}</p>`
+  : `<p class="pr-notice pr-notice--pending">現在このページに広告リンクはありません（ASPと提携する前の状態です）。</p>`;
 
 /**
  * Cloudflare Web Analytics のビーコン。ここで測るのは訪問の数だけ。
@@ -236,6 +249,53 @@ function assertCardNumbers(seidoName, spec, body, file) {
         throw new Error(
           `${file}: カードの数字が表にありません → ${seidoName} の「${k}: ${v}」の ${num}` +
             ' / 対処: 表の値と合わせるか、表のほうを直す',
+        );
+      }
+    }
+  }
+}
+
+/**
+ * **広告リンクが出ているページに、PR表記が無い状態を落とす。**
+ *
+ * ステマ規制（景品表示法・2023-10-01 施行）で要るのは「広告であることの表示」で、
+ * これが無い広告ページを1枚でも出したら、その時点で違反になる。
+ * PR表記を出すかどうかを人の記憶に任せない。**出力されたHTMLを見て機械が判定する。**
+ *
+ * 判定は「実リンク（class="buy"）があるのに pr-notice が無いか」。
+ * affiliateEnabled=false のあいだ [[AF:]] はプレースホルダ（link-todo）になるので、そこでは発火しない。
+ * 発火するのは、原稿に生HTMLで `<a class="buy">` を直書きした場合（＝links.json の台帳を迂回した場合）。
+ *
+ * ⚠️ affi サイトでは、運営者情報に広告リンクを1本置くだけで無表示の広告ページができていた。
+ */
+function assertAdDisclosure(html, file) {
+  if (html.includes('class="buy"') && !html.includes('class="pr-notice')) {
+    throw new Error(
+      `${file}: 広告リンクがあるのにPR表記がありません（ステマ規制）` +
+        ' / 対処: このページにも prNoticeHtml を出力する',
+    );
+  }
+}
+
+/**
+ * **リンクが1本も無いのに「広告に参加している／収入を得ている」と本文に書くのを落とす。**
+ *
+ * affiliateEnabled のフラグが止めていたのは「リンクを出すか」だけで、
+ * **本文に書いた文章は素通りしていた**（2026-09-01 のレビューで、affi の固定ページ2枚が実際にそうなっていた）。
+ * 開示の文言は原稿側にも書けてしまうので、原稿の段階で照合する。
+ *
+ * 対象の言い回しは content/site.json の disclosureOnlyPhrases に置く。
+ * わざと素朴な部分一致にしてある。**誤検知したら、その文を書き直すほうが正しい。**
+ */
+function assertNoPrematureDisclosure(docs) {
+  if (site.affiliateEnabled) return;
+  const phrases = [...(site.disclosureOnlyPhrases || []), site.affiliateDisclosure].filter(Boolean);
+  for (const doc of docs) {
+    for (const phrase of phrases) {
+      if (doc.body.includes(phrase)) {
+        throw new Error(
+          `${doc.file}: affiliateEnabled=false（広告リンク0本）なのに「${phrase}」と書かれています` +
+            ' / 対処: 事実に合わせて本文を書き直す。リンクを出したくなったなら links.json に発行済みURLを入れてから affiliateEnabled を true にする',
         );
       }
     }
@@ -472,6 +532,7 @@ marked.setOptions({ gfm: true, breaks: false });
 
 const articles = readDocs('articles', ['category', 'sources', 'checkedAt', 'eyecatch']);
 const pages = readDocs('pages');
+assertNoPrematureDisclosure([...articles, ...pages]);
 assertNoEmptyCategories(articles);
 for (const a of articles) {
   assertSources(a, a.file);
@@ -578,13 +639,28 @@ for (const a of articles) {
     ...others.filter((x) => x.category !== a.category),
   ].slice(0, 5);
 
-  const prNotice = site.affiliateEnabled
-    ? `<p class="pr-notice">${esc(site.prLabel)}</p>`
-    : `<p class="pr-notice pr-notice--pending">現在このページに広告リンクはありません（ASPと提携する前の状態です）。</p>`;
-
   const eyecatch = a.eyecatch
     ? `<p class="eyecatch"><img src="${a.eyecatch}" alt="${esc(a.title)}" width="1200" height="630" decoding="async"></p>`
     : '';
+
+  const articleHtml =
+    `<article class="post">` +
+    `<p class="cat-label"><a href="/${a.category}/">${esc(cname)}</a></p>` +
+    `<h1>${esc(a.title)}</h1>` +
+    `<p class="dates"><time datetime="${esc(a.published)}">公開 ${esc(a.published)}</time>${
+      a.updated !== a.published ? ` ／ <time datetime="${esc(a.updated)}">更新 ${esc(a.updated)}</time>` : ''
+    }</p>` +
+    eyecatch +
+    prNoticeHtml +
+    (hasToc(parsed.headings) ? `<nav class="toc"><p class="toc__title">目次</p>${tocList(parsed.headings)}</nav>` : '') +
+    html +
+    shareButtons(a.title, a.url) +
+    // 記事が1本しかないうちは「関連記事」の枠だけ出しても意味がないので省く
+    (related.length
+      ? `<section class="related"><h2 class="related__title">関連記事</h2>${postListHtml(related, 'related__list')}</section>`
+      : '') +
+    `</article>`;
+  assertAdDisclosure(articleHtml, a.file);
 
   writeFile(
     `${a.slug}/index.html`,
@@ -620,23 +696,7 @@ for (const a of articles) {
         aboutWidget +
         widget('新着記事', postListHtml(byRecent.slice(0, 5))) +
         categoryWidget,
-      content:
-        `<article class="post">` +
-        `<p class="cat-label"><a href="/${a.category}/">${esc(cname)}</a></p>` +
-        `<h1>${esc(a.title)}</h1>` +
-        `<p class="dates"><time datetime="${esc(a.published)}">公開 ${esc(a.published)}</time>${
-          a.updated !== a.published ? ` ／ <time datetime="${esc(a.updated)}">更新 ${esc(a.updated)}</time>` : ''
-        }</p>` +
-        eyecatch +
-        prNotice +
-        (hasToc(parsed.headings) ? `<nav class="toc"><p class="toc__title">目次</p>${tocList(parsed.headings)}</nav>` : '') +
-        html +
-        shareButtons(a.title, a.url) +
-        // 記事が1本しかないうちは「関連記事」の枠だけ出しても意味がないので省く
-        (related.length
-          ? `<section class="related"><h2 class="related__title">関連記事</h2>${postListHtml(related, 'related__list')}</section>`
-          : '') +
-        `</article>`,
+      content: articleHtml,
       year: String(new Date(a.updated).getFullYear()),
     }),
   );
@@ -647,6 +707,15 @@ for (const a of articles) {
 for (const p of pages) {
   const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(p.body))));
   assertNoRawEmphasis(parsed.html, p.file);
+
+  // 記事と違い、固定ページは広告リンクを置いたときだけPR表記を出す。
+  // 運営者情報に広告リンクを1本置くだけで無表示の広告ページができる、というのが affi で起きた事故。
+  const pageHtml =
+    `<article class="post"><h1>${esc(p.title)}</h1>` +
+    `<p class="dates"><time datetime="${esc(p.updated)}">更新 ${esc(p.updated)}</time></p>` +
+    (p.body.includes('[[AF:') ? prNoticeHtml : '') +
+    `${resolveLinks(parsed.html)}</article>`;
+  assertAdDisclosure(pageHtml, p.file);
 
   writeFile(
     `${p.slug}/index.html`,
@@ -666,7 +735,7 @@ for (const p of pages) {
       }),
       breadcrumb: crumbs([{ path: '/', label: 'ホーム' }, { label: p.title }]),
       sidebar: aboutWidget + widget('新着記事', postListHtml(byRecent.slice(0, 5))) + categoryWidget,
-      content: `<article class="post"><h1>${esc(p.title)}</h1><p class="dates"><time datetime="${esc(p.updated)}">更新 ${esc(p.updated)}</time></p>${resolveLinks(parsed.html)}</article>`,
+      content: pageHtml,
       year: String(new Date(p.updated).getFullYear()),
     }),
   );
