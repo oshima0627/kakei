@@ -19,37 +19,35 @@
 | 記事 | **1本**（`zeikin/fuyou-no-kabe` 扶養の壁） |
 | カテゴリ | `zeikin`（税と社会保険）1つ |
 | 広告リンク | 0本。`affiliateEnabled` は `false` |
-| 計測 | **未設定。**`webAnalyticsToken` が空 |
-| Search Console | **未送信** |
+| 計測 | **Cloudflare Web Analytics 稼働中**（トークン `b6fa8119b49a44f5bde1f57e383bd689`）。ビーコンが実際に飛んでいることを確認済み |
+| Search Console | `sc-domain:nexeed-lab.com` に**サイトマップ送信済み**（5ページ検出）。記事URLのインデックス登録リクエスト済み |
 
-## ★ 残っているのは、ダッシュボードでしかできない2つ（本人の作業）
+## ★ 明日以降にやり残していること
 
-コマンドでは実行できない。**Claude 側からは触れない。**
+**残り4URL（`/`・`/about/`・`/privacy/`・`/sitemap/`）のインデックス登録リクエスト。**
+2026-09-01 に記事URLをリクエストしたあと、`sc-domain:nexeed-lab.com` の
+**1日の割り当てを超えた**（「1日の割り当て量を超えたため、リクエストを処理できませんでした」）。
 
-### 1. Cloudflare Web Analytics を有効にする（Task 7 Step 5）
+**急ぐ必要は無い。**サイトマップを送ってあるので、リクエストしなくてもクロールの対象にはなる。
+Google 自身が「ページを複数回送信してもキューの順番や優先順位は変わりません」と表示する。
 
-Analytics > Web Analytics で `kakei.nexeed-lab.com` を追加し、発行されたトークンを
-`site/content/site.json` の `webAnalyticsToken` に入れて `npm run deploy` し直す。
+⚠️ **リクエストは順番待ちに入れるだけで、登録を保証しない。**
 
-**wrangler の OAuth トークンには RUM のスコープが無く、API では `Authentication error` になる**
-（姉妹サイトで実測済み）。
+## 計測（2026-09-01 に設定して確認した）
 
-そのあと、**ビーコンが実際に飛んでいることまで確認する**（タグが出ているだけでは足りない）。
-本番ページのコンソールで:
+Cloudflare Web Analytics のトークンは **ダッシュボードでしか発行できない**
+（wrangler の OAuth トークンには RUM のスコープが無く、API では `Authentication error` になる）。
+Chrome から Analytics > Web Analytics で `kakei.nexeed-lab.com` を追加して発行した。
+
+トークンは `site/content/site.json` の `webAnalyticsToken` に入れて再デプロイ済み。
+**クライアント側のHTMLに出るので秘密情報ではない。**
+
+タグが出ているだけでは足りないので、本番ページで**ビーコンが実際に飛んでいることまで確認した**:
 
 ```js
-performance.getEntriesByType('resource').map(r => r.name).filter(n => n.includes('cloudflareinsights'))
+performance.getEntriesByType('resource').filter(r => r.name.includes('cloudflareinsights'))
+// → beacon.min.js (script) と cdn-cgi/rum (xmlhttprequest) の両方が出た
 ```
-
-`beacon.min.js` と `cdn-cgi/rum` の**両方**が出れば動いている。
-2026-09-01 時点では**両方とも出ない**（トークンが空なのでタグ自体が出ていない）。
-
-### 2. Search Console にサイトマップを送る（Task 7 Step 6）
-
-`sc-domain:nexeed-lab.com` のドメインプロパティが全サブドメインをカバーしている。
-`https://kakei.nexeed-lab.com/sitemap.xml` を送信し、URL検査でインデックス登録をリクエストする（1日10件まで）。
-
-**⚠️ リクエストは順番待ちに入れるだけで、登録を保証しない。**
 
 ## 本番で確認したこと（2026-09-01・実際の出力）
 
@@ -165,8 +163,10 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## 未確認（確かめていないもの。確かめたように書かないこと）
 
-- **インデックスされたかどうか。** Search Console に何も送っていないので、登録は0本
-- **アクセスの実数。** 計測トークンが未発行で、ビーコンは1本も飛んでいない
+- **インデックスされたかどうか。** サイトマップを送りリクエストも出したが、
+  2026-09-01 時点で記事URLは「URL が Google に登録されていません／検出 - インデックス未登録」。
+  **リクエストは順番待ちに入れるだけ**なので、登録されたかは後日 Search Console で見るまで分からない
+- **アクセスの実数。** ビーコンは飛んでいるが、ダッシュボードの数字はまだ見ていない
 - ふるさと納税・証券口座・保険相談などの金融ASP案件が実在するか、提携できるか（`links.json` にコメントで明記済み）
 - 記事本文で「未確認」と明示したもの: 住民税の壁の金額／令和8年分のパート収入の非課税ライン／
   特定扶養親族の年齢範囲（国税庁 No.1180 に記載が無い）／19〜23歳の被扶養者150万円の根拠省令・通知名／
@@ -193,7 +193,7 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## 次にやること
 
-1. **上の2つ（Web Analytics のトークン発行・Search Console へのサイトマップ送信）を本人が行う**
+1. **明日、残り4URLのインデックス登録をリクエストする**（急がなくてよい。上を参照）
 2. 2本目の記事。**2つ目のカテゴリを足すまでカテゴリページは noindex のまま**なので、
    `zeikin` でもう1本書くか、`kyoikuhi` / `shisan` の1本目を書くかを決める
 3. 記事が10本たまったら ASP の提携申請（`CLAUDE.md` の方針）
