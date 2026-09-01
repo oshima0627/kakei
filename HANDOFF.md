@@ -203,6 +203,39 @@ python tools/article-images/build.py
 - **1つの図形に数字は1つ。** 2つ並べると、画像だけでは何の数字か分からなくなる
 - 単位と、何の額なのかは**必ず凡例か注記で示す**。図の中に置いた数字を説明なしにしない
 
+### 9. affi の広告ガードを2つ移植した（**affi リポジトリの削除前**）
+
+`moshimo-affiliate`（affi.nexeed-lab.com・2026-09-01 閉鎖）を消すにあたり、**kakei に無かったガード2つを移した。**
+kakei はいま `affiliateEnabled: false` だが、記事が10本たまったら提携申請する前提なので、
+**広告を入れた瞬間に無防備になる場所**だった。
+
+あわせて**固定ページの穴を塞いだ。** 記事は常時PR表記を出していたが、`pages/*.md` は
+`[[AF:]]` を書いてもPR表記が出ない実装だった（affi では運営者情報に広告リンクを1本置くだけで
+無表示の広告ページができていた）。
+
+- `site/build.mjs`: `prNoticeHtml` をモジュール定数へ上げ、固定ページは本文に `[[AF:` があるときだけ出力する。
+  記事・固定ページの両方で組み立て後のHTMLを `assertAdDisclosure` に通す
+- `site/content/site.json`: `disclosureOnlyPhrases` を追加（原稿側で落とす言い回しの一覧）
+- `site/test/guards.test.mjs`: **3ケース追加**（落ちること2つ＋出ること1つ）。
+  fixture は `premature-disclosure` / `ad-no-pr-notice` / `page-af-link`
+- `docs/moshimo-koshiki-kakunin-2026-08-31.md` を affi から移した
+  （もしもアフィリエイトの公式条件を原文で確認した記録。**kakei が ASP に申請するときに効く一次情報**）
+
+**わざと壊して落ちることを確認した**（実際の出力）:
+
+```
+$ KAKEI_TEST=1 KAKEI_CONTENT=test/fixtures/premature-disclosure node build.mjs
+Error: about.md: affiliateEnabled=false（広告リンク0本）なのに「収入を得ています」と書かれています
+
+$ KAKEI_TEST=1 KAKEI_CONTENT=test/fixtures/ad-no-pr-notice node build.mjs
+Error: about.md: 広告リンクがあるのにPR表記がありません（ステマ規制）
+```
+
+⚠️ **`assertAdDisclosure` が発火するのは、`links.json` の台帳を迂回して生HTMLで `<a class="buy">` を
+直書きした場合だけ。** 正規の `[[AF:]]` 経路ではPR表記が自動で付くので落ちない。**背理法の網であって、
+日常的に落ちるガードではない。**
+
+
 ## 検証済みの事実（実際に画面に出した出力）
 
 ```
@@ -213,7 +246,7 @@ built: 3 article(s), 2 page(s), 2 category page(s)
   /zeikin/fuyou-no-kabe/  扶養の壁（103万・106万・130万・150万・160万）を公式ページの原文で確かめる
 
 $ cd site && npm test
-ℹ tests 26 / ℹ pass 26 / ℹ fail 0
+ℹ tests 29 / ℹ pass 29 / ℹ fail 0
 ```
 
 3本目のデプロイ後に本番を curl した実際の出力:
@@ -310,7 +343,7 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## ビルドガードの一覧（何を落とすか）
 
-すべて `site/build.mjs`。回帰テストは `site/test/guards.test.mjs`（26ケース）。
+すべて `site/build.mjs`。回帰テストは `site/test/guards.test.mjs`（29ケース）。
 
 | ガード | 落とすもの |
 |---|---|
@@ -326,6 +359,8 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 | `renderSeidoCards` | `seido` に `制度` が無い ／ `根拠` が `https://` で始まらない ／ `確認日` が実在しない日付 ／ 数字が1つも無い |
 | `assertNoRawEmphasis` | 解釈されずに残った `**`（日本語の約物と CommonMark の flanking ルール） |
 | `resolveLinks` | `content/links.json` に無い `[[AF:キー]]` |
+| `assertAdDisclosure` | 出力HTMLに `class="buy"` があるのに `pr-notice` が無い（ステマ規制）。**links.json を迂回して生HTMLで広告リンクを直書きした場合の経路** |
+| `assertNoPrematureDisclosure` | `affiliateEnabled=false`（リンク0本）なのに、原稿に `disclosureOnlyPhrases` の言い回しが書かれている |
 | `warnIfStale` | 落とさない。`checkedAt` から180日で警告のみ |
 
 ## ガードをすり抜ける経路（塞がっていない。黙って残さないために書く）
@@ -358,7 +393,7 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 - **`affiliateEnabled` を、リンクが0本のまま `true` にしない**
 - **他人のまとめ記事を根拠にしない。** それらが食い違っているから、このサイトを作っている
 - **記事が0本のカテゴリを `site.json` に置かない**
-- `assertCardNumbers` と `assertNoRawEmphasis` のガードを外さない
+- `assertCardNumbers` と `assertNoRawEmphasis` のガードを外さない。`assertAdDisclosure` と `assertNoPrematureDisclosure`（affi から移植した広告まわり）も同じ
 - `site.json` の `origin` と `wrangler.jsonc` の `routes` は**必ず同じ値**にする
 - **記事画像の PNG を手で描き換えない。** 正は `tools/article-images/`（SVG と .pptx）。
   PNG は `build.py` の出力
