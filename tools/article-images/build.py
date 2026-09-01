@@ -74,6 +74,16 @@ SLIDES = [
         "note": "底＝自己負担2,000円／破線＝住民税所得割額の20％",
     },
     {
+        "svg": "koukou-mushouka.svg",
+        "png": "koukou-mushouka.png",
+        "category": "教育費",
+        "title": "「高校無償化」の中身",
+        "title_size": 34,
+        "subtitle": "制度名は高等学校等就学支援金\n授業料以外は別の給付金",
+        "legend": [("授業料＝就学支援金", WHITE), ("授業料以外＝奨学給付金", AZURE)],
+        "note": "数字は年額の上限・給付額（円）",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",

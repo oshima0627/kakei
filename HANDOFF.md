@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。記事2本。2本目と記事画像は 2026-09-01 に本番へデプロイして、実URLで確認済み。**
+**公開済み。記事3本・カテゴリ2つ。すべて 2026-09-01 に本番へデプロイして実URLで確認済み。**
 
 | | |
 |---|---|
@@ -16,15 +16,16 @@
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
 | デプロイ | `npm run deploy`（`site/` で実行。Cloudflare Workers Static Assets / Worker 名 `kakei-log`） |
-| 記事 | **2本**（`zeikin/fuyou-no-kabe` 扶養の壁 ／ `zeikin/furusato-nozei-jogen` ふるさと納税の上限額） |
-| カテゴリ | `zeikin`（税と社会保険）1つ。**2つ目を足すまでカテゴリページは noindex** |
+| 記事 | **3本**（`zeikin/fuyou-no-kabe` 扶養の壁 ／ `zeikin/furusato-nozei-jogen` ふるさと納税の上限額 ／ `kyoikuhi/koukou-mushouka` 高校無償化） |
+| カテゴリ | **2つ**（`zeikin` 税と社会保険 ／ `kyoikuhi` 教育費）。**2つになったのでカテゴリページは index 対象になり、sitemap にも載った** |
 | 広告リンク | 0本。`affiliateEnabled` は `false` |
 | 計測 | Cloudflare Web Analytics 稼働中（トークン `b6fa8119b49a44f5bde1f57e383bd689`） |
 | Search Console | `sc-domain:nexeed-lab.com` にサイトマップ送信済み |
 
 ## ★ いちばん先にやること（**本人のダッシュボード操作**）
 
-1. Search Console に **`https://kakei.nexeed-lab.com/zeikin/furusato-nozei-jogen/`** のインデックス登録をリクエスト
+1. Search Console に **新しい4URL**のインデックス登録をリクエスト:
+   `/zeikin/furusato-nozei-jogen/` ／ `/kyoikuhi/koukou-mushouka/` ／ `/zeikin/` ／ `/kyoikuhi/`
 2. 残り4URL（`/`・`/about/`・`/privacy/`・`/sitemap/`）のリクエスト。
    2026-09-01 は1日の割り当てを使い切っていた。**急がなくてよい**（サイトマップを送ってあるのでクロール対象にはなる）
 
@@ -163,17 +164,53 @@ python tools/article-images/build.py
 ⚠️ **この罠は CSS を足すたびに再発しうる。** `.<ブロック> <要素>` の形で書くと、
 そのブロックの中のクラス付き要素を全部上書きする。機械では止められないので `styles.css` にコメントを残した。
 
+### 7. 3本目の記事を書いた（教育費カテゴリの1本目）
+
+`site/content/articles/kyoikuhi-koukou-mushouka.md`（約16KB）。
+**「高校無償化」という名前の制度は存在せず、文科省自身が「的確な表現としては…高等学校等就学支援金です」
+と書いている**ところを起点に、授業料（就学支援金）と授業料以外（奨学給付金）の2本立てを原文で並べた記事。
+
+姉妹サイトの territory を避けて教育費を選んだ（`nisa` は NISA、`ikunavi` / `childcare` / `maternity` /
+`sickness` は育休・産休・傷病手当をすでに持っている。`my-data/04_projects/domains.md` で確認）。
+
+出典は文科省のページ2枚と**PDF資料2本**。PDF は PyMuPDF で本文を抜いて照合した
+（金額は HTML ページに無く、令和8年度の額は予算資料の PDF にしかない）。
+⚠️ **文科省のウェブページに出ている奨学給付金の額は令和7年度までのもの**で、記事には令和8年度予算資料の
+額を載せ、その旨を本文に明記した。
+
+引用の機械照合: **引用行 41 / 一致 41 / 不一致 0**。
+
+`site.json` に `kyoikuhi`（教育費）を足した。**カテゴリが2つになったので `showCategoryNav` が true になり、
+カテゴリページが index 対象になって sitemap も 6URL → 9URL に増えた**（実測）。
+
+記事画像 `koukou-mushouka.png` も同じ手順で作った。執筆中に `assertNoRawEmphasis` が3か所、
+`assertEyecatch` は通過（front matter に書いてから画像を作ったため）。
+
 ## 検証済みの事実（実際に画面に出した出力）
 
 ```
 $ cd site && npm run build
-built: 2 article(s), 2 page(s), 1 category page(s)
+built: 3 article(s), 2 page(s), 2 category page(s)
+  /kyoikuhi/koukou-mushouka/  「高校無償化」は制度の名前ではない ― 高等学校等就学支援金を文科省の原文で確かめる
   /zeikin/furusato-nozei-jogen/  ふるさと納税の「上限額」は何で決まるのか ― 総務省の計算式を原文で確かめる
   /zeikin/fuyou-no-kabe/  扶養の壁（103万・106万・130万・150万・160万）を公式ページの原文で確かめる
 
 $ cd site && npm test
 ℹ tests 26 / ℹ pass 26 / ℹ fail 0
 ```
+
+3本目のデプロイ後に本番を curl した実際の出力:
+
+```
+/kyoikuhi/koukou-mushouka/      200 text/html      30571
+/kyoikuhi/                      200 text/html       5756
+/zeikin/                        200 text/html       6664
+/img/og/koukou-mushouka.png     200 image/png      61830
+/sitemap.xml                    200 application/xml  969（9URL）
+```
+
+canonical と og:image はどちらも実URLと一致。Version ID `0d1350c8-8195-4b27-bf37-1c06058c1354`。
+⚠️ デプロイ直後の1回目の curl は 404 を返した（アセットの伝播待ち）。3回叩き直して 200 を確認している。
 
 ローカルの `dist` を `python -m http.server` で配って、ブラウザで実際に開いて確認した:
 

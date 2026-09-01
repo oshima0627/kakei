@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="授業料と授業料以外に分かれた2本の支援">
+  <!-- 記事「高校無償化」の図版。背景は透過（PowerPoint 側の紺色の上に置く）。
+       高校の費用が「授業料」と「授業料以外」に割れていて、
+       それぞれ別の制度が受け止めていることを表す。
+       高さは大小関係だけで、実際の比率ではない。 -->
+
+  <!-- 左: 授業料 → 高等学校等就学支援金 -->
+  <rect x="42" y="120" width="180" height="150" rx="8" fill="#ffffff" opacity="0.9"/>
+  <text x="132" y="205" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="34" font-weight="700" fill="#014172">457,200</text>
+  <text x="132" y="238" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="19" font-weight="700" fill="#014172">118,800</text>
+
+  <!-- 右: 授業料以外 → 高校生等奨学給付金 -->
+  <rect x="278" y="120" width="180" height="150" rx="8" fill="#8ec5e8" opacity="0.95"/>
+  <text x="368" y="205" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="34" font-weight="700" fill="#014172">152,000</text>
+  <text x="368" y="238" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="19" font-weight="700" fill="#014172">143,700</text>
+
+  <!-- 2つに割れていることを示す切れ目 -->
+  <g stroke="#e7cd7a" stroke-width="5" stroke-linecap="round">
+    <line x1="250" y1="96" x2="250" y2="294"/>
+  </g>
+
+  <!-- 上: ひとまとめに「高校の費用」があるという見立て -->
+  <rect x="42" y="52" width="416" height="34" rx="8" fill="none"
+        stroke="#ffffff" stroke-width="3" opacity="0.45"/>
+
+  <!-- 下向きの矢印（費用が2つの制度に振り分けられる） -->
+  <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"
+     fill="none" opacity="0.6">
+    <polyline points="118,318 132,334 146,318"/>
+    <line x1="132" y1="294" x2="132" y2="334"/>
+    <polyline points="354,318 368,334 382,318"/>
+    <line x1="368" y1="294" x2="368" y2="334"/>
+  </g>
+
+  <!-- 受け皿（制度名は PowerPoint のテキストボックス側に置く） -->
+  <rect x="42" y="352" width="180" height="10" rx="5" fill="#ffffff" opacity="0.9"/>
+  <rect x="278" y="352" width="180" height="10" rx="5" fill="#8ec5e8" opacity="0.95"/>
+</svg>
