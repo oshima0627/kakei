@@ -149,7 +149,12 @@ h1 {
 /* 目次から飛んだときに見出しがヘッダーに隠れないように */
 .post h2, .post h3 { scroll-margin-top: 5rem; }
 
-.post p, .post ul, .post ol { font-size: 1.0625rem; margin: 0 0 1.4rem; }
+/* ⚠️ `.post p`（クラス＋要素＝詳細度 0,1,1）は `.pcard__note` などの
+ * 単一クラス（0,1,0）より強い。素で書くと、クラス付きの <p> の font-size と
+ * margin を後ろから全部上書きしてしまう（実際に .widget__title の色が
+ * --muted に化けて、紺の上でコントラスト 2.29:1 になっていた）。
+ * 本文の段落はクラスを持たないので、:not([class]) で本文だけに絞る。 */
+.post p:not([class]), .post ul, .post ol { font-size: 1.0625rem; margin: 0 0 1.4rem; }
 .post li { margin-bottom: .45rem; }
 
 .post strong { font-weight: 700; }
@@ -402,7 +407,8 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   margin: 0 0 .9rem;
 }
 
-.widget p { margin: 0 0 .7rem; font-size: .88rem; color: var(--muted); }
+/* `.post p` と同じ理由で :not([class])。これが .widget__title の color:#fff を潰していた。 */
+.widget p:not([class]) { margin: 0 0 .7rem; font-size: .88rem; color: var(--muted); }
 
 .widget ul { list-style: none; margin: 0; padding: 0; }
 .widget li { margin-bottom: .85rem; line-height: 1.5; }
@@ -601,7 +607,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .toc--side li { margin-bottom: .35rem; }
 .toc--side ol ol { font-size: .8rem; }
 
-.widget__more { margin-top: .6rem; }
+.widget__more { font-size: .88rem; margin: .6rem 0 0; }
 .widget__more a { font-size: .82rem; }
 .widget time { display: block; font-size: .74rem; color: var(--muted); margin-top: .15rem; }
 

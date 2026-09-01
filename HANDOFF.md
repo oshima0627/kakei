@@ -125,6 +125,44 @@ python tools/article-images/build.py
 ⚠️ **これ以降、画像の無い記事はビルドできない。** 下書きを content に置いたままにもできない。
 邪魔になったら `readDocs('articles', [...])` から `eyecatch` を外すのが最小の戻し方。
 
+### 6. サイドバー見出しが読めなかったのを直した（**指摘を受けて修正**）
+
+「このサイトについて」の文字が紺の帯の上でほとんど読めなかった。原因は **CSS の詳細度**。
+
+```
+.widget__title { color: #fff; ... }        /* 0,1,0 */
+.widget p      { color: var(--muted); }    /* 0,1,1 ← こちらが勝つ */
+```
+
+`.widget p` は**クラス＋要素**なので単一クラスより強く、`color: #fff` を後ろから潰していた。
+ブラウザで実測した結果は **コントラスト 2.29:1**（AA は 4.5:1）。
+
+同じ理由で `.post p` が `.pcard__note` `.share__title` `.toc__title` `.dates` `.pr-notice` の
+**font-size と margin も全部潰していた**（例: `.pcard__note` は `.76rem` の指定なのに 17px で出ていた）。
+`.related__title` に `!important` が付いていたのは、この罠を個別に回避した跡。
+
+対処: `.post p` と `.widget p` を **`:not([class])`** に変えて、本文の段落だけに当てるようにした
+（本文は markdown 由来でクラスを持たない）。`.widget__more` は `.widget p` から借りていた値を自前で持たせた。
+
+ブラウザで実測した結果（`styles.css` をキャッシュ回避で読み直して計測）:
+
+| | 修正前 | 修正後 | 指定値 |
+|---|---|---|---|
+| `.widget__title` のコントラスト | **2.29:1** | **10.50:1** | `#fff` on `--navy` |
+| `.pcard__note` | 17px | 12.16px | `.76rem` |
+| `.pcard__name` | 17px | 16.32px | `1.02rem` |
+| `.share__title` | 17px | 13.12px | `.82rem` |
+| `.toc__title` | 17px | 20.48px | `1.28rem` |
+| `.dates` | 17px | 12.8px | `.8rem` |
+| `.pr-notice` | 17px | 13.12px | `.82rem` |
+| 本文の `p` | 17px | 17px（50個） | `1.0625rem` |
+
+375px 幅で `scrollWidth === clientWidth`（375）＝横スクロールなしも確認。本番へデプロイして
+`styles.css` に `:not([class])` が出ていることを curl で確認済み（Version ID `c39bb37b-8d21-4a73-bc99-e6fc04cf214b`）。
+
+⚠️ **この罠は CSS を足すたびに再発しうる。** `.<ブロック> <要素>` の形で書くと、
+そのブロックの中のクラス付き要素を全部上書きする。機械では止められないので `styles.css` にコメントを残した。
+
 ## 検証済みの事実（実際に画面に出した出力）
 
 ```
