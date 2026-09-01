@@ -6,41 +6,70 @@
 
 ---
 
-## 現在の状況（Task 6 完了 ＋ Task 7 Step 1 まで）
+## 現在の状況（**公開済み**。Task 7 Step 4 まで完了）
 
-記事が **1本** できた。生成器・ガード・記事はそろっていて、**残っているのは外向きの操作だけ**。
+記事1本で **2026-09-01 に公開した**。生成器・ガード・記事・本番がそろっている。
 
 | | |
 |---|---|
-| サイト名 | 家計の制度ログ（`kakei.nexeed-lab.com`） |
+| サイト名 | 家計の制度ログ |
+| 公開URL | **https://kakei.nexeed-lab.com/**（2026-09-01 に**公開済み**） |
+| リポジトリ | **github.com/oshima0627/kakei（private）**。`main` が本番 |
+| デプロイ | `npm run deploy`（`site/` で実行。Cloudflare Workers Static Assets / Worker 名 `kakei-log`） |
 | 記事 | **1本**（`zeikin/fuyou-no-kabe` 扶養の壁） |
 | カテゴリ | `zeikin`（税と社会保険）1つ |
 | 広告リンク | 0本。`affiliateEnabled` は `false` |
-| git | `main` ブランチ。**GitHub リモート未設定＝push できない**（下の判断待ちを見ること） |
-| デプロイ | **未実施。本番はまだ存在しない** |
+| 計測 | **未設定。**`webAnalyticsToken` が空 |
+| Search Console | **未送信** |
 
-## ★ 判断待ち（本人の承認が要る外向きの操作。ここで止まっている）
+## ★ 残っているのは、ダッシュボードでしかできない2つ（本人の作業）
 
-### 1. GitHub リポジトリ `kakei` を作るか
+コマンドでは実行できない。**Claude 側からは触れない。**
 
-ローカルのみ。可視性（private / public）も未決。
+### 1. Cloudflare Web Analytics を有効にする（Task 7 Step 5）
 
-```bash
-cd "C:/Users/oshim/Documents/projects/kakei" && gh repo create kakei --private --source=. --remote=origin --push
+Analytics > Web Analytics で `kakei.nexeed-lab.com` を追加し、発行されたトークンを
+`site/content/site.json` の `webAnalyticsToken` に入れて `npm run deploy` し直す。
+
+**wrangler の OAuth トークンには RUM のスコープが無く、API では `Authentication error` になる**
+（姉妹サイトで実測済み）。
+
+そのあと、**ビーコンが実際に飛んでいることまで確認する**（タグが出ているだけでは足りない）。
+本番ページのコンソールで:
+
+```js
+performance.getEntriesByType('resource').map(r => r.name).filter(n => n.includes('cloudflareinsights'))
 ```
 
-### 2. 本番へデプロイするか（Task 7 Step 2 以降）
+`beacon.min.js` と `cdn-cgi/rum` の**両方**が出れば動いている。
+2026-09-01 時点では**両方とも出ない**（トークンが空なのでタグ自体が出ていない）。
 
-公開する操作なので承認待ちにしてある。デプロイ後の Step 5・6（Cloudflare Web Analytics のトークン発行、
-Search Console へのサイトマップ送信）は**ダッシュボードでしかできない**ので、いずれにせよ本人の作業が要る。
+### 2. Search Console にサイトマップを送る（Task 7 Step 6）
 
-```bash
-cd "C:/Users/oshim/Documents/projects/kakei/site" && npx wrangler deploy
+`sc-domain:nexeed-lab.com` のドメインプロパティが全サブドメインをカバーしている。
+`https://kakei.nexeed-lab.com/sitemap.xml` を送信し、URL検査でインデックス登録をリクエストする（1日10件まで）。
+
+**⚠️ リクエストは順番待ちに入れるだけで、登録を保証しない。**
+
+## 本番で確認したこと（2026-09-01・実際の出力）
+
+```
+/                              200 text/html 4824
+/zeikin/fuyou-no-kabe/         200 text/html 37122
+/robots.txt                    200 text/plain 616
+/sitemap.xml                   200 application/xml 568
+/img/og/site.png               200 image/png 74907
+/nonexistent-page/             404 text/html 2621
+/zeikin/fuyou-no-kabe (末尾/無) 307 -> https://kakei.nexeed-lab.com/zeikin/fuyou-no-kabe/
 ```
 
-手順の詳細は `docs/superpowers/plans/2026-08-31-kakei-site.md` の Task 7（Step 2〜8）にある。
+- 記事の canonical は `https://kakei.nexeed-lab.com/zeikin/fuyou-no-kabe/`、
+  og:image は `https://kakei.nexeed-lab.com/img/og/site.png`（**どちらも実URLと一致**）
+- 記事ページに `<meta name="robots">` は無い（index される）。カテゴリページは `noindex,follow`
+- `sitemap.xml` は5URL（トップ・記事・about・privacy・sitemap）。カテゴリページは載っていない
+- ブラウザで本番トップを開いてコンソールエラー0件、横スクロールなし
 
-## 検証済み（実際に実行して出力を見たもの）
+## ローカルで検証済み（実際に実行して出力を見たもの）
 
 ```
 $ cd site && npm test
@@ -58,9 +87,6 @@ built: 1 article(s), 2 page(s), 1 category page(s)
 - **375px で `document.body.scrollWidth === document.body.clientWidth`**（横スクロールなし）。
   幅の広い表は `div.table-wrap`（`overflow-x: auto`）の中だけでスクロールする
 - カテゴリページは `noindex,follow` で、`sitemap.xml` にも載っていない（カテゴリ1個のときの仕様どおり）
-- 記事の canonical は `https://kakei.nexeed-lab.com/zeikin/fuyou-no-kabe/`、
-  og:image は `https://kakei.nexeed-lab.com/img/og/site.png`
-
 OG画像（Task 7 Step 1）は**差し替え済み**。`site/public/img/og/site.png` は
 PNG シグネチャ `89504e470d0a1a0a` / IHDR **1200×630** / 74,907 bytes（Node で実際に読んで確認）。
 姉妹サイトのものはもう残っていない。
@@ -139,7 +165,8 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## 未確認（確かめていないもの。確かめたように書かないこと）
 
-- **本番が動くかどうか。** 一度もデプロイしていないので `https://kakei.nexeed-lab.com/` は未確認
+- **インデックスされたかどうか。** Search Console に何も送っていないので、登録は0本
+- **アクセスの実数。** 計測トークンが未発行で、ビーコンは1本も飛んでいない
 - ふるさと納税・証券口座・保険相談などの金融ASP案件が実在するか、提携できるか（`links.json` にコメントで明記済み）
 - 記事本文で「未確認」と明示したもの: 住民税の壁の金額／令和8年分のパート収入の非課税ライン／
   特定扶養親族の年齢範囲（国税庁 No.1180 に記載が無い）／19〜23歳の被扶養者150万円の根拠省令・通知名／
@@ -166,10 +193,14 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## 次にやること
 
-1. **上の判断待ち2件（GitHubリポジトリ・デプロイ）に答えをもらう**
-2. デプロイしてよければ Task 7 Step 2〜8（`docs/superpowers/plans/2026-08-31-kakei-site.md`）
-3. 2本目の記事。**2つ目のカテゴリを足すまでカテゴリページは noindex のまま**なので、
+1. **上の2つ（Web Analytics のトークン発行・Search Console へのサイトマップ送信）を本人が行う**
+2. 2本目の記事。**2つ目のカテゴリを足すまでカテゴリページは noindex のまま**なので、
    `zeikin` でもう1本書くか、`kyoikuhi` / `shisan` の1本目を書くかを決める
+3. 記事が10本たまったら ASP の提携申請（`CLAUDE.md` の方針）
+
+⚠️ **記事を1本で公開したこと自体の効果はまだ測れていない。**
+姉妹サイト `ikunavi` では、育休・産休系クエリ約30件がすべて83〜105位でクリック0という実測がある
+（原因は本文量と診断されている）。**記事を増やせば取れる、という前提には裏付けが無い。**
 
 ## 触ってはいけないところ
 
