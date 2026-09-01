@@ -54,15 +54,15 @@
 
   g.fillStyle = '#ffffff';
   g.font = '700 88px ' + JP;
-  g.fillText('アフィリエイト実測ログ', 88, 360);
+  g.fillText('家計の制度ログ', 88, 360);
 
   g.fillStyle = 'rgba(255,255,255,0.88)';
   g.font = '400 42px ' + JP;
-  g.fillText('ASPの条件を、公式の文言で確かめて書く', 92, 436);
+  g.fillText('お金の制度を、公式の原文で確かめて書く', 92, 436);
 
   g.fillStyle = 'rgba(255,255,255,0.60)';
   g.font = '400 34px ' + JP;
-  g.fillText('affi.nexeed-lab.com', 92, 552);
+  g.fillText('kakei.nexeed-lab.com', 92, 552);
 
   return c.toDataURL('image/png');
 })();

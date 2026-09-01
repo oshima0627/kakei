@@ -1,25 +1,90 @@
 # HANDOFF
 
-## 現在の状況（Task 5 完了 ＋ ブランチ最終レビューの修正まで）
+最終更新: **2026-09-01**
 
-静的サイト生成器の移植とビルドガードの実装が終わっている。**記事はまだ0本。未デプロイ。**
+**このファイルだけ読めば再開できる**状態を保つこと。古くなった記述は消して書き直す。履歴は git log にある。
 
-移植元は `moshimo-affiliate`（姉妹サイト「寸法で選ぶ」）で、**移植した文言のうちサイト固有のものが
-書き換えられずに残っていた事故を、このレビューで全部つぶした**（フッターの免責文が
-「掲載している寸法・仕様はメーカー公式サイトの…」のまま全ページに出力されていた）。
-`site/` と `dist/` に姉妹サイトの文言が残っていないことは grep で確認済み。
+---
 
-**検証済み**（実際に実行して出力を確認）:
+## 現在の状況（Task 6 完了 ＋ Task 7 Step 1 まで）
+
+記事が **1本** できた。生成器・ガード・記事はそろっていて、**残っているのは外向きの操作だけ**。
+
+| | |
+|---|---|
+| サイト名 | 家計の制度ログ（`kakei.nexeed-lab.com`） |
+| 記事 | **1本**（`zeikin/fuyou-no-kabe` 扶養の壁） |
+| カテゴリ | `zeikin`（税と社会保険）1つ |
+| 広告リンク | 0本。`affiliateEnabled` は `false` |
+| git | `main` ブランチ。**GitHub リモート未設定＝push できない**（下の判断待ちを見ること） |
+| デプロイ | **未実施。本番はまだ存在しない** |
+
+## ★ 判断待ち（本人の承認が要る外向きの操作。ここで止まっている）
+
+### 1. GitHub リポジトリ `kakei` を作るか
+
+ローカルのみ。可視性（private / public）も未決。
+
+```bash
+cd "C:/Users/oshim/Documents/projects/kakei" && gh repo create kakei --private --source=. --remote=origin --push
+```
+
+### 2. 本番へデプロイするか（Task 7 Step 2 以降）
+
+公開する操作なので承認待ちにしてある。デプロイ後の Step 5・6（Cloudflare Web Analytics のトークン発行、
+Search Console へのサイトマップ送信）は**ダッシュボードでしかできない**ので、いずれにせよ本人の作業が要る。
+
+```bash
+cd "C:/Users/oshim/Documents/projects/kakei/site" && npx wrangler deploy
+```
+
+手順の詳細は `docs/superpowers/plans/2026-08-31-kakei-site.md` の Task 7（Step 2〜8）にある。
+
+## 検証済み（実際に実行して出力を見たもの）
 
 ```
 $ cd site && npm test
-… ℹ tests 23 / ℹ pass 23 / ℹ fail 0
+ℹ tests 23 / ℹ pass 23 / ℹ fail 0
 
 $ cd site && npm run build
-built: 0 article(s), 2 page(s), 0 category page(s)
-
-注意: affiliateEnabled=false のため、リンク位置はプレースホルダで出力しています。
+built: 1 article(s), 2 page(s), 1 category page(s)
+  /zeikin/fuyou-no-kabe/  扶養の壁（103万・106万・130万・150万・160万）を公式ページの原文で確かめる
 ```
+
+`npm run dev`（wrangler dev）でブラウザに実表示して確認した:
+
+- 制度カード4枚が、**全部に出典URLと確認日が付いた形**で出力される
+- 表3つが崩れない。未解釈の `**` は0件。コンソールエラーは0件（PC幅・375px とも）
+- **375px で `document.body.scrollWidth === document.body.clientWidth`**（横スクロールなし）。
+  幅の広い表は `div.table-wrap`（`overflow-x: auto`）の中だけでスクロールする
+- カテゴリページは `noindex,follow` で、`sitemap.xml` にも載っていない（カテゴリ1個のときの仕様どおり）
+- 記事の canonical は `https://kakei.nexeed-lab.com/zeikin/fuyou-no-kabe/`、
+  og:image は `https://kakei.nexeed-lab.com/img/og/site.png`
+
+OG画像（Task 7 Step 1）は**差し替え済み**。`site/public/img/og/site.png` は
+PNG シグネチャ `89504e470d0a1a0a` / IHDR **1200×630** / 74,907 bytes（Node で実際に読んで確認）。
+姉妹サイトのものはもう残っていない。
+
+## 専門エージェント2本は**起動を確認した**（効果も実測できた）
+
+`~/.claude/agents/` の `article-writer` と `source-verifier` は、このセッションで**実際に起動して動いた**。
+
+そして **`source-verifier` は実際に不一致を3件見つけた**。書いた本人の自己申告では「全部確認した」だった記事に対して、
+一次情報を取り直した結果:
+
+1. 厚労省の引用から、原文冒頭の限定句（「毎年の被扶養者認定の時に」「人手不足による労働時間延長等に伴い」）が
+   丸ごと落ちていた。読者は適用場面を誤解する
+2. 配偶者特別控除の表で、本人900万円以下の列の最終行を「1万円」と書いていた（正しくは **3万円**。
+   1万円は 950万円超1,000万円以下 の列の値）＝**列の取り違え**
+3. まとめ表で、満額控除の区分の下限（「58万円超」）が落ちていた
+
+**3件とも、ビルドガードでは検出できない種類の誤り**（引用の欠落・列の取り違え・区分の下限）。
+`assertCardNumbers` は記事内の内部整合しか見ないので、表そのものが事実と違っていても通る。
+**生成と検証を分けたことに実測の裏付けが付いた。** `source-verifier` から `Edit` / `Write` を外してあるのは
+この設計の要点なので、足さないこと。
+
+修正後に**修正部分だけ再照合**して全12細目が `一致` になっている。
+⚠️ 再照合は修正部分のみ。初回に `一致` と判定した他30項目を取り直してはいない。
 
 ## 検証コマンド
 
@@ -50,73 +115,73 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 | `resolveLinks` | `content/links.json` に無い `[[AF:キー]]` |
 | `warnIfStale` | 落とさない。`checkedAt` から180日で警告のみ |
 
+## ⚠️ 2026-10-01 にこの記事のビルドが落ちる（意図した挙動）
+
+`zeikin-fuyou-no-kabe.md` の `revisionAt` は **2026-10-01**。
+厚労省の適用拡大特設サイトが「2026年10月に賃金要件を撤廃予定」と書いているためで、
+その日が来ると `assertNotExpired` がビルドを落とす。
+
+**対処は「出典を取得し直して本文を確認し、`checkedAt` と `revisionAt` を両方更新する」。
+`revisionAt` だけを先に進めない。**
+
+なお、賃金要件の撤廃時期について厚労省のページは**2か所で書きぶりが違う**（特設サイトは
+「2026年10月に撤廃予定」と言い切り、政策ページは「公布から3年以内で、全国の最低賃金が
+1,016円以上となることを見極めて判断」）。記事は片方を選ばず両方そのまま並べてある。
+
 ## このリポジトリの状態
 
-- `site/content/articles/` は空（記事0本）
-- `site/content/site.json` の `categories` は空配列。**これは意図した状態**（記事0本のカテゴリを置くとビルドが落ちる）
+- `site/content/articles/` に記事1本
+- `site/content/site.json` の `categories` は `zeikin` 1つ。**2つ目を足すまでカテゴリページは noindex**
 - `site/content/links.json` はキー0件（提携ASPが未確認のため）
 - `affiliateEnabled` は `false`（リンクが1本も無いため）
 - `webAnalyticsToken` / `xHandle` は未発行・未開設で空文字
-- `defaultOgImage` は `moshimo-affiliate` からコピーした `public/img/og/site.png` **のまま**（Task 7 で差し替える）
-- git は `main` ブランチ。**GitHub リモートは未設定**（外向きの操作なので本人の承認待ち。`git push` はまだできない）
+- `tools/og-card.js` は家計の制度ログ用に書き換え済み。**Node では動かない**（canvas を使うのでブラウザで実行する）
 
-## 次にやること
+## 未確認（確かめていないもの。確かめたように書かないこと）
 
-### Task 6: 1本目の記事を書く
-
-1. `site/content/articles/` に記事を1本置く（`category: zeikin`）
-2. **`site/content/site.json` の `categories` に `zeikin` を足す。**
-   足し忘れると「未定義のカテゴリ」でビルドが落ちるので、忘れても検出はされる
-3. `npm run build` と `npm test` を両方通す
-
-⚠️ **カテゴリが1個の間、カテゴリページ（`/zeikin/`）は `noindex,follow` になり、`sitemap.xml` にも載らない。**
-`build.mjs` の `showCategoryNav = site.categories.length >= 2` がそう作ってある
-（カテゴリが1つだとカテゴリページとトップページの中身がほぼ同じになり、重複コンテンツとして
-競合するため）。姉妹サイトから引き継いだ意図的な挙動。**Search Console にカテゴリページが
-出てこなくても不具合ではない。** 2つ目のカテゴリを足した時点で自動的に index される。
-
-### Task 7: デプロイ
-
-- **`site/public/img/og/site.png` は姉妹サイトのままなので、必ず差し替える。**
-  SNSのカードはSVGを受け付けないのでPNGにする（1200×630）
-- サイト名をハードコードしている箇所は `site/public/favicon.svg` の `aria-label` と
-  `site/public/styles.css` の1行目コメントの2つだけ（静的ファイルなので `site.json` から引けない）。
-  サイト名を変えるときはここも直す
-
-## 未確認・判断待ち
-
-- **GitHub リポジトリ `kakei` の作成・push は判断待ち**（本人の承認が必要な外向きの操作）
-- ふるさと納税・証券口座・保険相談などの金融ASP案件が実在するか、提携できるかは未確認
-  （`links.json` にコメントで明記済み）
+- **本番が動くかどうか。** 一度もデプロイしていないので `https://kakei.nexeed-lab.com/` は未確認
+- ふるさと納税・証券口座・保険相談などの金融ASP案件が実在するか、提携できるか（`links.json` にコメントで明記済み）
+- 記事本文で「未確認」と明示したもの: 住民税の壁の金額／令和8年分のパート収入の非課税ライン／
+  特定扶養親族の年齢範囲（国税庁 No.1180 に記載が無い）／19〜23歳の被扶養者150万円の根拠省令・通知名／
+  賃金要件が撤廃される正確な日
 - `npm test` のスクリプトは `node --test "test/**/*.test.mjs"`（グロブは Node に展開させるため引用符で囲ってある）。
-  **`node --test test/`（ディレクトリ指定）はこの環境で落ちる。** 2026-09-01 に再現を確認:
-
-  ```
-  Error: Cannot find module 'C:\Users\oshim\Documents\projects\kakei\site\test'
-      at Module._resolveFilename (node:internal/modules/cjs/loader:1405:15)
-    code: 'MODULE_NOT_FOUND'
-  ```
-
-  ディレクトリを走査せず、`test` をエントリーポイントとして実行しようとしている。
-  グロブ指定に変えて回避したが、**根本原因は未特定**（Node v24.1.0 / npm 11.3.0 / Windows 11）
+  **`node --test test/`（ディレクトリ指定）はこの環境で落ちる**（`MODULE_NOT_FOUND`。Node v24.1.0 / Windows 11）。
+  グロブ指定で回避したが、**根本原因は未特定**
 
 ## ガードをすり抜ける経路（塞がっていない。黙って残さないために書く）
 
-今回のレビューで数えた13経路のうち、**塞がったのは 3・4・7・9・10・11・12。**
-以下は**残っている**。記事を書くときは人間が見るしかない。
+レビューで数えた13経路のうち、塞がったのは 3・4・7・9・10・11・12。以下は**残っている**。
+記事を書くときは人間か `source-verifier` が見るしかない。
 
 | # | 名前 | 内容 |
 |---|---|---|
 | 1 | 素の本文数字 | `seido` フェンスに入れない数字は一切検査されない |
 | 2 | 名寄せ不在 | `sources` は記事単位のリスト。**どの数字がどの URL 由来かを機械は知らない** |
-| 5 | 表そのものが無検査 | `assertCardNumbers` が保証するのは**記事内の内部整合だけ**。表が事実と合っているかは誰も見ていない |
+| 5 | 表そのものが無検査 | `assertCardNumbers` が保証するのは**記事内の内部整合だけ**。表が事実と合っているかは誰も見ていない。**今回の不一致3件はすべてこの穴を通った** |
 | 6 | `revisionAt` 省略 | 任意項目なので、書かなければ発火しない |
-| 8 | `revisionAt` だけ前進 | `checkedAt` 据え置きで `revisionAt` を +1年 すれば通る。機械的な防御は無い（`CLAUDE.md` に「revisionAt だけを先に進めない」と書いてあるだけ） |
+| 8 | `revisionAt` だけ前進 | `checkedAt` 据え置きで `revisionAt` を +1年 すれば通る。機械的な防御は無い |
 | 13 | 固定ページ免除 | `pages/*.md` は `sources` / `checkedAt` が不要（`readDocs` の必須キーに入っていない） |
 
-**`about.md` にはこれらを保証しているとは書いていない。** 実装が保証していないことを
-読者に約束しないこと（一度、`revisionAt` が任意項目なのに「記事には次の改定予定日を
-持たせています」と書いていて、レビューで指摘された）。
+**`about.md` にはこれらを保証しているとは書いていない。** 実装が保証していないことを読者に約束しないこと。
+
+## 次にやること
+
+1. **上の判断待ち2件（GitHubリポジトリ・デプロイ）に答えをもらう**
+2. デプロイしてよければ Task 7 Step 2〜8（`docs/superpowers/plans/2026-08-31-kakei-site.md`）
+3. 2本目の記事。**2つ目のカテゴリを足すまでカテゴリページは noindex のまま**なので、
+   `zeikin` でもう1本書くか、`kyoikuhi` / `shisan` の1本目を書くかを決める
+
+## 触ってはいけないところ
+
+- **`source-verifier` に `Edit` / `Write` を足さない。**外してあるのが設計の要点。
+  今回、生成と検証を分けたことで実際に不一致が3件出た
+- **エージェントを本数だけ増やさない。** 2本で始めて、実測で効果が示されたときだけ足す
+- **ASPが発行していないURLをリンクにしない。** URLの形を推測して組み立てない
+- **`affiliateEnabled` を、リンクが0本のまま `true` にしない**
+- **他人のまとめ記事を根拠にしない。**それらが食い違っているから、このサイトを作っている
+- **記事が0本のカテゴリを `site.json` に置かない**
+- `assertCardNumbers` と `assertNoRawEmphasis` のガードを外さない
+- `site.json` の `origin` と `wrangler.jsonc` の `routes` は**必ず同じ値**にする
 
 ## 据え置きにした軽微な指摘（直していない）
 
