@@ -63,10 +63,11 @@
 
 ```
 tools/article-images/
-  svg/fuyou-no-kabe.svg          図版（高さの違う5つの壁。白＝税／緑＝社会保険）
+  svg/fuyou-no-kabe.svg          図版（高さの違う5つの壁。白＝税／青＝社会保険）
   svg/furusato-nozei-jogen.svg   図版（3層に積んだ控除と、20％の天井）
+  svg/brand-mark.svg             図版（favicon と同じ意匠。site.png 用）
   build.py                       SVG → PNG → .pptx 生成 → SVG 再埋め込み → 1200×630 PNG 書き出し
-  article-images.pptx            生成物。**これを PowerPoint で開いて直せる**
+  article-images.pptx            生成物。**これを PowerPoint で開いて直せる**（3スライド）
   _work/                         中間ファイル（.gitignore 済み）
 ```
 
@@ -77,7 +78,8 @@ python tools/article-images/build.py
 - **SVG は .pptx の中に SVG のまま入っている。** python-pptx は SVG を `add_picture` できないので、
   保存後の OOXML に PowerPoint 2016 以降の `asvg:svgBlip` 拡張を書き足している。
   PNG は代替画像として残る（`ppt/media/*.svg` と `*.png` の両方が入っていることを zip を開いて確認済み）
-- 出力先は `site/public/img/og/{fuyou-no-kabe,furusato-nozei-jogen}.png`。**どちらも 1200×630**
+- 出力先は `site/public/img/og/` の `fuyou-no-kabe.png` / `furusato-nozei-jogen.png` /
+  **`site.png`（サイト全体の既定 og:image）**。3枚とも PNG シグネチャと IHDR を読んで **1200×630** を確認済み
 - 記事の front matter に `eyecatch:` を足した。`build.mjs` はこれを本文冒頭の図版・記事一覧のサムネイル・
   `og:image`・JSON-LD の `image` に使う（既存の実装。今回 `build.mjs` は触っていない）
 - 日本語を SVG に入れていないのは、LibreOffice でのラスタライズをフォントに依存させないため。
@@ -85,6 +87,28 @@ python tools/article-images/build.py
 
 **前提**: LibreOffice（`C:\Program Files\LibreOffice\program\soffice.exe`）、python-pptx、PyMuPDF。
 `soffice` は専用のユーザープロファイルを `-env:UserInstallation` で渡している（起動中の LibreOffice と衝突させないため）。
+
+### 4. 画像の色をサイトの色に合わせた（**指摘を受けて直した**）
+
+最初は favicon の緑（`#0f4c3a`）で作ったが、**画面のほう（ヘッダのカテゴリラベル・表のヘッダ・
+サイドバー見出し・フッター）は紺（`--navy: #014172`）**で、並べると色が合っていなかった。
+`styles.css` のカスタムプロパティを正として、**画像側を紺に寄せた**。
+
+| 使いどころ | 色 | 出どころ |
+|---|---|---|
+| 画像の背景 | `#014172` | `--navy`（カテゴリラベル・表ヘッダ・フッターと同じ） |
+| 図版のアクセント（社会保険の壁／住民税） | `#8ec5e8` | `--link`（`#0077c6`）を紺の上で読める明るさにしたもの |
+| 注意（20％の天井の破線） | `#e7cd7a` | `--warn-line` |
+
+**あわせて直したもの**:
+
+- `site/public/favicon.svg` の緑 → `#014172`（タブのアイコンだけ緑が残るのを避けるため）
+- `site/public/img/og/site.png` を PowerPoint 側で作り直した（もとは緑）
+- **`tools/og-card.js` を削除した。** ブラウザのコンソールに貼って `site.png` を描く道具で、
+  `tools/article-images/build.py` に置き換わったため。**2つの生成器が別の色を出す状態を残さない**
+
+⚠️ **`--accent: #213555`（H2 の縦棒・制度カードの左罫）は画像に使っていない。**
+画像で主役にしたのは `--navy` のほう。
 
 ## 検証済みの事実（実際に画面に出した出力）
 
@@ -121,7 +145,10 @@ $ cd site && npm test
 - 記事の canonical は `https://kakei.nexeed-lab.com/zeikin/furusato-nozei-jogen/`、
   og:image は同じホストの `/img/og/furusato-nozei-jogen.png`（**どちらも実URLと一致**）
 - `sitemap.xml` は **6URL**（トップ・記事2本・about・privacy・sitemap）。カテゴリページは載っていない
-- デプロイ: `Deployed kakei-log triggers` / Version ID `0421f72d-7b49-4dbb-8965-922d7bf92128`
+- 画像を紺に直したあと**もう一度デプロイして取り直した**。本番の3枚とも 200 / `image/png`
+  （`site.png` 38,079 / `fuyou-no-kabe.png` 49,441 / `furusato-nozei-jogen.png` 59,365 バイト＝手元と同じ）。
+  `favicon.svg` も 200 で、中身が `fill="#014172"` になっていることを確認した
+- デプロイ: Version ID `b41c0609-9f1b-4902-b265-65c31a10971c`（色を直したあとの版）
 
 **ビルドガードが実際に落ちたことも確認した。** 執筆中に `assertNoRawEmphasis` が
 「`**…です。**` の閉じの `**` が句点の直後」を4か所で検出してビルドを止めた。直して通した。
@@ -227,6 +254,8 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 - `site.json` の `origin` と `wrangler.jsonc` の `routes` は**必ず同じ値**にする
 - **記事画像の PNG を手で描き換えない。** 正は `tools/article-images/`（SVG と .pptx）。
   PNG は `build.py` の出力
+- **画像の色を `styles.css` と別々に決めない。** 画面と画像で色が食い違った実例があるので、
+  色を変えるときは `--navy` / `--link` / `--warn-line` と `build.py` の定数を必ず一緒に動かす
 
 ## 据え置きにした軽微な指摘（直していない）
 

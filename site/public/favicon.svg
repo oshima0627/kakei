@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="家計の制度ログ">
-  <rect width="64" height="64" rx="10" fill="#0f4c3a"/>
+  <rect width="64" height="64" rx="10" fill="#014172"/>
   <!-- 公式ページの本文に見立てた3本の行 -->
   <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.55">
     <line x1="14" y1="19" x2="46" y2="19"/>

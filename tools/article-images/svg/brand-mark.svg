@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="公式ページの本文と、確認済みのチェック">
+  <!-- サイト全体の OG 画像（site.png）に使う印。favicon.svg と同じ意匠を大きくしたもの。
+       3本線＝公式ページの本文、チェック＝原文で確かめた印。
+       背景は透過（PowerPoint 側の紺色の上に置く）。 -->
+
+  <rect x="70" y="45" width="360" height="360" rx="52" fill="none"
+        stroke="#ffffff" stroke-width="4" opacity="0.35"/>
+
+  <!-- 公式ページの本文に見立てた3本の行 -->
+  <g stroke="#ffffff" stroke-width="16" stroke-linecap="round" opacity="0.5">
+    <line x1="126" y1="125" x2="330" y2="125"/>
+    <line x1="126" y1="180" x2="292" y2="180"/>
+    <line x1="126" y1="235" x2="254" y2="235"/>
+  </g>
+
+  <!-- 確認済みのチェック -->
+  <polyline points="150,285 210,345 380,120" fill="none" stroke="#8ec5e8" stroke-width="30"
+            stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

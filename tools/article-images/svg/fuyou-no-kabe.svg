@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="高さの違う5つの壁">
   <!-- 記事「扶養の壁」の図版。背景は透過（PowerPoint 側の濃緑の上に置く）。
        壁の高さは 103/106/130/150/160 の大小関係だけを表していて、比率ではない。
-       白＝税の壁、緑＝社会保険の壁。「ひとつの制度の話ではない」ことを色で分けている。 -->
+       白＝税の壁、青＝社会保険の壁。「ひとつの制度の話ではない」ことを色で分けている。 -->
 
   <defs>
     <!-- 壁のレンガ目地。壁ごとに切り出して使う -->
     <pattern id="brick" width="34" height="22" patternUnits="userSpaceOnUse">
       <rect width="34" height="22" fill="none"/>
-      <path d="M0 22 H34 M17 0 V22" stroke="#0f4c3a" stroke-width="2" opacity="0.28"/>
+      <path d="M0 22 H34 M17 0 V22" stroke="#014172" stroke-width="2" opacity="0.28"/>
     </pattern>
   </defs>
 
@@ -25,18 +25,18 @@
 
   <!-- 壁2: 106（社会保険） -->
   <g>
-    <rect x="126" y="235" width="68" height="165" rx="5" fill="#7fd1ae" opacity="0.95"/>
+    <rect x="126" y="235" width="68" height="165" rx="5" fill="#8ec5e8" opacity="0.95"/>
     <rect x="126" y="235" width="68" height="165" rx="5" fill="url(#brick)"/>
     <text x="160" y="217" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-          font-size="30" font-weight="700" fill="#7fd1ae">106</text>
+          font-size="30" font-weight="700" fill="#8ec5e8">106</text>
   </g>
 
   <!-- 壁3: 130（社会保険） -->
   <g>
-    <rect x="216" y="185" width="68" height="215" rx="5" fill="#7fd1ae" opacity="0.95"/>
+    <rect x="216" y="185" width="68" height="215" rx="5" fill="#8ec5e8" opacity="0.95"/>
     <rect x="216" y="185" width="68" height="215" rx="5" fill="url(#brick)"/>
     <text x="250" y="167" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-          font-size="30" font-weight="700" fill="#7fd1ae">130</text>
+          font-size="30" font-weight="700" fill="#8ec5e8">130</text>
   </g>
 
   <!-- 壁4: 150（税） -->

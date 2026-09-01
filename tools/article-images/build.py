@@ -41,10 +41,11 @@ SOFFICE = r"C:\Program Files\LibreOffice\program\soffice.exe"
 # 実行中の LibreOffice と衝突しないよう、専用のユーザープロファイルを使う
 LO_PROFILE = "file:///" + os.path.join(WORK, "loprofile").replace("\\", "/")
 
-# 意匠は site/public/favicon.svg と tools/og-card.js に合わせてある
-GREEN = RGBColor(0x0F, 0x4C, 0x3A)
+# 色は site/public/styles.css のカスタムプロパティに合わせてある。
+# 画面（紺のヘッダ・表・カテゴリラベル）と画像の色が食い違わないようにするため。
+NAVY = RGBColor(0x01, 0x41, 0x72)   # --navy
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
-MINT = RGBColor(0x7F, 0xD1, 0xAE)
+AZURE = RGBColor(0x8E, 0xC5, 0xE8)  # --link (#0077c6) を紺の上で読める明るさにしたもの
 JP_FONT = "Yu Gothic UI"
 
 # 1200×630 px を 96dpi として inch に直した値
@@ -59,7 +60,7 @@ SLIDES = [
         "title": "扶養の壁",
         "title_size": 46,
         "subtitle": "103・106・130・150・160 は\n何の壁なのか",
-        "legend": [("税の壁", WHITE), ("社会保険の壁", MINT)],
+        "legend": [("税の壁", WHITE), ("社会保険の壁", AZURE)],
         "note": "単位：万円",
     },
     {
@@ -69,8 +70,16 @@ SLIDES = [
         "title": "ふるさと納税の上限額",
         "title_size": 34,
         "subtitle": "決めているのは\n総務省の3本の計算式",
-        "legend": [("(1) 所得税", WHITE), ("(2)(3) 住民税", MINT)],
+        "legend": [("(1) 所得税", WHITE), ("(2)(3) 住民税", AZURE)],
         "note": "底＝自己負担2,000円／破線＝住民税所得割額の20％",
+    },
+    {
+        # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
+        "kind": "site",
+        "svg": "brand-mark.svg",
+        "png": "site.png",
+        "title": "家計の制度ログ",
+        "subtitle": "お金の制度を、公式の原文で確かめて書く",
     },
 ]
 
@@ -133,7 +142,7 @@ def build_pptx(png_paths):
 
         bg = slide.background.fill
         bg.solid()
-        bg.fore_color.rgb = GREEN
+        bg.fore_color.rgb = NAVY
 
         # 左上のブランドの3本線（favicon と同じ「公式ページの本文」の見立て）
         for i, w in enumerate((2.6, 2.1, 1.6)):
@@ -147,15 +156,22 @@ def build_pptx(png_paths):
             bar.line.fill.background()
             bar.shadow.inherit = False
 
-        add_text(slide, Inches(0.78), Inches(1.62), Inches(5.4), Inches(0.45),
-                 [spec["category"]], 18, bold=True, color=MINT)
-        add_text(slide, Inches(0.78), Inches(2.12), Inches(5.75), Inches(1.0),
-                 [spec["title"]], spec["title_size"], bold=True)
-        add_text(slide, Inches(0.78), Inches(3.28), Inches(5.6), Inches(1.4),
-                 spec["subtitle"].split("\n"), 26, spacing=1.35, color=WHITE)
-
-        add_text(slide, Inches(0.78), Inches(5.62), Inches(5.6), Inches(0.4),
-                 ["家計の制度ログ　kakei.nexeed-lab.com"], 17, color=MINT)
+        if spec.get("kind") == "site":
+            add_text(slide, Inches(0.78), Inches(2.30), Inches(5.75), Inches(1.1),
+                     [spec["title"]], 54, bold=True)
+            add_text(slide, Inches(0.78), Inches(3.55), Inches(6.2), Inches(0.6),
+                     [spec["subtitle"]], 21, color=WHITE)
+            add_text(slide, Inches(0.78), Inches(5.62), Inches(5.6), Inches(0.4),
+                     ["kakei.nexeed-lab.com"], 19, color=AZURE)
+        else:
+            add_text(slide, Inches(0.78), Inches(1.62), Inches(5.4), Inches(0.45),
+                     [spec["category"]], 18, bold=True, color=AZURE)
+            add_text(slide, Inches(0.78), Inches(2.12), Inches(5.75), Inches(1.0),
+                     [spec["title"]], spec["title_size"], bold=True)
+            add_text(slide, Inches(0.78), Inches(3.28), Inches(5.6), Inches(1.4),
+                     spec["subtitle"].split(chr(10)), 26, spacing=1.35, color=WHITE)
+            add_text(slide, Inches(0.78), Inches(5.62), Inches(5.6), Inches(0.4),
+                     ["家計の制度ログ　kakei.nexeed-lab.com"], 17, color=AZURE)
 
         pic = slide.shapes.add_picture(
             png_paths[spec["svg"]], Inches(6.62), Inches(0.62), Inches(5.21), Inches(4.69),
@@ -164,7 +180,7 @@ def build_pptx(png_paths):
 
         # 図版の凡例（日本語なのでフォントの都合上 SVG ではなくスライド側に置く）
         x = Inches(6.75)
-        for label, color in spec["legend"]:
+        for label, color in spec.get("legend", []):
             chip = slide.shapes.add_shape(5, x, Inches(5.46), Inches(0.17), Inches(0.17))
             chip.fill.solid()
             chip.fill.fore_color.rgb = color
@@ -174,8 +190,9 @@ def build_pptx(png_paths):
                      [label], 15, color=WHITE)
             x += Inches(2.45)
 
-        add_text(slide, Inches(6.62), Inches(5.88), Inches(5.21), Inches(0.3),
-                 [spec["note"]], 13, color=MINT)
+        if spec.get("note"):
+            add_text(slide, Inches(6.62), Inches(5.88), Inches(5.21), Inches(0.3),
+                     [spec["note"]], 13, color=AZURE)
 
     prs.save(PPTX)
     return PPTX
