@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="高さの違う5つの壁">
+  <!-- 記事「扶養の壁」の図版。背景は透過（PowerPoint 側の濃緑の上に置く）。
+       壁の高さは 103/106/130/150/160 の大小関係だけを表していて、比率ではない。
+       白＝税の壁、緑＝社会保険の壁。「ひとつの制度の話ではない」ことを色で分けている。 -->
+
+  <defs>
+    <!-- 壁のレンガ目地。壁ごとに切り出して使う -->
+    <pattern id="brick" width="34" height="22" patternUnits="userSpaceOnUse">
+      <rect width="34" height="22" fill="none"/>
+      <path d="M0 22 H34 M17 0 V22" stroke="#0f4c3a" stroke-width="2" opacity="0.28"/>
+    </pattern>
+  </defs>
+
+  <!-- 地面 -->
+  <line x1="20" y1="400" x2="480" y2="400" stroke="#ffffff" stroke-width="3"
+        stroke-linecap="round" opacity="0.45"/>
+
+  <!-- 壁1: 103（税） -->
+  <g>
+    <rect x="36" y="250" width="68" height="150" rx="5" fill="#ffffff" opacity="0.92"/>
+    <rect x="36" y="250" width="68" height="150" rx="5" fill="url(#brick)"/>
+    <text x="70" y="232" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+          font-size="30" font-weight="700" fill="#ffffff">103</text>
+  </g>
+
+  <!-- 壁2: 106（社会保険） -->
+  <g>
+    <rect x="126" y="235" width="68" height="165" rx="5" fill="#7fd1ae" opacity="0.95"/>
+    <rect x="126" y="235" width="68" height="165" rx="5" fill="url(#brick)"/>
+    <text x="160" y="217" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+          font-size="30" font-weight="700" fill="#7fd1ae">106</text>
+  </g>
+
+  <!-- 壁3: 130（社会保険） -->
+  <g>
+    <rect x="216" y="185" width="68" height="215" rx="5" fill="#7fd1ae" opacity="0.95"/>
+    <rect x="216" y="185" width="68" height="215" rx="5" fill="url(#brick)"/>
+    <text x="250" y="167" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+          font-size="30" font-weight="700" fill="#7fd1ae">130</text>
+  </g>
+
+  <!-- 壁4: 150（税） -->
+  <g>
+    <rect x="306" y="135" width="68" height="265" rx="5" fill="#ffffff" opacity="0.92"/>
+    <rect x="306" y="135" width="68" height="265" rx="5" fill="url(#brick)"/>
+    <text x="340" y="117" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+          font-size="30" font-weight="700" fill="#ffffff">150</text>
+  </g>
+
+  <!-- 壁5: 160（税） -->
+  <g>
+    <rect x="396" y="100" width="68" height="300" rx="5" fill="#ffffff" opacity="0.92"/>
+    <rect x="396" y="100" width="68" height="300" rx="5" fill="url(#brick)"/>
+    <text x="430" y="82" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+          font-size="30" font-weight="700" fill="#ffffff">160</text>
+  </g>
+
+</svg>

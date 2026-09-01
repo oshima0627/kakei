@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="3層に積み上がった控除と、その上にある天井">
+  <!-- 記事「ふるさと納税の上限額」の図版。背景は透過（PowerPoint 側の濃緑の上に置く）。
+       (1)(2)(3) は総務省「税金の控除について」の3本の計算式の番号に合わせてある。
+       破線＝住民税所得割額の20％の天井。その上のはみ出しが自己負担として残る部分。
+       高さは大小関係だけを表していて、実際の比率ではない。 -->
+
+  <!-- 容器 -->
+  <rect x="150" y="60" width="200" height="340" rx="14" fill="none"
+        stroke="#ffffff" stroke-width="3" opacity="0.5"/>
+
+  <!-- (1) 所得税からの控除 -->
+  <rect x="160" y="300" width="180" height="90" rx="6" fill="#ffffff" opacity="0.85"/>
+  <text x="250" y="356" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="30" font-weight="700" fill="#0f4c3a">(1)</text>
+
+  <!-- (2) 住民税からの控除（基本分） -->
+  <rect x="160" y="228" width="180" height="70" rx="6" fill="#7fd1ae" opacity="0.55"/>
+  <text x="250" y="274" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="30" font-weight="700" fill="#0f4c3a">(2)</text>
+
+  <!-- (3) 住民税からの控除（特例分） -->
+  <rect x="160" y="112" width="180" height="114" rx="6" fill="#7fd1ae" opacity="0.95"/>
+  <text x="250" y="180" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="30" font-weight="700" fill="#0f4c3a">(3)</text>
+
+  <!-- 天井（住民税所得割額の20％） -->
+  <line x1="112" y1="106" x2="424" y2="106" stroke="#f7d774" stroke-width="5"
+        stroke-linecap="round" stroke-dasharray="16 12"/>
+  <text x="436" y="99" font-family="Arial, Helvetica, sans-serif"
+        font-size="26" font-weight="700" fill="#f7d774">20%</text>
+
+  <!-- 天井を超えた分＝自己負担として残る -->
+  <rect x="160" y="60" width="180" height="38" rx="6" fill="none"
+        stroke="#f7d774" stroke-width="3" stroke-dasharray="8 7" opacity="0.9"/>
+
+  <!-- 天井を押し上げようとして止まる矢印 -->
+  <g stroke="#f7d774" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.9">
+    <line x1="80" y1="200" x2="80" y2="132"/>
+    <polyline points="62,150 80,132 98,150"/>
+  </g>
+
+  <!-- 自己負担2,000円の下限（容器の底） -->
+  <line x1="150" y1="400" x2="350" y2="400" stroke="#ffffff" stroke-width="4"
+        stroke-linecap="round" opacity="0.7"/>
+  <text x="250" y="434" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="24" font-weight="700" fill="#ffffff" opacity="0.8">2,000</text>
+</svg>

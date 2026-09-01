@@ -3,6 +3,7 @@ title: 扶養の壁（103万・106万・130万・150万・160万）を公式ペ�
 description: 扶養の壁と呼ばれる103万・106万・130万・150万・160万が、それぞれ何の壁なのかを国税庁・財務省・厚生労働省・日本年金機構の公式ページで確認しました。金額・要件・適用年分を出典URLと確認日つきで並べています。
 slug: zeikin/fuyou-no-kabe
 category: zeikin
+eyecatch: /img/og/fuyou-no-kabe.png
 published: 2026-09-01
 updated: 2026-09-01
 sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1800.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1177.htm | https://www.nta.go.jp/users/gensen/2025kiso/index.htm | https://www.nta.go.jp/users/gensen/2026kiso/index.htm | https://www.keisan.nta.go.jp/r7yokuaru/cat2/cat22/cat22b/cid1238.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2025/20250417syotoku.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm | https://www.mof.go.jp/public_relations/finance/202604/202604c.html | https://www.mhlw.go.jp/tekiyoukakudai/jugyouin/taisho/ | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000147284_00021.html | https://www.mhlw.go.jp/stf/taiou_001_00002.html | https://www.nenkin.go.jp/service/kounen/tekiyo/hihokensha1/20141202.html | https://www.nenkin.go.jp/oshirase/taisetu/2025/202508/0819.html | https://www.nenkin.go.jp/oshirase/taisetu/jigyosho/2026/202605/0501.html
