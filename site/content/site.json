@@ -34,16 +34,30 @@
     "収入を得ることがあります"
   ],
 
+  "//analyticsPhrases": "計測の有無と原稿の食い違いを止める（assertAnalyticsClaims）。absent は「計測していない」と読める言い回しで、webAnalyticsToken が入っているときに書いてあったらビルドを落とす。present はその逆。⚠️ わざと素朴な部分一致にしてある。誤検知したら、その文を事実に合わせて書き直すほうが正しい。2026-09-01 のレビューで、privacy.md が「アクセス解析は導入していません」と書いたままビーコンを出していた。",
+  "analyticsPhrases": {
+    "absent": [
+      "アクセス解析は導入していません",
+      "アクセス解析を導入していません",
+      "アクセス解析は行っていません",
+      "アクセス状況は計測していません"
+    ],
+    "present": [
+      "アクセス解析を導入しています",
+      "でアクセス状況を計測しています"
+    ]
+  },
+
   "//affiliateEnabled": "⚠️ ASPで実際にリンクを発行し content/links.json に入れるまで false のままにする。リンクが1本も無いのに『収入を得ています』と書くのは事実に反する。提携申請は記事が10本たまってから行う。",
   "affiliateEnabled": false,
 
-  "//webAnalyticsToken": "Cloudflare Web Analytics のビーコントークン。クライアント側HTMLに出るので秘密情報ではない。⚠️ 未発行。ダッシュボードでのみ発行できる（APIには RUM スコープが無く Authentication error になる）。",
+  "//webAnalyticsToken": "Cloudflare Web Analytics のビーコントークン。クライアント側HTMLに出るので秘密情報ではない。発行済み（2026-09-01・ダッシュボードでのみ発行できる。APIには RUM スコープが無く Authentication error になる）。⚠️ ここが空でないあいだ、原稿に「計測していない」と書くと assertAnalyticsClaims がビルドを落とす。",
   "webAnalyticsToken": "b6fa8119b49a44f5bde1f57e383bd689",
 
   "//xHandle": "X（旧Twitter）のハンドル。@ は付けない。⚠️ 未開設。",
   "xHandle": "",
 
-  "//defaultOgImage": "og:image の既定値。SNSのカードはSVGを受け付けないので必ずPNGにする。⚠️ 未作成（Task 7）。",
+  "//defaultOgImage": "og:image の既定値。SNSのカードはSVGを受け付けないので必ずPNGにする。作成済み（tools/article-images/build.py が書き出す 1200x630 の PNG）。",
   "defaultOgImage": "/img/og/site.png",
 
   "//robots": "robots.txt のAIクローラ方針。allowAI に入れたものだけ明示的に許可する。",

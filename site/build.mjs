@@ -303,6 +303,35 @@ function assertNoPrematureDisclosure(docs) {
 }
 
 /**
+ * **計測の有無と、原稿に書いてある説明が食い違っていないかを検査する。**
+ *
+ * 2026-09-01 のレビューで、プライバシーポリシーが「アクセス解析は導入していません」と
+ * 書いたまま、そのページ自身が Cloudflare Web Analytics のビーコンを読み込んでいた。
+ * **同じ誤りが affi サイトでも起きている。**フラグと原稿がずれても誰も気づかないので機械で止める。
+ *
+ * 言い回しは content/site.json の analyticsPhrases に置く。
+ * disclosureOnlyPhrases と同じく、わざと素朴な部分一致にしてある。
+ */
+function assertAnalyticsClaims(docs) {
+  const phrases = site.analyticsPhrases || {};
+  const measuring = Boolean(site.webAnalyticsToken);
+  const wrong = measuring ? phrases.absent || [] : phrases.present || [];
+  const state = measuring
+    ? 'webAnalyticsToken が入っている（＝全ページでビーコンを読み込んでいる）'
+    : 'webAnalyticsToken が空（＝計測していない）';
+  for (const doc of docs) {
+    for (const phrase of wrong) {
+      if (doc.body.includes(phrase)) {
+        throw new Error(
+          `${doc.file}: ${state}のに「${phrase}」と書かれています` +
+            ' / 対処: 事実に合わせて本文を書き直す。計測をやめたいなら site.json の webAnalyticsToken を空にする',
+        );
+      }
+    }
+  }
+}
+
+/**
  * **記事が1本も無いカテゴリが site.json に残っていないかを検査する。**
  *
  * 空のカテゴリページが sitemap に載り、Google に薄いページとして拾われる。
@@ -533,6 +562,7 @@ marked.setOptions({ gfm: true, breaks: false });
 const articles = readDocs('articles', ['category', 'sources', 'checkedAt', 'eyecatch']);
 const pages = readDocs('pages');
 assertNoPrematureDisclosure([...articles, ...pages]);
+assertAnalyticsClaims([...articles, ...pages]);
 assertNoEmptyCategories(articles);
 for (const a of articles) {
   assertSources(a, a.file);

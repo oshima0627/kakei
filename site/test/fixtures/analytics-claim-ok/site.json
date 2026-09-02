@@ -1,0 +1,67 @@
+{
+  "name": "家計の制度ログ",
+  "tagline": "お金の制度を、公式の原文で確かめて書く",
+  "description": "税・社会保険・教育費・資産形成の制度を、国税庁や厚生労働省などの公式ページの文言で確認して書いているサイトです。金額・要件・期限を、出典URLと確認日つきで載せています。",
+  "lang": "ja",
+  "//origin": "本番の公開URL。canonical と sitemap がこの値を使う。wrangler.jsonc の routes と必ず同じ値にする。",
+  "origin": "https://kakei.nexeed-lab.com",
+  "//categories": "記事の front matter の category は、この slug のどれかでなければビルドが落ちる。⚠️ 記事が0本のカテゴリをここに置くとビルドが落ちる（assertNoEmptyCategories）。1本目が書けた時点で足す。最終形は zeikin / kyoikuhi / shisan の3つ。",
+  "categories": [
+    {
+      "slug": "zeikin",
+      "name": "税と社会保険"
+    }
+  ],
+  "//nav": "ヘッダーとフッターのナビ。カテゴリは自動で先頭に入るので、ここには固定ページだけ書く。",
+  "nav": [
+    {
+      "path": "/about/",
+      "label": "運営者情報"
+    },
+    {
+      "path": "/privacy/",
+      "label": "プライバシーポリシー"
+    },
+    {
+      "path": "/sitemap/",
+      "label": "サイトマップ"
+    }
+  ],
+  "//affiliateDisclosure": "フッターに常時出す開示。affiliateEnabled が true のときだけ出力される。",
+  "affiliateDisclosure": "当サイトはアフィリエイトプログラムに参加しており、リンク経由の申し込みにより収入を得ることがあります。",
+  "//prLabel": "景品表示法のステマ規制（2023-10-01 施行）向けの表記。ASP側の開示文言とは別物で、両方必要。",
+  "prLabel": "この記事には広告（アフィリエイトリンク）が含まれます。",
+  "//affiliateEnabled": "⚠️ ASPで実際にリンクを発行し content/links.json に入れるまで false のままにする。リンクが1本も無いのに『収入を得ています』と書くのは事実に反する。提携申請は記事が10本たまってから行う。",
+  "affiliateEnabled": false,
+  "//webAnalyticsToken": "Cloudflare Web Analytics のビーコントークン。クライアント側HTMLに出るので秘密情報ではない。⚠️ 未発行。ダッシュボードでのみ発行できる（APIには RUM スコープが無く Authentication error になる）。",
+  "webAnalyticsToken": "testtoken0000000000000000000000",
+  "//xHandle": "X（旧Twitter）のハンドル。@ は付けない。⚠️ 未開設。",
+  "xHandle": "",
+  "//defaultOgImage": "og:image の既定値。SNSのカードはSVGを受け付けないので必ずPNGにする。⚠️ 未作成（Task 7）。",
+  "defaultOgImage": "/img/og/site.png",
+  "//robots": "robots.txt のAIクローラ方針。allowAI に入れたものだけ明示的に許可する。",
+  "robots": {
+    "//allowAI": "許可すると何が返ってくるかで判断する。現状ゼロ（見返りのある提携が無い）。",
+    "allowAI": [],
+    "denyAI": [
+      "Applebot-Extended",
+      "Bytespider",
+      "CCBot",
+      "ClaudeBot",
+      "Claude-User",
+      "Google-Extended",
+      "GPTBot",
+      "meta-externalagent",
+      "PetalBot",
+      "Timpibot"
+    ]
+  },
+  "analyticsPhrases": {
+    "absent": ["アクセス解析は導入していません"],
+    "present": ["アクセス解析を導入しています"]
+  },
+  "disclosureOnlyPhrases": [
+    "アフィリエイトプログラムに参加しています",
+    "収入を得ています"
+  ]
+}
