@@ -260,3 +260,22 @@ test('計測していて、そう書いてあればビルドは通る', () => {
   const r = runBuild('analytics-claim-ok');
   assert.equal(r.code, 0, r.stderr);
 });
+
+/**
+ * 日本語の太字は、開きの `**` の直後・閉じの `**` の直前に約物（「」。、）を置くと
+ * CommonMark の flanking ルールで強調にならず、`**` がそのまま本文に出る。
+ * ガード（assertNoRawEmphasis）は前からあったが、テストが無かったので固定する。
+ */
+test('約物に挟まれた太字は強調にならず、ビルドが落ちる（CommonMark の flanking）', () => {
+  const r = runBuild('raw-emphasis', { KAKEI_TODAY: '2026-09-01' });
+  assert.notEqual(r.code, 0, 'ビルドは失敗しなければならない');
+  assert.match(r.stderr, /太字記法が解釈されずに残っています/);
+  assert.match(r.stderr, /103万円/);
+});
+
+test('約物を強調の内側に入れた太字はビルドが通る', () => {
+  // 落ちる側だけだと「** があれば落ちる」ガードでもテストが通ってしまうので、
+  // 正しく書いた同じ文が通ることを並べて固定する。
+  const r = runBuild('raw-emphasis-ok', { KAKEI_TODAY: '2026-09-01' });
+  assert.equal(r.code, 0, r.stderr);
+});
