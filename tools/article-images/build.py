@@ -84,6 +84,16 @@ SLIDES = [
         "note": "数字は私立高校の年額（円）",
     },
     {
+        "svg": "daigaku-mushouka.svg",
+        "png": "daigaku-mushouka.png",
+        "category": "教育費",
+        "title": "「大学無償化」の中身",
+        "title_size": 34,
+        "subtitle": "高等教育の修学支援新制度\n無償化されたのは減免だけ",
+        "legend": [("授業料等減免", WHITE), ("給付型奨学金", AZURE)],
+        "note": "数字は私立大学の年額（給付型は自宅外）",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",

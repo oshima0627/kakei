@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="授業料等減免と給付型奨学金に分かれた2本の支援">
+  <!-- 記事「大学無償化」の図版。背景は透過（PowerPoint 側の紺色の上に置く）。
+       高等教育の修学支援新制度が、性質の違う2本の支援でできていることを表す。
+       高さは大小関係だけで、実際の比率ではない。 -->
+
+  <!-- 数字は私立大学の年額を1つの図形に1つだけ載せる。
+       国公立の額も並べると、どちらが何の数字か画像だけでは分からなくなる。
+       何の額かと単位は PowerPoint 側の凡例と注記が持つ。 -->
+
+  <!-- 左: 授業料等減免（学校に納める額が減る） -->
+  <rect x="52" y="152" width="170" height="150" rx="8" fill="#ffffff" opacity="0.9"/>
+  <text x="137" y="241" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="40" font-weight="700" fill="#014172">70</text>
+
+  <!-- 右: 給付型奨学金（学生本人に支給される） -->
+  <rect x="278" y="107" width="170" height="195" rx="8" fill="#8ec5e8" opacity="0.95"/>
+  <text x="363" y="219" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="40" font-weight="700" fill="#014172">91</text>
+
+  <!-- 2本が別の制度であることを示す切れ目 -->
+  <g stroke="#e7cd7a" stroke-width="5" stroke-linecap="round">
+    <line x1="250" y1="88" x2="250" y2="326"/>
+  </g>
+
+  <!-- 上: ひとまとめに「大学の費用」があるという見立て -->
+  <rect x="52" y="46" width="396" height="34" rx="8" fill="none"
+        stroke="#ffffff" stroke-width="3" opacity="0.45"/>
+
+  <!-- 下向きの矢印（費用が2本の支援に振り分けられる） -->
+  <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"
+     fill="none" opacity="0.6">
+    <polyline points="123,350 137,366 151,350"/>
+    <line x1="137" y1="326" x2="137" y2="366"/>
+    <polyline points="349,350 363,366 377,350"/>
+    <line x1="363" y1="326" x2="363" y2="366"/>
+  </g>
+
+  <!-- 受け皿（制度名は PowerPoint のテキストボックス側に置く） -->
+  <rect x="52" y="384" width="170" height="10" rx="5" fill="#ffffff" opacity="0.9"/>
+  <rect x="278" y="384" width="170" height="10" rx="5" fill="#8ec5e8" opacity="0.95"/>
+</svg>
