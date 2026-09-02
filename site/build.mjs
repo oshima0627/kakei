@@ -599,7 +599,10 @@ const navHtml = [
   .join('');
 
 function widget(title, inner) {
-  return `<div class="widget"><p class="widget__title">${esc(title)}</p>${inner}</div>`;
+  // 見た目だけの見出しにしない。スクリーンリーダーの見出しジャンプで飛べるようにする。
+  // ⚠️ .widget__title は font-size / font-weight / margin を自分で持っているので、
+  // p から h2 に変えても見た目は変わらない（styles.css の詳細度の罠に注意）。
+  return `<div class="widget"><h2 class="widget__title">${esc(title)}</h2>${inner}</div>`;
 }
 
 function postListHtml(list, cls = '') {
@@ -669,8 +672,11 @@ for (const a of articles) {
     ...others.filter((x) => x.category !== a.category),
   ].slice(0, 5);
 
+  // alt に記事タイトルを入れない。直前の h1 と同じ文字列が二度読み上げられるだけで、
+  // 図の中身（何のグラフか・凡例・単位）は何も伝わらない。
+  // front matter の eyecatchAlt に図の内容を書く。書かなければ装飾画像として alt="" にする。
   const eyecatch = a.eyecatch
-    ? `<p class="eyecatch"><img src="${a.eyecatch}" alt="${esc(a.title)}" width="1200" height="630" decoding="async"></p>`
+    ? `<p class="eyecatch"><img src="${a.eyecatch}" alt="${esc(a.eyecatchAlt || '')}" width="1200" height="630" decoding="async"></p>`
     : '';
 
   const articleHtml =
@@ -714,6 +720,9 @@ for (const a of articles) {
         articleSection: cname,
         inLanguage: site.lang,
         mainEntityOfPage: { '@type': 'WebPage', '@id': a.url },
+        ...(site.author
+          ? { author: { '@type': 'Person', name: site.author.name, url: ORIGIN + site.author.url } }
+          : {}),
         publisher: { '@type': 'Organization', name: site.name },
       }),
       breadcrumb: crumbs([

@@ -391,6 +391,22 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   .l-side { position: sticky; top: 5rem; }
 }
 
+/* 本文へのスキップリンク。ふだんは画面外に置き、キーボードでフォーカスしたときだけ出す。
+   display:none や visibility:hidden にするとフォーカスできなくなるので使わない。 */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 16px;
+  text-decoration: none;
+  font-weight: 700;
+}
+.skip-link:focus { left: 0; }
+.l-main:focus { outline: none; }
+
 .widget {
   margin-bottom: 2rem;
   padding-bottom: 1.6rem;

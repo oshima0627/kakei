@@ -13,6 +13,9 @@
     { "slug": "kyoikuhi", "name": "教育費" }
   ],
 
+  "//author": "JSON-LD の author に出す書き手。制度・税金は YMYL なので、書き手が誰かを構造化データにも出す。url は about ページへのサイト内パス。",
+  "author": { "name": "大島（Nexeed Lab）", "url": "/about/" },
+
   "//nav": "ヘッダーとフッターのナビ。カテゴリは自動で先頭に入るので、ここには固定ページだけ書く。",
   "nav": [
     { "path": "/about/", "label": "運営者情報" },

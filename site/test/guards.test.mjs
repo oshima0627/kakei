@@ -241,3 +241,22 @@ test('KAKEI_TODAY が実在しない日付だとビルドが落ちる', () => {
   assert.notEqual(r.code, 0);
   assert.match(r.stderr, /KAKEI_TODAY は実在する日付を YYYY-MM-DD で指定します/);
 });
+
+test('計測しているのに「アクセス解析は導入していません」と書いてあるとビルドが落ちる', () => {
+  const r = runBuild('analytics-measuring-denied');
+  assert.notEqual(r.code, 0, 'ビルドは失敗しなければならない');
+  assert.match(r.stderr, /アクセス解析は導入していません/);
+  assert.match(r.stderr, /webAnalyticsToken が入っている/);
+});
+
+test('計測していないのに「アクセス解析を導入しています」と書いてあるとビルドが落ちる', () => {
+  const r = runBuild('analytics-absent-claimed');
+  assert.notEqual(r.code, 0, 'ビルドは失敗しなければならない');
+  assert.match(r.stderr, /アクセス解析を導入しています/);
+  assert.match(r.stderr, /webAnalyticsToken が空/);
+});
+
+test('計測していて、そう書いてあればビルドは通る', () => {
+  const r = runBuild('analytics-claim-ok');
+  assert.equal(r.code, 0, r.stderr);
+});

@@ -87,7 +87,10 @@ python tools/article-images/build.py
    `title` / `title_size` / `subtitle` / `legend` / `note`）
 3. `build.py` を走らせる。`tools/article-images/article-images.pptx` にスライドが増え、
    `site/public/img/og/<slug>.png` が出る
-4. 記事の front matter に `eyecatch: /img/og/<slug>.png` を書く
+4. 記事の front matter に `eyecatch: /img/og/<slug>.png` と **`eyecatchAlt:`** を書く。
+   **`eyecatchAlt` には図の中身を書く**（何の図か・凡例の色が何を指すか・単位）。
+   **記事タイトルを alt にしない。**直前の `h1` と同じ文が二度読み上げられるだけで、図の中身は伝わらない。
+   書かなければ `alt=""`（装飾画像）として出力される
 5. **できた PNG を必ず目で見る。** タイトルの折り返し・要素の重なりは実際に見ないと分からない
 
 - **色は `site/public/styles.css` のカスタムプロパティに合わせる。**
@@ -107,6 +110,17 @@ python tools/article-images/build.py
 cd site && npm run build   # 本番の content でビルドする
 cd site && npm test        # ビルドガードの回帰テスト（test/guards.test.mjs）
 ```
+
+**記事を書いたら、引用を機械照合する。**
+
+```bash
+python tools/verify-quotes.py               # 全記事
+python tools/verify-quotes.py <記事名>.md   # 1本だけ
+```
+
+不一致が出たら**原文を読み直して記事のほうを直す。原文に合わせる。逆はしない。**
+⚠️ **照合できるのは「引用が原文にあるか」だけ。**引用の選び方が原文の趣旨を曲げていないか、
+表の内容が事実と合っているかは見ていない。そこは `source-verifier` か人間の仕事。
 
 `build.mjs` のガードを触ったら、**必ず `npm test` も走らせる。**
 ガードは「落ちるべきものが落ちること」で初めて意味を持つので、ビルドが通っただけでは検証にならない。
