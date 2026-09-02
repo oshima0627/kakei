@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。記事4本・カテゴリ2つ。すべて本番へデプロイして実URLで確認済み（最新は 2026-09-02）。**
+**公開済み。記事は手元に5本、本番に4本。⚠️ 5本目（高額療養費）は書き上がっているが、まだデプロイしていない（下記）。**
 
 | | |
 |---|---|
@@ -16,8 +16,8 @@
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
 | デプロイ | `npm run deploy`（`site/` で実行。Cloudflare Workers Static Assets / Worker 名 `kakei-log`） |
-| 記事 | **4本**（`zeikin/fuyou-no-kabe` 扶養の壁 ／ `zeikin/furusato-nozei-jogen` ふるさと納税の上限額 ／ `kyoikuhi/koukou-mushouka` 高校無償化 ／ **`kyoikuhi/daigaku-mushouka` 大学無償化**） |
-| sitemap | **10URL**（実測） |
+| 記事 | 手元 **5本** / 本番 **4本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ **`zeikin/kougaku-ryouyouhi` 高額療養費＝本番未反映**） |
+| sitemap | 手元ビルド **11URL** / 本番 **10URL**（どちらも実測） |
 | カテゴリ | **2つ**（`zeikin` 税と社会保険 ／ `kyoikuhi` 教育費）。**2つになったのでカテゴリページは index 対象になり、sitemap にも載った** |
 | 広告リンク | 0本。`affiliateEnabled` は `false` |
 | 計測 | Cloudflare Web Analytics 稼働中（トークン `b6fa8119b49a44f5bde1f57e383bd689`） |
@@ -53,6 +53,63 @@ sitemap の10URLを1件ずつ URL 検査にかけた。**画面で確認した�
 送った8URLを URL 検査で1件ずつ見て、「登録済み」に変わった数を数える。
 `/kyoikuhi/`・`/about/`・`/privacy/`・`/sitemap/` は既にクロール済みで未登録だったので、
 **クロールされても登録されない**なら理由（重複・低品質判定など）を見る。
+
+## ★ いちばん先にやること ― 5本目の記事をデプロイする
+
+記事 `zeikin/kougaku-ryouyouhi`（高額療養費）は**書き上がってコミット済みだが、本番に出ていない。**
+`npm run deploy` が Claude のセッション側（auto mode の分類器）でブロックされたため。**回避はしていない。**
+
+```bash
+cd "C:/Users/oshim/Documents/projects/kakei/site"
+npm run deploy
+```
+
+デプロイしたら、実URLで確認する（前回までと同じ手順）:
+
+```bash
+curl -s -o /dev/null -w "%{http_code} %{content_type} %{size_download}
+" https://kakei.nexeed-lab.com/zeikin/kougaku-ryouyouhi/
+curl -s -o /dev/null -w "%{http_code} %{content_type} %{size_download}
+" https://kakei.nexeed-lab.com/img/og/kougaku-ryouyouhi.png
+curl -s https://kakei.nexeed-lab.com/sitemap.xml | grep -c "<loc>"   # 11 になるはず
+```
+
+そのあと Search Console で `/zeikin/kougaku-ryouyouhi/` のインデックス登録をリクエストする。
+
+## 5本目の記事（2026-09-02・**手元では検証済み。本番は未反映**）
+
+`zeikin/kougaku-ryouyouhi`「高額療養費の自己負担限度額は2026年8月から変わった ― 新設された「年間上限」を厚生労働省の原文で確かめる」。
+**税と社会保険カテゴリの3本目。**
+
+**記事の芯**: 高額療養費の上限額は **令和8年8月（2026年8月）診療分から改定済み**で、
+月単位の限度額に加えて**年単位の「年間上限」が新設**された（年間＝8月から翌年7月）。
+さらに **令和9年8月（2027年8月）に所得区分が細分化**され、70歳未満の区分は5→13になる。
+**多数回該当の金額は据え置き。**ネット上の説明が食い違う原因は、この3時点のどれを指しているかの違い。
+
+⚠️ **`revisionAt: 2027-08-01` を入れてある。**その日を過ぎるとビルドが落ちる（令和9年8月の改定に合わせた）。
+
+### 資料の中で整合していない点を1つ見つけた（記事に書いた）
+
+厚労省ページは年収200万円未満の多数回該当を「引き下げます（▲同25％）」と書いているが、
+資料の表は **44,400円 → 34,500円**（約22.3％）。**25％が何に対する25％かは資料に書かれていない。**
+44,400円の25％引きは33,300円で表の額と違う。記事では両方を並べ、確定させていない。
+
+### 検証（実際の出力）
+
+```
+npm run build → built: 5 article(s), 2 page(s), 2 category page(s)
+npm test      → ℹ tests 34 / ℹ pass 34 / ℹ fail 0
+python tools/verify-quotes.py → 合計 121 行 / 一致 121 / 不一致 0（新記事は 14/14）
+表の数値の突き合わせ → 123トークン中、原文に無いのは「2027」の2件だけ（令和9年の西暦読み替え）
+手元 dist の sitemap → 11URL
+本番 /zeikin/kougaku-ryouyouhi/ → 404（未デプロイであることの確認）
+```
+
+記事画像 `kougaku-ryouyouhi.png` は既存手順（`tools/article-images/build.py`）で作り、**PNG を目で見て**
+文字の折り返しが崩れていないことを確認した。図版は積み上がった自己負担が年間上限の破線で水平になる階段。
+
+⚠️ **世帯合算は扱っていない。**取得した厚労省の3資料に記述が無く、
+一次情報を当てられなかったため。記事の「確認できなかったこと」にそう書いてある。
 
 ## ビルドガードのテストを1本足した（2026-09-02）
 
