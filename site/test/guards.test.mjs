@@ -76,6 +76,31 @@ test('og:image になる画像が PNG でないとビルドが落ちる（SNSの
   assert.match(r.stderr, /PNG ではありません/);
 });
 
+test('eyecatchAlt が無いとビルドが落ちる（書き忘れると黙って alt="" になっていた）', () => {
+  const r = runBuild('no-eyecatch-alt');
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /eyecatchAlt がありません/);
+});
+
+test('eyecatchAlt が記事タイトルと同じだとビルドが落ちる', () => {
+  // 直前の h1 と同じ文が二度読み上げられるだけで、図の中身は伝わらない。
+  const r = runBuild('eyecatch-alt-is-title');
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /eyecatchAlt が記事タイトルと同じです/);
+});
+
+test('eyecatchAlt を書けば、その文がアイキャッチの alt に出る', () => {
+  // 落ちる側だけでは「eyecatchAlt があれば落ちる」ガードでもテストが通ってしまう。
+  // 通る側と、書いた文が実際に出力へ入ることを併せて固定する。
+  const r = runBuild('seido-ok', { KAKEI_TODAY: '2026-09-01' });
+  assert.equal(r.code, 0, r.stderr);
+  const html = fs.readFileSync(
+    path.join(SITE, 'test/.out/seido-ok/zeikin/seido-ok/index.html'),
+    'utf8',
+  );
+  assert.match(html, /<img src="\/img\/og\/site\.png" alt="ガードの検査用の図。青い棒が3本、左から高い順に並んでいる。単位は万円。"/);
+});
+
 test('revisionAt を過ぎているとビルドが落ちる', () => {
   const r = runBuild('expired', { KAKEI_TODAY: '2027-01-02' });
   assert.notEqual(r.code, 0);

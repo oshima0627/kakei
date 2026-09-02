@@ -70,6 +70,7 @@ git add -A && git commit -m "<何を変えたか>" && git push
    **記事が0本のカテゴリを `site.json` に置いてもビルドが落ちる**
 7. **記事画像（アイキャッチ）を必ず作る。** front matter の `eyecatch` は必須で、
    指したファイルが `site/public/` に無いとビルドが落ちる（`assertEyecatch`）
+8. **`eyecatchAlt` も必須。** 空、または記事タイトルと同じ文だとビルドが落ちる（`assertEyecatchAlt`）
 
 ## 記事画像の作り方
 
@@ -90,7 +91,9 @@ python tools/article-images/build.py
 4. 記事の front matter に `eyecatch: /img/og/<slug>.png` と **`eyecatchAlt:`** を書く。
    **`eyecatchAlt` には図の中身を書く**（何の図か・凡例の色が何を指すか・単位）。
    **記事タイトルを alt にしない。**直前の `h1` と同じ文が二度読み上げられるだけで、図の中身は伝わらない。
-   書かなければ `alt=""`（装飾画像）として出力される
+   **書き忘れとタイトルの流用はビルドが落ちる**（`assertEyecatchAlt`）。
+   ⚠️ **ガードが見るのは「書いたか」と「タイトルの丸写しか」だけ。**
+   中身が伝わるかは機械では判定できないので、そこは自分で読み返す
 5. **できた PNG を必ず目で見る。** タイトルの折り返し・要素の重なりは実際に見ないと分からない
 
 - **色は `site/public/styles.css` のカスタムプロパティに合わせる。**

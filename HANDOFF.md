@@ -96,7 +96,8 @@ Active deployment: 319bc193（main / by oshima0627）← 自動ビルド
 
 ⚠️ **突き合わせは改行コードを揃えてから行う。** 手元の `dist/` は CRLF、Cloudflare の Linux ビルドは LF なので、
 そのまま比べるとバイト数が違って見える（記事1本で63バイト差）。**中身は同じ。**
-`diff` を git-bash のプロセス置換で使うと誤検知したので、Python で `` を除いて比較した。
+`diff` を git-bash のプロセス置換で使うと誤検知したので、Python で `
+` を除いて比較した。
 
 ⚠️ **2026-10-01 以降、自動ビルドは失敗する。** `zeikin-fuyou-no-kabe.md` の `revisionAt` が
 2026-10-01 で、`assertNotExpired` がビルドを止めるため。これまでは「手でデプロイしなければ気づかない」
@@ -134,6 +135,55 @@ canonical と og:image は実URLと一致。記事HTMLは手元ビルドと**差
 インデックス登録をリクエストする（カテゴリページ `/zeikin/` `/kyoikuhi/` も記事が増えたので出し直す価値がある）。
 
 ⚠️ **worktree には `site/node_modules` が無い。** 手元でビルドする前に `cd site && npm ci` が要る（実測）。
+
+## `eyecatchAlt` をビルドガードにした（2026-09-02）
+
+**画像を作ったか**は `assertEyecatch` が止めていたが、**代替テキストを書いたか**は誰も見ていなかった。
+書き忘れると黙って `alt=""` になり、**画面では気づけない**（気づけるのは読み上げで聞く人だけで、
+その人には図が丸ごと存在しないことになる）。
+
+前回「既存 fixture を直す割に合わない」と見送っていたが、実測すると fixture の記事は23本で、
+1行足すだけだったので入れた。
+
+| 足したもの | 中身 |
+|---|---|
+| `site/build.mjs` の `assertEyecatchAlt` | `eyecatchAlt` が空、または**記事タイトルと同じ文**なら落とす |
+| `site/build.mjs` の記事レンダリング | `esc(a.eyecatchAlt || '')` → `esc(a.eyecatchAlt)`。**空へ落とす退避を消した**（退避があると書き忘れが黙って通る） |
+| `site/test/fixtures/no-eyecatch-alt/` | `eyecatchAlt` を書いていない記事 |
+| `site/test/fixtures/eyecatch-alt-is-title/` | `eyecatchAlt` にタイトルをそのまま貼った記事 |
+| 既存 fixture 22本 | `eyecatchAlt` を1行追加（`no-eyecatch` は `eyecatch` 自体が無いので対象外） |
+| `site/test/guards.test.mjs` | **3件追加**（落ちる2件＋通る1件） |
+
+タイトル流用も落としているのは、`CLAUDE.md` に「記事タイトルを alt にしない」と書いてあるルールが
+機械で判定できるため。**直前の `h1` と同じ文が二度読み上げられるだけで、図の中身は伝わらない。**
+
+通る側のテストは、**書いた文が実際に `img` の `alt` に入ること**まで見ている。
+落ちる側だけでは「`eyecatchAlt` があれば落ちる」ガードでもテストが通ってしまう。
+
+### 検証（実際の出力）
+
+本番の記事をわざと壊して、落ちることを確認した:
+
+```
+$ (eyecatchAlt の行を消して) node build.mjs
+Error: zeikin-iryouhi-koujo.md: front matter に eyecatchAlt がありません
+       / 対処: 図の中身を書く（何の図か・凡例の色が何を指すか・単位）。記事タイトルを書かない
+
+$ (eyecatchAlt にタイトルを貼って) node build.mjs
+Error: zeikin-iryouhi-koujo.md: eyecatchAlt が記事タイトルと同じです
+       / 対処: 直前の h1 と同じ文が二度読み上げられるだけになる。図の中身を書く
+
+$ (戻して) node build.mjs
+built: 7 article(s), 2 page(s), 2 category page(s)
+
+$ npm test
+ℹ tests 37 / ℹ pass 37 / ℹ fail 0（34件から3件増）
+```
+
+⚠️ **ガードが見ているのは「書いたか」と「タイトルの丸写しか」の2つだけ。**
+図の中身が伝わるかは機械では判定できない。**過去に指摘を受けた2件**（高額療養費の図に「53」とだけ
+書いてあった件・高校無償化の図に公立と私立の額を2つ並べた件）は、**どちらもこのガードでは止まらない。**
+できた PNG を目で見る手順は、これまでどおり要る。
 
 ## 7本目の記事（2026-09-02・**本番反映まで確認済み**）
 
@@ -313,7 +363,7 @@ python tools/verify-quotes.py
 ⚠️ **照合できるのは「引用が原文にあるか」だけ。**引用の選び方が原文の趣旨を曲げていないか、
 表が事実と合っているかは見ていない。今回の B1・C1 は、その**機械では見えない層**で見つかったもの。
 
-⚠️ **`eyecatchAlt` はガードにしていない。**書かなければ `alt=""` になる（既存 fixture 12本を直す割に合わないと判断）。
+（`eyecatchAlt` は当時ガードにしていなかったが、**2026-09-02 に `assertEyecatchAlt` を足した**。下の節を参照）
 
 ## 4本目の記事（2026-09-02・**本番反映まで確認済み**）
 
@@ -682,7 +732,7 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## ビルドガードの一覧（何を落とすか）
 
-すべて `site/build.mjs`。回帰テストは `site/test/guards.test.mjs`（32ケース）。
+すべて `site/build.mjs`。回帰テストは `site/test/guards.test.mjs`（**37ケース**）。
 
 | ガード | 落とすもの |
 |---|---|
@@ -695,6 +745,7 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 | `assertNotExpired` | `revisionAt` を**書いてある**記事が、その日以降。キーごと書いていない記事は許す |
 | `assertCardNumbers` | `seido` カードの数値トークンが、同じ記事の表の行に無い |
 | `assertEyecatch` | 記事に `eyecatch` が無い ／ 指した画像が `site/public/` に無い ／ og:image になる画像が PNG でない。**記事画像の作り忘れとパスの打ち間違いを止める** |
+| `assertEyecatchAlt` | `eyecatchAlt` が空 ／ 記事タイトルと同じ文。**書き忘れると黙って `alt=""` になり、読み上げで聞く人には図が丸ごと存在しないことになる**。⚠️ 見ているのは「書いたか」と「タイトルの丸写しか」だけで、**中身が伝わるかは判定していない** |
 | `renderSeidoCards` | `seido` に `制度` が無い ／ `根拠` が `https://` で始まらない ／ `確認日` が実在しない日付 ／ 数字が1つも無い |
 | `assertNoRawEmphasis` | 解釈されずに残った `**`（日本語の約物と CommonMark の flanking ルール） |
 | `resolveLinks` | `content/links.json` に無い `[[AF:キー]]` |

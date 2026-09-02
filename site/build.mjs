@@ -527,6 +527,34 @@ function assertEyecatch(meta, file) {
   }
 }
 
+/**
+ * **アイキャッチの代替テキスト（eyecatchAlt）が、図の中身を伝える形で書かれているかを見る。**
+ *
+ * これを書き忘れても画像は出るので、目視では気づけない。**気づけるのは読み上げで聞く人だけ**で、
+ * その人には図が丸ごと存在しないことになる。以前は書き忘れると黙って alt="" になっていた。
+ *
+ * タイトルの流用も落とす。alt がタイトルと同じだと、**直前の h1 と同じ文が二度読み上げられる**だけで、
+ * 図の中身（何のグラフか・凡例の色が何を指すか・単位）は伝わらない。
+ *
+ * ⚠️ **「中身を説明できているか」は機械では判定できない。** ここで止められるのは
+ * 「書いていない」と「タイトルを貼っただけ」の2つだけで、質は人が見るしかない。
+ */
+function assertEyecatchAlt(meta, file) {
+  const alt = (meta.eyecatchAlt || '').trim();
+  if (!alt) {
+    throw new Error(
+      `${file}: front matter に eyecatchAlt がありません` +
+        ' / 対処: 図の中身を書く（何の図か・凡例の色が何を指すか・単位）。記事タイトルを書かない',
+    );
+  }
+  if (alt === meta.title.trim()) {
+    throw new Error(
+      `${file}: eyecatchAlt が記事タイトルと同じです` +
+        ' / 対処: 直前の h1 と同じ文が二度読み上げられるだけになる。図の中身を書く',
+    );
+  }
+}
+
 function readDocs(dir, extraRequired = []) {
   const full = path.join(CONTENT, dir);
   if (!fs.existsSync(full)) return [];
@@ -567,6 +595,7 @@ assertNoEmptyCategories(articles);
 for (const a of articles) {
   assertSources(a, a.file);
   assertEyecatch(a, a.file);
+  assertEyecatchAlt(a, a.file);
   assertNotExpired(a, a.file);
   warnIfStale(a, a.file);
 }
@@ -674,9 +703,10 @@ for (const a of articles) {
 
   // alt に記事タイトルを入れない。直前の h1 と同じ文字列が二度読み上げられるだけで、
   // 図の中身（何のグラフか・凡例・単位）は何も伝わらない。
-  // front matter の eyecatchAlt に図の内容を書く。書かなければ装飾画像として alt="" にする。
+  // front matter の eyecatchAlt に図の内容を書く。assertEyecatchAlt が空とタイトル流用を落とすので、
+  // ここで空文字へ落とす退避は置かない（退避があると、書き忘れが黙って alt="" になる）。
   const eyecatch = a.eyecatch
-    ? `<p class="eyecatch"><img src="${a.eyecatch}" alt="${esc(a.eyecatchAlt || '')}" width="1200" height="630" decoding="async"></p>`
+    ? `<p class="eyecatch"><img src="${a.eyecatch}" alt="${esc(a.eyecatchAlt)}" width="1200" height="630" decoding="async"></p>`
     : '';
 
   const articleHtml =
