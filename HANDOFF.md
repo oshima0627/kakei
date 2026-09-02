@@ -8,16 +8,16 @@
 
 ## 現在の状況
 
-**公開済み。記事は手元に7本、本番に4本。⚠️ 5本目（高額療養費）・6本目（児童手当）・7本目（医療費控除）は書き上がっているが、まだデプロイしていない（下記）。**
+**公開済み。手元と本番はどちらも記事7本で一致している（未反映は無い）。2026-09-02 に Cloudflare の自動デプロイを設定した（下記）。**
 
 | | |
 |---|---|
 | サイト名 | 家計の制度ログ |
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
-| デプロイ | `npm run deploy`（`site/` で実行。Cloudflare Workers Static Assets / Worker 名 `kakei-log`） |
-| 記事 | 手元 **7本** / 本番 **4本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ **`zeikin/kougaku-ryouyouhi` 高額療養費** ／ **`kyoikuhi/jidouteate` 児童手当** ／ **`zeikin/iryouhi-koujo` 医療費控除**。後ろ3本が本番未反映） |
-| sitemap | 手元ビルド **13URL** / 本番 **10URL**（どちらも実測） |
+| デプロイ | **`main` への push で自動**（Cloudflare Workers Builds）。手動は `npm run deploy`（`site/` で実行。Worker 名 `kakei-log`） |
+| 記事 | 手元 **7本** / 本番 **7本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ **`zeikin/kougaku-ryouyouhi` 高額療養費** ／ **`kyoikuhi/jidouteate` 児童手当** ／ **`zeikin/iryouhi-koujo` 医療費控除**。7本すべて本番反映済み） |
+| sitemap | 手元ビルド **13URL** / 本番 **13URL**（どちらも実測） |
 | カテゴリ | **2つ**（税と社会保険4本・教育費3本）（`zeikin` 税と社会保険 ／ `kyoikuhi` 教育費）。**2つになったのでカテゴリページは index 対象になり、sitemap にも載った** |
 | 広告リンク | 0本。`affiliateEnabled` は `false` |
 | 計測 | Cloudflare Web Analytics 稼働中（トークン `b6fa8119b49a44f5bde1f57e383bd689`） |
@@ -54,34 +54,67 @@ sitemap の10URLを1件ずつ URL 検査にかけた。**画面で確認した�
 `/kyoikuhi/`・`/about/`・`/privacy/`・`/sitemap/` は既にクロール済みで未登録だったので、
 **クロールされても登録されない**なら理由（重複・低品質判定など）を見る。
 
-## ★ いちばん先にやること ― 未反映の3本をデプロイする
+## 自動デプロイを設定した（2026-09-02・**画面で確認済み**）
 
-記事 `zeikin/kougaku-ryouyouhi`（高額療養費）・`kyoikuhi/jidouteate`（児童手当）・
-`zeikin/iryouhi-koujo`（医療費控除）は**書き上がってコミット済みだが、本番に出ていない。**
-高額療養費と児童手当は `npm run deploy` が Claude のセッション側（auto mode の分類器）でブロックされたため。
-医療費控除は、デプロイを依頼されていないため実行していない。**どちらも回避はしていない。**
+**`main` に push すると Cloudflare が自分でビルドしてデプロイする**ようにした（Cloudflare Workers Builds）。
+これまでは毎回 `npm run deploy` を手で叩いていた。
 
-⚠️ **worktree には `site/node_modules` が無い。** ビルドの前に `cd site && npm ci` が要る（実測）。
+⚠️ **設定前は自動デプロイされていなかった。** `main` に push した5分後に本番を叩いて
+`/zeikin/iryouhi-koujo/` が 404、sitemap が 10URL のままであることを確認している。
+**他のサイト（`ikunavi` `uchina-map` `programming-dojo` など）は連携済みだったので、そちらと混同しやすい。**
 
-```bash
-cd "C:/Users/oshim/Documents/projects/kakei/site"
-npm run deploy
+設定した内容（Workers & Pages → kakei-log → Settings → Builds。**画面で確認した値**）:
+
+| 項目 | 値 |
+|---|---|
+| Git repository | `oshima0627/kakei` |
+| Root directory | `/site` |
+| Build command | `npm ci && npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Production branch | `main` |
+| Builds for non-production branches | **オフ**（`claude/*` の作業ブランチでビルドを回さないため） |
+| Build watch paths | include `*` / exclude なし |
+| API token | `solo build token`（他サイトと共用の既存トークン） |
+
+GitHub アカウント `oshima0627` は**すでに Cloudflare に連携済み**だったので、新しい OAuth 許可は出していない。
+
+⚠️ **手動の `npm run deploy` は今も使える。** 急ぐときはそちらが速い（自動ビルドは push から数分かかる）。
+ただし**手動デプロイした内容は `main` の中身と一致している必要がある**。ずれると、次に誰かが
+`main` へ push した瞬間に上書きされる。
+
+⚠️ **ビルドは Cloudflare 側の Linux で走る。** 記事画像の生成（`tools/article-images/build.py`）は
+**自動ビルドに含まれていない**（LibreOffice と PowerPoint に依存するため手元でしか動かない）。
+PNG はリポジトリにコミットされたものがそのまま配信される。**画像を作ったら必ずコミットすること。**
+
+## 未反映だった3本をデプロイした（2026-09-02・**本番反映まで確認済み**）
+
+`zeikin/kougaku-ryouyouhi`（高額療養費）・`kyoikuhi/jidouteate`（児童手当）・
+`zeikin/iryouhi-koujo`（医療費控除）を手動デプロイした。Version ID `9ae16b27-0c51-4337-8a00-686fc3b35d2a`。
+
+本番を curl した実際の出力:
+
+```
+200 text/html  46902  /zeikin/iryouhi-koujo/
+200 text/html  32637  /zeikin/kougaku-ryouyouhi/
+200 text/html  28456  /kyoikuhi/jidouteate/
+200 image/png  57407  /img/og/iryouhi-koujo.png
+200 image/png  57158  /img/og/kougaku-ryouyouhi.png
+200 image/png  57087  /img/og/jidouteate.png
+200 text/html   9383  /zeikin/
+200 text/html   8309  /kyoikuhi/
+sitemap.xml → 13URL（10→13）
 ```
 
-デプロイしたら、実URLで確認する（前回までと同じ手順）:
+canonical と og:image は実URLと一致。記事HTMLは手元ビルドと**差分0**。
 
-```bash
-for u in /zeikin/kougaku-ryouyouhi/ /kyoikuhi/jidouteate/ /zeikin/iryouhi-koujo/ /img/og/kougaku-ryouyouhi.png /img/og/jidouteate.png /img/og/iryouhi-koujo.png; do
-  curl -s -o /dev/null -w "%{http_code} %{content_type} %{size_download}  $u
-" "https://kakei.nexeed-lab.com$u"
-done
-curl -s https://kakei.nexeed-lab.com/sitemap.xml | grep -c "<loc>"   # 13 になるはず
-```
+### 次にやること ― Search Console
 
-そのあと Search Console で `/zeikin/kougaku-ryouyouhi/`・`/kyoikuhi/jidouteate/`・`/zeikin/iryouhi-koujo/` の
+`/zeikin/kougaku-ryouyouhi/`・`/kyoikuhi/jidouteate/`・`/zeikin/iryouhi-koujo/` の
 インデックス登録をリクエストする（カテゴリページ `/zeikin/` `/kyoikuhi/` も記事が増えたので出し直す価値がある）。
 
-## 7本目の記事（2026-09-02・**手元では検証済み。本番は未反映**）
+⚠️ **worktree には `site/node_modules` が無い。** 手元でビルドする前に `cd site && npm ci` が要る（実測）。
+
+## 7本目の記事（2026-09-02・**本番反映まで確認済み**）
 
 `zeikin/iryouhi-koujo`「医療費控除の下限は10万円とは限らない ― 国税庁の原文と、2027年1月に延長・恒久化される
 セルフメディケーション税制を確かめる」。**税と社会保険カテゴリの4本目**で、高額療養費・扶養の壁の2本とリンクしている。
@@ -121,7 +154,7 @@ python tools/verify-quotes.py → 合計 195 行 / 一致 195 / 不一致 0（�
 （白＝控除の対象／青＝差し引かれる分／黄の破線＝ここまでは引かれる）。
 できた PNG は目で見て確認した。**既存6枚の PNG は1バイトも変わっていない**（`git status` で確認）。
 
-## 6本目の記事（2026-09-02・**手元では検証済み。本番は未反映**）
+## 6本目の記事（2026-09-02・**本番反映まで確認済み**）
 
 `kyoikuhi/jidouteate`「児童手当の「第3子は月3万円」は、子どもが3人いれば当たるわけではない ― こども家庭庁の原文で確かめる」。
 **教育費カテゴリの3本目**で、高校無償化・大学無償化の2本とリンクしている。
@@ -151,7 +184,7 @@ python tools/verify-quotes.py → 合計 145 行 / 一致 145 / 不一致 0（�
 
 ⚠️ **凡例のラベルは1つ11文字くらいが限界。**超えると折り返して下の注記に重なる（`build.py` にコメント済み）。
 
-## 5本目の記事（2026-09-02・**手元では検証済み。本番は未反映**）
+## 5本目の記事（2026-09-02・**本番反映まで確認済み**）
 
 `zeikin/kougaku-ryouyouhi`「高額療養費の自己負担限度額は2026年8月から変わった ― 新設された「年間上限」を厚生労働省の原文で確かめる」。
 **税と社会保険カテゴリの3本目。**
@@ -177,7 +210,7 @@ npm test      → ℹ tests 34 / ℹ pass 34 / ℹ fail 0
 python tools/verify-quotes.py → 合計 121 行 / 一致 121 / 不一致 0（新記事は 14/14）
 表の数値の突き合わせ → 123トークン中、原文に無いのは「2027」の2件だけ（令和9年の西暦読み替え）
 手元 dist の sitemap → 11URL
-本番 /zeikin/kougaku-ryouyouhi/ → 404（未デプロイであることの確認）
+本番 /zeikin/kougaku-ryouyouhi/ → 404（当時。2026-09-02 にデプロイして 200 になった）
 ```
 
 ### 画像の指摘（2026-09-02・**直して作り直した**）
@@ -663,7 +696,7 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## 次にやること
 
-1. **未反映の3本をデプロイする**（上の★）。そのあと Search Console のインデックス登録リクエスト（本人のダッシュボード操作）
+1. **Search Console のインデックス登録リクエスト**（本人のダッシュボード操作）。未反映の記事はもう無い
 2. **8本目の記事。**`zeikin` をさらに厚くするか、3つ目のカテゴリ `shisan` の1本目を書くかは**まだ判断待ち**。
    ⚠️ **`shisan` は姉妹サイト `nisa` が NISA を持っている。**territory が重ならない題材にすること。
    7本目は本人の選択で `zeikin`（医療費控除）にした
