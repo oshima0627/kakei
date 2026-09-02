@@ -5,7 +5,7 @@ slug: zeikin/furusato-nozei-jogen
 category: zeikin
 eyecatch: /img/og/furusato-nozei-jogen.png
 published: 2026-09-01
-updated: 2026-09-01
+updated: 2026-09-02
 sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1150.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm
 checkedAt: 2026-09-01
 ---
@@ -114,7 +114,7 @@ lead: ふるさと納税だけに認められている上乗せ。ここが実�
 
 総務省のページは、天井を超えた場合に何が起きるかもはっきり書いています。
 
-> この場合、(1)、(2)及び(3)の3つの控除を合計しても（ふるさと納税額－2,000円）の全額が控除されず、実質負担額は2,000円を超えます。
+> この場合、(1)、(2)及び(3)' の3つの控除を合計しても（ふるさと納税額－2,000円）の全額が控除されず、実質負担額は2,000円を超えます。
 
 ここが、いわゆる「上限額を超えた」状態です。**罰則があるわけでも、寄附が無効になるわけでもありません。控除しきれなかった分が自己負担として残るだけです**。
 
