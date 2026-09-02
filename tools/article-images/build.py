@@ -94,6 +94,16 @@ SLIDES = [
         "note": "数字は私立大学の年額（給付型は自宅外）",
     },
     {
+        "svg": "kougaku-ryouyouhi.svg",
+        "png": "kougaku-ryouyouhi.png",
+        "category": "税と社会保険",
+        "title": "高額療養費の年間上限",
+        "title_size": 34,
+        "subtitle": "2026年8月から\n年単位の上限額が入った",
+        "legend": [("窓口で払う自己負担", WHITE), ("上限を超えて戻る分", AZURE)],
+        "note": "破線＝年間上限（万円）。8月から翌年7月まで",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",
