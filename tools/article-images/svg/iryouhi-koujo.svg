@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="1年間に支払った医療費を縦に積み上げた棒。下から補てんされた分と下限額が差し引かれ、破線より上だけが控除の対象になる図">
+  <!-- 記事「医療費控除の下限額」の図版。背景は透過（PowerPoint 側の紺の上に置く）。
+       縦＝1年間に支払った医療費の積み上がり。下から順に
+         青（下段）＝保険金などで補てんされた分
+         青（中段）＝適用下限額
+         白（上段）＝控除の対象になる分
+       黄の破線＝ここまでは引かれる、という境目。
+       日本語も数字も入れない（数字だけ置いても何の数字か分からないため。金額は本文の表が持つ）。 -->
+
+  <!-- 左の軸（支払った医療費の全体） -->
+  <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"
+     fill="none" opacity="0.55">
+    <line x1="96" y1="60" x2="96" y2="400"/>
+    <polyline points="80,78 96,60 112,78"/>
+    <line x1="82" y1="400" x2="110" y2="400"/>
+  </g>
+
+  <!-- 上段：控除の対象になる分 -->
+  <rect x="170" y="60" width="180" height="186" rx="10" fill="#ffffff" opacity="0.92"/>
+
+  <!-- 中段：適用下限額 -->
+  <rect x="170" y="254" width="180" height="62" rx="10" fill="#8ec5e8" opacity="0.9"/>
+
+  <!-- 下段：保険金などで補てんされた分 -->
+  <rect x="170" y="324" width="180" height="76" rx="10" fill="#8ec5e8" opacity="0.9"/>
+
+  <!-- 引かれる分の上端＝控除の対象になる分の下端 -->
+  <line x1="132" y1="250" x2="418" y2="250"
+        stroke="#e7cd7a" stroke-width="5" stroke-linecap="round" stroke-dasharray="16 11"/>
+</svg>

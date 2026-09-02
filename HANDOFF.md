@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。記事は手元に6本、本番に4本。⚠️ 5本目（高額療養費）と6本目（児童手当）は書き上がっているが、まだデプロイしていない（下記）。**
+**公開済み。記事は手元に7本、本番に4本。⚠️ 5本目（高額療養費）・6本目（児童手当）・7本目（医療費控除）は書き上がっているが、まだデプロイしていない（下記）。**
 
 | | |
 |---|---|
@@ -16,9 +16,9 @@
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
 | デプロイ | `npm run deploy`（`site/` で実行。Cloudflare Workers Static Assets / Worker 名 `kakei-log`） |
-| 記事 | 手元 **6本** / 本番 **4本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ **`zeikin/kougaku-ryouyouhi` 高額療養費** ／ **`kyoikuhi/jidouteate` 児童手当**。後ろ2本が本番未反映） |
-| sitemap | 手元ビルド **12URL** / 本番 **10URL**（どちらも実測） |
-| カテゴリ | **2つ**（税と社会保険3本・教育費3本）（`zeikin` 税と社会保険 ／ `kyoikuhi` 教育費）。**2つになったのでカテゴリページは index 対象になり、sitemap にも載った** |
+| 記事 | 手元 **7本** / 本番 **4本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ **`zeikin/kougaku-ryouyouhi` 高額療養費** ／ **`kyoikuhi/jidouteate` 児童手当** ／ **`zeikin/iryouhi-koujo` 医療費控除**。後ろ3本が本番未反映） |
+| sitemap | 手元ビルド **13URL** / 本番 **10URL**（どちらも実測） |
+| カテゴリ | **2つ**（税と社会保険4本・教育費3本）（`zeikin` 税と社会保険 ／ `kyoikuhi` 教育費）。**2つになったのでカテゴリページは index 対象になり、sitemap にも載った** |
 | 広告リンク | 0本。`affiliateEnabled` は `false` |
 | 計測 | Cloudflare Web Analytics 稼働中（トークン `b6fa8119b49a44f5bde1f57e383bd689`） |
 | Search Console | `sc-domain:nexeed-lab.com`。サイトマップ送信済み。**2026-09-02 に未登録の8URLへインデックス登録をリクエスト済み**（下記） |
@@ -54,11 +54,14 @@ sitemap の10URLを1件ずつ URL 検査にかけた。**画面で確認した�
 `/kyoikuhi/`・`/about/`・`/privacy/`・`/sitemap/` は既にクロール済みで未登録だったので、
 **クロールされても登録されない**なら理由（重複・低品質判定など）を見る。
 
-## ★ いちばん先にやること ― 未反映の2本をデプロイする
+## ★ いちばん先にやること ― 未反映の3本をデプロイする
 
-記事 `zeikin/kougaku-ryouyouhi`（高額療養費）と `kyoikuhi/jidouteate`（児童手当）は
-**書き上がってコミット済みだが、本番に出ていない。**
-`npm run deploy` が Claude のセッション側（auto mode の分類器）でブロックされたため。**回避はしていない。**
+記事 `zeikin/kougaku-ryouyouhi`（高額療養費）・`kyoikuhi/jidouteate`（児童手当）・
+`zeikin/iryouhi-koujo`（医療費控除）は**書き上がってコミット済みだが、本番に出ていない。**
+高額療養費と児童手当は `npm run deploy` が Claude のセッション側（auto mode の分類器）でブロックされたため。
+医療費控除は、デプロイを依頼されていないため実行していない。**どちらも回避はしていない。**
+
+⚠️ **worktree には `site/node_modules` が無い。** ビルドの前に `cd site && npm ci` が要る（実測）。
 
 ```bash
 cd "C:/Users/oshim/Documents/projects/kakei/site"
@@ -68,15 +71,55 @@ npm run deploy
 デプロイしたら、実URLで確認する（前回までと同じ手順）:
 
 ```bash
-for u in /zeikin/kougaku-ryouyouhi/ /kyoikuhi/jidouteate/ /img/og/kougaku-ryouyouhi.png /img/og/jidouteate.png; do
+for u in /zeikin/kougaku-ryouyouhi/ /kyoikuhi/jidouteate/ /zeikin/iryouhi-koujo/ /img/og/kougaku-ryouyouhi.png /img/og/jidouteate.png /img/og/iryouhi-koujo.png; do
   curl -s -o /dev/null -w "%{http_code} %{content_type} %{size_download}  $u
 " "https://kakei.nexeed-lab.com$u"
 done
-curl -s https://kakei.nexeed-lab.com/sitemap.xml | grep -c "<loc>"   # 12 になるはず
+curl -s https://kakei.nexeed-lab.com/sitemap.xml | grep -c "<loc>"   # 13 になるはず
 ```
 
-そのあと Search Console で `/zeikin/kougaku-ryouyouhi/` と `/kyoikuhi/jidouteate/` の
-インデックス登録をリクエストする（カテゴリページ `/kyoikuhi/` も記事が増えたので出し直す価値がある）。
+そのあと Search Console で `/zeikin/kougaku-ryouyouhi/`・`/kyoikuhi/jidouteate/`・`/zeikin/iryouhi-koujo/` の
+インデックス登録をリクエストする（カテゴリページ `/zeikin/` `/kyoikuhi/` も記事が増えたので出し直す価値がある）。
+
+## 7本目の記事（2026-09-02・**手元では検証済み。本番は未反映**）
+
+`zeikin/iryouhi-koujo`「医療費控除の下限は10万円とは限らない ― 国税庁の原文と、2027年1月に延長・恒久化される
+セルフメディケーション税制を確かめる」。**税と社会保険カテゴリの4本目**で、高額療養費・扶養の壁の2本とリンクしている。
+
+**記事の芯は2つ。**
+
+1. **医療費控除の適用下限額は10万円ではない。** 国税庁 No.1131 の原文が
+   「10万円と総所得金額等の5パーセント相当額のいずれか低い方の金額」と書いている。
+   さらに**引く順番**（保険金等が先・下限額が後）と、補てん金は
+   **その給付の目的となった医療費を限度としてしか引かない**（引ききれない分を他の医療費に回さない）。
+2. **セルフメディケーション税制の適用期限は、いま公式の2か所で違う。**
+   国税庁 No.1129 は令和8年12月31日まで（ページに「令和7年4月1日現在法令等」と明記）。
+   厚労省が載せている**令和9年1月1日施行の租税特別措置法41条の17**では、
+   **スイッチOTC医薬品は期限が撤廃（恒久化）され、それ以外は令和13年12月31日まで5年延長**されている。
+   同省の事務連絡（令和8年8月7日）が同じことを平文で書いている。**記事は両方を時点つきで並べた。**
+
+⚠️ **`revisionAt: 2027-01-01` を入れてある。**その日を過ぎるとビルドが落ちる
+（改正法の施行日。国税庁のページが更新されたら本文と `checkedAt` を直す）。
+
+⚠️ **扶養との違いを書いた**（医療費控除の「生計を一にする配偶者その他の親族」には所得金額の要件が無い）。
+根拠は国税庁の**質疑応答事例**で、これにはページ末尾に
+「必ずしも事案の内容の全部を表現したものではありません」という国税庁自身の限定が付く。**その断りも記事に引いた。**
+
+### 検証（実際の出力）
+
+```
+cd site && npm ci → added 92 packages（worktree に node_modules が無かった）
+npm run build → built: 7 article(s), 2 page(s), 2 category page(s)
+npm test      → ℹ tests 34 / ℹ pass 34 / ℹ fail 0
+python tools/verify-quotes.py → 合計 195 行 / 一致 195 / 不一致 0（新記事は 50/50）
+表の数値の突き合わせ → 19トークン中、原文に無いのは「150」「400」の2件
+                       （筆者が例として選んだ総所得金額等の額。記事にそう明記した）
+手元 dist の sitemap → 13URL
+```
+
+図版は数字を入れず、**縦の棒を3段に割って「下から引かれていく」ことだけを表した**
+（白＝控除の対象／青＝差し引かれる分／黄の破線＝ここまでは引かれる）。
+できた PNG は目で見て確認した。**既存6枚の PNG は1バイトも変わっていない**（`git status` で確認）。
 
 ## 6本目の記事（2026-09-02・**手元では検証済み。本番は未反映**）
 
@@ -620,10 +663,11 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## 次にやること
 
-1. **Search Console のインデックス登録リクエスト**（上の★。本人のダッシュボード操作）
-2. **5本目の記事。**`zeikin` を厚くするか、3つ目のカテゴリ `shisan` の1本目を書くかを決める。
-   ⚠️ **`shisan` は姉妹サイト `nisa` が NISA を持っている。**territory が重ならない題材にすること
-3. 記事が10本たまったら ASP の提携申請（`CLAUDE.md` の方針）
+1. **未反映の3本をデプロイする**（上の★）。そのあと Search Console のインデックス登録リクエスト（本人のダッシュボード操作）
+2. **8本目の記事。**`zeikin` をさらに厚くするか、3つ目のカテゴリ `shisan` の1本目を書くかは**まだ判断待ち**。
+   ⚠️ **`shisan` は姉妹サイト `nisa` が NISA を持っている。**territory が重ならない題材にすること。
+   7本目は本人の選択で `zeikin`（医療費控除）にした
+3. 記事が10本たまったら ASP の提携申請（`CLAUDE.md` の方針）。**あと3本**
 
 ⚠️ **2026-10-01 に1本目のビルドが落ちる**（下の節）。記事を増やす前でも後でも、その日までに対応が要る。
 

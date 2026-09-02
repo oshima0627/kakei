@@ -117,6 +117,18 @@ SLIDES = [
         "note": "上の子から順に数える（左の点＝数える順番）\n上の子を数に入れるには経済的負担と確認書が要る",
     },
     {
+        "svg": "iryouhi-koujo.svg",
+        "png": "iryouhi-koujo.png",
+        "category": "税と社会保険",
+        "title": "医療費控除の下限額",
+        "title_size": 34,
+        "subtitle": "10万円とは限らない\n引く順番も決まっている",
+        # ⚠️ 凡例は1つ 11文字くらいまで。長いと折り返して下の注記に重なる。
+        "legend": [("控除の対象", WHITE), ("差し引かれる分", AZURE)],
+        # 図に数字は入れない。縦軸が何かだけを書く（金額は本文の表が持つ）。
+        "note": "縦＝1年間に支払った医療費の積み上がり\n破線まで＝保険金などと下限額。ここまでは引かれる",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",
