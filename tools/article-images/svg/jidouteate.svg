@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="上から数えた3人の子のうち、いちばん下だけが加算の対象になっている図">
+  <!-- 記事「児童手当の第3子」の図版。背景は透過（PowerPoint 側の紺の上に置く）。
+       上から順に1人目・2人目・3人目。左の点の数が数える順番を表す（数字は書かない）。
+       点線の枠＝条件を満たしたときだけ数に入る上の子。白＝加算の対象になる子。
+       日本語も数字も入れない（数字だけ置いても何の数字か分からないため。金額は本文の表が持つ）。 -->
+
+  <!-- 上から数える向きを示す矢印 -->
+  <g stroke="#e7cd7a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.9">
+    <line x1="60" y1="60" x2="60" y2="380"/>
+    <polyline points="44,362 60,380 76,362"/>
+  </g>
+
+  <!-- 1人目（条件つきで数に入る上の子） -->
+  <circle cx="96" cy="98" r="7" fill="#e7cd7a"/>
+  <rect x="130" y="50" width="280" height="96" rx="14" fill="none"
+        stroke="#8ec5e8" stroke-width="4" stroke-dasharray="12 9"/>
+  <g fill="#8ec5e8" opacity="0.9">
+    <circle cx="185" cy="88" r="17"/>
+    <path d="M163,136 q0,-30 22,-30 q22,0 22,30 z"/>
+  </g>
+
+  <!-- 2人目（条件つきで数に入る上の子） -->
+  <circle cx="88" cy="218" r="7" fill="#e7cd7a"/>
+  <circle cx="108" cy="218" r="7" fill="#e7cd7a"/>
+  <rect x="130" y="170" width="280" height="96" rx="14" fill="none"
+        stroke="#8ec5e8" stroke-width="4" stroke-dasharray="12 9"/>
+  <g fill="#8ec5e8" opacity="0.9">
+    <circle cx="185" cy="208" r="17"/>
+    <path d="M163,256 q0,-30 22,-30 q22,0 22,30 z"/>
+  </g>
+
+  <!-- 3人目（加算の対象） -->
+  <circle cx="80" cy="338" r="7" fill="#e7cd7a"/>
+  <circle cx="100" cy="338" r="7" fill="#e7cd7a"/>
+  <circle cx="120" cy="338" r="7" fill="#e7cd7a"/>
+  <rect x="130" y="290" width="280" height="96" rx="14" fill="#ffffff" opacity="0.9"/>
+  <g fill="#014172">
+    <circle cx="185" cy="328" r="17"/>
+    <path d="M163,376 q0,-30 22,-30 q22,0 22,30 z"/>
+  </g>
+</svg>

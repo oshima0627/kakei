@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。記事は手元に5本、本番に4本。⚠️ 5本目（高額療養費）は書き上がっているが、まだデプロイしていない（下記）。**
+**公開済み。記事は手元に6本、本番に4本。⚠️ 5本目（高額療養費）と6本目（児童手当）は書き上がっているが、まだデプロイしていない（下記）。**
 
 | | |
 |---|---|
@@ -16,9 +16,9 @@
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
 | デプロイ | `npm run deploy`（`site/` で実行。Cloudflare Workers Static Assets / Worker 名 `kakei-log`） |
-| 記事 | 手元 **5本** / 本番 **4本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ **`zeikin/kougaku-ryouyouhi` 高額療養費＝本番未反映**） |
-| sitemap | 手元ビルド **11URL** / 本番 **10URL**（どちらも実測） |
-| カテゴリ | **2つ**（`zeikin` 税と社会保険 ／ `kyoikuhi` 教育費）。**2つになったのでカテゴリページは index 対象になり、sitemap にも載った** |
+| 記事 | 手元 **6本** / 本番 **4本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ **`zeikin/kougaku-ryouyouhi` 高額療養費** ／ **`kyoikuhi/jidouteate` 児童手当**。後ろ2本が本番未反映） |
+| sitemap | 手元ビルド **12URL** / 本番 **10URL**（どちらも実測） |
+| カテゴリ | **2つ**（税と社会保険3本・教育費3本）（`zeikin` 税と社会保険 ／ `kyoikuhi` 教育費）。**2つになったのでカテゴリページは index 対象になり、sitemap にも載った** |
 | 広告リンク | 0本。`affiliateEnabled` は `false` |
 | 計測 | Cloudflare Web Analytics 稼働中（トークン `b6fa8119b49a44f5bde1f57e383bd689`） |
 | Search Console | `sc-domain:nexeed-lab.com`。サイトマップ送信済み。**2026-09-02 に未登録の8URLへインデックス登録をリクエスト済み**（下記） |
@@ -54,9 +54,10 @@ sitemap の10URLを1件ずつ URL 検査にかけた。**画面で確認した�
 `/kyoikuhi/`・`/about/`・`/privacy/`・`/sitemap/` は既にクロール済みで未登録だったので、
 **クロールされても登録されない**なら理由（重複・低品質判定など）を見る。
 
-## ★ いちばん先にやること ― 5本目の記事をデプロイする
+## ★ いちばん先にやること ― 未反映の2本をデプロイする
 
-記事 `zeikin/kougaku-ryouyouhi`（高額療養費）は**書き上がってコミット済みだが、本番に出ていない。**
+記事 `zeikin/kougaku-ryouyouhi`（高額療養費）と `kyoikuhi/jidouteate`（児童手当）は
+**書き上がってコミット済みだが、本番に出ていない。**
 `npm run deploy` が Claude のセッション側（auto mode の分類器）でブロックされたため。**回避はしていない。**
 
 ```bash
@@ -67,14 +68,45 @@ npm run deploy
 デプロイしたら、実URLで確認する（前回までと同じ手順）:
 
 ```bash
-curl -s -o /dev/null -w "%{http_code} %{content_type} %{size_download}
-" https://kakei.nexeed-lab.com/zeikin/kougaku-ryouyouhi/
-curl -s -o /dev/null -w "%{http_code} %{content_type} %{size_download}
-" https://kakei.nexeed-lab.com/img/og/kougaku-ryouyouhi.png
-curl -s https://kakei.nexeed-lab.com/sitemap.xml | grep -c "<loc>"   # 11 になるはず
+for u in /zeikin/kougaku-ryouyouhi/ /kyoikuhi/jidouteate/ /img/og/kougaku-ryouyouhi.png /img/og/jidouteate.png; do
+  curl -s -o /dev/null -w "%{http_code} %{content_type} %{size_download}  $u
+" "https://kakei.nexeed-lab.com$u"
+done
+curl -s https://kakei.nexeed-lab.com/sitemap.xml | grep -c "<loc>"   # 12 になるはず
 ```
 
-そのあと Search Console で `/zeikin/kougaku-ryouyouhi/` のインデックス登録をリクエストする。
+そのあと Search Console で `/zeikin/kougaku-ryouyouhi/` と `/kyoikuhi/jidouteate/` の
+インデックス登録をリクエストする（カテゴリページ `/kyoikuhi/` も記事が増えたので出し直す価値がある）。
+
+## 6本目の記事（2026-09-02・**手元では検証済み。本番は未反映**）
+
+`kyoikuhi/jidouteate`「児童手当の「第3子は月3万円」は、子どもが3人いれば当たるわけではない ― こども家庭庁の原文で確かめる」。
+**教育費カテゴリの3本目**で、高校無償化・大学無償化の2本とリンクしている。
+
+**記事の芯**: こども家庭庁の資料に**「子供が３人以上いる場合に必ずしも「第３子以降」としてカウントされる
+わけではありません」と明記されている**。理由は数え方が2階建てだから。
+
+- 手当が出る「児童」＝ 18歳到達後最初の3月31日まで
+- 第3子を数えるときの「兄姉等」＝ 18歳年度末を過ぎて22歳年度末まで、**親等に経済的負担のある子**
+- 兄姉等を数に入れるには **「監護相当・生計費の負担についての確認書」等の提出が必要**
+
+⚠️ **所得制限の撤廃は「未確認」として書いた。**取得した4資料のどこにも撤廃という文言が無い。
+読み取れるのは「所得上限限度額を超過して受給していなかった人にも申請の道がある」ことまで。
+
+### 検証（実際の出力）
+
+```
+npm run build → built: 6 article(s), 2 page(s), 2 category page(s)
+npm test      → ℹ tests 34 / ℹ pass 34 / ℹ fail 0
+python tools/verify-quotes.py → 合計 145 行 / 一致 145 / 不一致 0（新記事は 24/24）
+表の数値の突き合わせ → 3桁以上4トークン、原文に無いもの 0
+手元 dist の sitemap → 12URL
+```
+
+図版は数字を入れず、**左の点の数で「上から数える順番」を表した**。
+凡例が折り返して注記に重なったので短くし、作り直して目で見て確認した。
+
+⚠️ **凡例のラベルは1つ11文字くらいが限界。**超えると折り返して下の注記に重なる（`build.py` にコメント済み）。
 
 ## 5本目の記事（2026-09-02・**手元では検証済み。本番は未反映**）
 

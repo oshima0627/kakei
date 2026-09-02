@@ -105,6 +105,18 @@ SLIDES = [
         "note": "横＝8月から翌年7月の12か月　縦＝自己負担の積み上がり\n破線＝年間上限。ここから先は払わなくてよい",
     },
     {
+        "svg": "jidouteate.svg",
+        "png": "jidouteate.png",
+        "category": "教育費",
+        "title": "児童手当の「第3子」",
+        "title_size": 34,
+        "subtitle": "3人いても\n第3子とは限らない",
+        # ⚠️ 凡例は1つ 11文字くらいまで。長いと折り返して下の注記に重なる。
+        "legend": [("加算の対象になる子", WHITE), ("数に入る上の子", AZURE)],
+        # 図に数字は入れない。左の点の数が数える順番。金額は本文の表が持つ。
+        "note": "上の子から順に数える（左の点＝数える順番）\n上の子を数に入れるには経済的負担と確認書が要る",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",
