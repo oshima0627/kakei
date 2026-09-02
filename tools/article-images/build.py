@@ -100,8 +100,9 @@ SLIDES = [
         "title": "高額療養費の年間上限",
         "title_size": 34,
         "subtitle": "2026年8月から\n年単位の上限額が入った",
-        "legend": [("窓口で払う自己負担", WHITE), ("上限を超えて戻る分", AZURE)],
-        "note": "破線＝年間上限（万円）。8月から翌年7月まで",
+        "legend": [("実際に払う自己負担", WHITE), ("払わずに済む分", AZURE)],
+        # 図に数字は入れない。軸が何かだけを書く（金額は本文の表が持つ）。
+        "note": "横＝8月から翌年7月の12か月　縦＝自己負担の積み上がり\n破線＝年間上限。ここから先は払わなくてよい",
     },
     {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
@@ -220,9 +221,10 @@ def build_pptx(png_paths):
                      [label], 15, color=WHITE)
             x += Inches(2.45)
 
+        # note は改行で複数行にできる。図の軸が何かを書くために2行必要になった。
         if spec.get("note"):
             add_text(slide, Inches(6.62), Inches(5.88), Inches(5.21), Inches(0.3),
-                     [spec["note"]], 13, color=AZURE)
+                     spec["note"].split(chr(10)), 13, color=AZURE)
 
     prs.save(PPTX)
     return PPTX

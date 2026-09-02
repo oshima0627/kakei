@@ -21,11 +21,11 @@
            L277,140 L432,140 L432,400 Z"
         fill="#ffffff" opacity="0.85"/>
 
-  <!-- 年間上限（破線の天井） -->
+  <!-- 年間上限（破線の天井）
+       ⚠️ ここに「53」と書いていたが、図だけでは何の数字か分からないので外した。
+       53万円という額は本文の表が持つ。ふるさと納税の図で「2,000」を外したのと同じ理由。 -->
   <line x1="40" y1="140" x2="452" y2="140" stroke="#e7cd7a" stroke-width="5"
         stroke-linecap="round" stroke-dasharray="16 12"/>
-  <text x="462" y="133" font-family="Arial, Helvetica, sans-serif"
-        font-size="26" font-weight="700" fill="#e7cd7a" text-anchor="end">53</text>
 
   <!-- 上限に達した位置 -->
   <circle cx="277" cy="140" r="8" fill="#e7cd7a"/>

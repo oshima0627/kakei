@@ -4,7 +4,7 @@ description: 高額療養費制度の上限額は令和8年8月診療分から�
 slug: zeikin/kougaku-ryouyouhi
 category: zeikin
 eyecatch: /img/og/kougaku-ryouyouhi.png
-eyecatchAlt: 月ごとの自己負担が階段状に積み上がり、年間上限53万円の破線に当たってそこから水平になる図。白が実際に払う自己負担、青が上限を超えて戻る分。
+eyecatchAlt: 自己負担が階段状に積み上がり、年間上限の破線に当たってそこから水平になる図。横軸は8月から翌年7月の12か月。白が実際に払う自己負担、青が上限に達して払わずに済む分。
 published: 2026-09-02
 updated: 2026-09-02
 sources: https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/iryouhoken/juuyou/kougakuiryou/index.html | https://www.mhlw.go.jp/content/001726232.pdf | https://www.mhlw.go.jp/content/001729632.pdf | https://www.mhlw.go.jp/stf/shingi/other-hoken_474087_00004.html
