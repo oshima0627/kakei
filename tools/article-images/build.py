@@ -46,11 +46,18 @@ LO_PROFILE = "file:///" + os.path.join(WORK, "loprofile").replace("\\", "/")
 NAVY = RGBColor(0x01, 0x41, 0x72)   # --navy
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
 AZURE = RGBColor(0x8E, 0xC5, 0xE8)  # --link (#0077c6) を紺の上で読める明るさにしたもの
+WARN = RGBColor(0xE7, 0xCD, 0x7A)   # --warn-line。図の黄色い破線と、それを指すラベルに使う
 JP_FONT = "Yu Gothic UI"
 
 # 1200×630 px を 96dpi として inch に直した値
 SLIDE_W = Inches(12.5)
 SLIDE_H = Inches(6.5625)
+
+# 図版（SVG）を置く枠。ラベルの座標変換もこの枠を使うので、動かすときは片方だけ直さない。
+# ⚠️ SVG の縦横比とこの枠の縦横比は一致していない（縦横で別々に伸びる）。
+#    だからラベルの座標変換も x と y で別々の倍率をかける。
+FIG_L, FIG_T = Inches(6.62), Inches(0.62)
+FIG_W, FIG_H = Inches(5.21), Inches(4.69)
 
 SLIDES = [
     {
@@ -70,8 +77,15 @@ SLIDES = [
         "title": "ふるさと納税の上限額",
         "title_size": 34,
         "subtitle": "決めているのは\n総務省の3本の計算式",
-        "legend": [("(1) 所得税", WHITE), ("(2)(3) 住民税", AZURE)],
-        "note": "破線＝住民税所得割額の20％の天井",
+        # ラベルで名前が付いたので凡例は置かない（色と名前を二度説明することになる）
+        "labels": [
+            {"at": (212, 345), "text": "(1) 所得税から", "size": 15},
+            {"at": (212, 263), "text": "(2) 住民税の基本分", "size": 15},
+            {"at": (212, 169), "text": "(3) 住民税の特例分", "size": 15},
+            {"at": (212, 74), "text": "住民税所得割額の20％\n＝ここが天井",
+             "size": 13, "color": WARN},
+        ],
+        "note": "破線の上にはみ出した分は控除されず、自己負担として残る",
     },
     {
         "svg": "koukou-mushouka.svg",
@@ -210,6 +224,61 @@ def add_text(slide, left, top, width, height, runs, size, bold=False,
     return box
 
 
+def svg_viewbox(svg_name):
+    """SVG の viewBox（幅・高さ）を返す。ラベルの座標変換に使う。"""
+    head = open(os.path.join(SVG_DIR, svg_name), encoding="utf-8").read(2000)
+    m = re.search(r'viewBox="\s*[\d.+-]+\s+[\d.+-]+\s+([\d.]+)\s+([\d.]+)', head)
+    if not m:
+        raise RuntimeError(f"{svg_name}: viewBox が読めません")
+    return float(m.group(1)), float(m.group(2))
+
+
+# ラベルを置く箱の幅。長いラベルはこの幅で折り返す。
+LABEL_BOX_W = Inches(1.9)
+
+
+def add_figure_labels(slide, spec):
+    """図の要素のとなりに日本語のラベルを置く。
+
+    **なぜ必要か**: SVG には日本語を入れない決まりなので（ラスタライズをフォントに
+    依存させないため）、図の中の要素に名前が付けられなかった。その結果、読者は
+    「図形 → 右下の凡例 → さらに小さい注記」と3往復しないと図を読めなかった。
+    PowerPoint のテキストボックスなら日本語を置けるので、ここで図の上に重ねる。
+
+    位置は **SVG の viewBox 座標**で書く。図を描いた座標系のまま指定できるので、
+    SVG を直したときにラベルもそのまま追従させやすい。
+
+    spec["labels"] の各要素:
+        {"at": (x, y), "text": "授業料",
+         "align": "left" | "right" | "center",   # at がテキストのどちら側か（既定 left）
+         "size": 14, "color": WHITE, "bold": True}
+    """
+    labels = spec.get("labels")
+    if not labels:
+        return
+    vb_w, vb_h = svg_viewbox(spec["svg"])
+    for lb in labels:
+        x, y = lb["at"]
+        # ⚠️ x と y で別々の倍率をかける（図版は縦横比を保たずに枠へ引き伸ばされている）
+        cx = FIG_L + int(FIG_W * (x / vb_w))
+        cy = FIG_T + int(FIG_H * (y / vb_h))
+        size = lb.get("size", 14)
+        align = lb.get("align", "left")
+        w = lb.get("width", LABEL_BOX_W)
+        if align == "right":
+            left, pp = cx - w, PP_ALIGN.RIGHT
+        elif align == "center":
+            left, pp = cx - int(w / 2), PP_ALIGN.CENTER
+        else:
+            left, pp = cx, PP_ALIGN.LEFT
+        # at を文字の縦中央に合わせる（テキストボックスの原点は左上なので半行ぶん上げる）
+        top = cy - Pt(size * 0.72)
+        add_text(slide, left, top, w, Pt(size * 1.6),
+                 lb["text"].split(chr(10)), size,
+                 bold=lb.get("bold", True), color=lb.get("color", WHITE),
+                 spacing=1.15, align=pp)
+
+
 def build_pptx(png_paths):
     prs = Presentation()
     prs.slide_width = SLIDE_W
@@ -253,9 +322,12 @@ def build_pptx(png_paths):
                      ["家計の制度ログ　kakei.nexeed-lab.com"], 17, color=AZURE)
 
         pic = slide.shapes.add_picture(
-            png_paths[spec["svg"]], Inches(6.62), Inches(0.62), Inches(5.21), Inches(4.69),
+            png_paths[spec["svg"]], FIG_L, FIG_T, FIG_W, FIG_H,
         )
         spec["_pic_name"] = pic.name
+
+        # 図の中のラベル。SVG の viewBox 座標で位置を指定する（add_figure_labels を参照）
+        add_figure_labels(slide, spec)
 
         # 図版の凡例（日本語なのでフォントの都合上 SVG ではなくスライド側に置く）
         x = Inches(6.75)
