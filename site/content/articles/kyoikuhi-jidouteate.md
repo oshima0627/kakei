@@ -4,7 +4,7 @@ description: 児童手当の第3子以降は月30,000円ですが、こども家
 slug: kyoikuhi/jidouteate
 category: kyoikuhi
 eyecatch: /img/og/jidouteate.png
-eyecatchAlt: 縦に並んだ3人の子を上から数える図。上の2人は条件つきで数に入ることを示す点線の枠、いちばん下の1人だけが加算の対象として白く塗られている。
+eyecatchAlt: 縦に並んだ3人の子を上から数える図。左の点の数が数える順番で、それぞれ1人目・2人目・3人目と書かれている。上の2人は条件つきで数に入ることを示す点線の枠、いちばん下だけが白く塗られ「3人目＝加算の対象」と書かれている。
 published: 2026-09-02
 updated: 2026-09-02
 sources: https://www.cfa.go.jp/policies/kokoseido/jidouteate | https://www.cfa.go.jp/policies/kokoseido/jidouteate/annai | https://www.cfa.go.jp/policies/kokoseido/jidouteate/mottoouen | https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/c9d07fdc-1873-4b62-ba35-b38a62a471a6/9f5267a3/20250213_policies_kokoseido_jidouteate_annai_05.pdf | https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/6a83b8eb-4e0e-4754-b96d-c83e66a6ac81/e935b433/20240809_policies_kokoseido_jidouteate_mottoouen_04.pdf

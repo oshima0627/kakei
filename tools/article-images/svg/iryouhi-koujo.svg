@@ -5,6 +5,7 @@
          青（中段）＝適用下限額
          白（上段）＝控除の対象になる分
        黄の破線＝ここまでは引かれる、という境目。
+       ⚠️ 棒は viewBox の左寄り（x < 300）に置く。右半分は PowerPoint 側のラベルの置き場所。
        日本語も数字も入れない（数字だけ置いても何の数字か分からないため。金額は本文の表が持つ）。 -->
 
   <!-- 左の軸（支払った医療費の全体） -->
@@ -16,15 +17,15 @@
   </g>
 
   <!-- 上段：控除の対象になる分 -->
-  <rect x="170" y="60" width="180" height="186" rx="10" fill="#ffffff" opacity="0.92"/>
+  <rect x="120" y="60" width="180" height="186" rx="10" fill="#ffffff" opacity="0.92"/>
 
   <!-- 中段：適用下限額 -->
-  <rect x="170" y="254" width="180" height="62" rx="10" fill="#8ec5e8" opacity="0.9"/>
+  <rect x="120" y="254" width="180" height="62" rx="10" fill="#8ec5e8" opacity="0.9"/>
 
   <!-- 下段：保険金などで補てんされた分 -->
-  <rect x="170" y="324" width="180" height="76" rx="10" fill="#8ec5e8" opacity="0.9"/>
+  <rect x="120" y="324" width="180" height="76" rx="10" fill="#8ec5e8" opacity="0.9"/>
 
   <!-- 引かれる分の上端＝控除の対象になる分の下端 -->
-  <line x1="132" y1="250" x2="418" y2="250"
+  <line x1="90" y1="250" x2="302" y2="250"
         stroke="#e7cd7a" stroke-width="5" stroke-linecap="round" stroke-dasharray="16 11"/>
 </svg>

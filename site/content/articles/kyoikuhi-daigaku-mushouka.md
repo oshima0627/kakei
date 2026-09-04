@@ -4,7 +4,7 @@ description: 大学無償化と呼ばれている支援の正式名称は高等�
 slug: kyoikuhi/daigaku-mushouka
 category: kyoikuhi
 eyecatch: /img/og/daigaku-mushouka.png
-eyecatchAlt: 2つに分かれた図。白が授業料等減免で私立大学の授業料70万円、青が給付型奨学金で私立大学の自宅外通学91万円。どちらも年額の上限。
+eyecatchAlt: 「高等教育の修学支援新制度」と書かれた枠が2つに割れ、左の白が授業料等減免で私立大学の授業料70万円、右の青が給付型奨学金で私立大学の自宅外通学91万円（どちらも年額の上限）。矢印の先に、減免は多子世帯なら所得制限なし、給付型は収入の基準が残っていると書かれている。
 published: 2026-09-02
 updated: 2026-09-02
 sources: https://www.mext.go.jp/kyufu/index.htm | https://www.mext.go.jp/kyufu/outline/index.html | https://www.mext.go.jp/kyufu/university/index.html | https://www.mext.go.jp/a_menu/koutou/hutankeigen/index.htm | https://www.mext.go.jp/content/20250620-mxt_gakushi_100001062_01.pdf | https://www.mext.go.jp/content/20260206-mxt_gakushi01-100001062-1-2gakusei.pdf

@@ -4,7 +4,7 @@ description: 高校無償化と呼ばれている支援の正式名称は高等�
 slug: kyoikuhi/koukou-mushouka
 category: kyoikuhi
 eyecatch: /img/og/koukou-mushouka.png
-eyecatchAlt: 2つに分かれた図。白が授業料に充てる就学支援金で457,200円、青が授業料以外に充てる奨学給付金で152,000円。どちらも私立高校の年額。
+eyecatchAlt: 「高校でかかる費用」と書かれた枠が「授業料」と「授業料以外」の2つに割れ、それぞれ下向きの矢印で別の制度に受け止められている図。白の授業料は高等学校等就学支援金で457,200円、青の授業料以外は高校生等奨学給付金で152,000円。どちらも私立高校の年額。
 published: 2026-09-01
 updated: 2026-09-02
 sources: https://www.mext.go.jp/a_menu/shotou/mushouka/index.htm | https://www.mext.go.jp/content/20260616-mxt_shuukyo03-100002595_7.pdf | https://www.mext.go.jp/content/20260408-mxt_shuukyo03-100002595_4.pdf | https://www.mext.go.jp/a_menu/shotou/mushouka/1342674.htm | https://www.mext.go.jp/a_menu/shotou/mushouka/1344089.htm

@@ -67,8 +67,16 @@ SLIDES = [
         "title": "扶養の壁",
         "title_size": 46,
         "subtitle": "103・106・130・150・160 は\n何の壁なのか",
-        "legend": [("税の壁", WHITE), ("社会保険の壁", AZURE)],
-        "note": "単位：万円",
+        # 壁の下に「何の壁か」を1本ずつ置く。色分け（白＝税／青＝社会保険）は
+        # ラベルで言い換えられるので凡例は置かない。
+        "labels": [
+            {"at": (70, 428),  "text": "所得税\n〜令和6年分", "size": 10, "align": "center", "width": Inches(0.94)},
+            {"at": (160, 428), "text": "社会保険\n適用拡大", "size": 10, "align": "center", "width": Inches(0.94), "color": AZURE},
+            {"at": (250, 428), "text": "健康保険の\n被扶養者", "size": 10, "align": "center", "width": Inches(0.94), "color": AZURE},
+            {"at": (340, 428), "text": "配偶者\n特別控除", "size": 10, "align": "center", "width": Inches(0.94)},
+            {"at": (430, 428), "text": "所得税\n令和7年分〜", "size": 10, "align": "center", "width": Inches(0.94)},
+        ],
+        "note": "単位：万円　白＝税の壁　青＝社会保険の壁",
     },
     {
         "svg": "furusato-nozei-jogen.svg",
@@ -94,8 +102,17 @@ SLIDES = [
         "title": "「高校無償化」の中身",
         "title_size": 34,
         "subtitle": "制度名は高等学校等就学支援金\n授業料以外は別の給付金",
-        "legend": [("授業料＝就学支援金", WHITE), ("授業料以外＝奨学給付金", AZURE)],
-        "note": "数字は私立高校の年額（円）",
+        # 「何が2つに割れているのか」と「矢印の行き先が何か」を図の中で言う。
+        "labels": [
+            {"at": (250, 69),  "text": "高校でかかる費用", "size": 13, "align": "center", "width": Inches(2.2)},
+            {"at": (132, 103), "text": "授業料", "size": 15, "align": "center", "width": Inches(1.7)},
+            {"at": (368, 103), "text": "授業料以外", "size": 15, "align": "center", "width": Inches(1.7),
+             "color": AZURE},
+            {"at": (132, 388), "text": "高等学校等\n就学支援金", "size": 11, "align": "center", "width": Inches(1.7)},
+            {"at": (368, 388), "text": "高校生等\n奨学給付金", "size": 11, "align": "center", "width": Inches(1.7),
+             "color": AZURE},
+        ],
+        "note": "矢印の先＝それを受け止める制度\n数字は私立高校の年額（円）",
     },
     {
         "svg": "daigaku-mushouka.svg",
@@ -104,7 +121,20 @@ SLIDES = [
         "title": "「大学無償化」の中身",
         "title_size": 34,
         "subtitle": "高等教育の修学支援新制度\n無償化されたのは減免だけ",
-        "legend": [("授業料等減免", WHITE), ("給付型奨学金", AZURE)],
+        # 2本の支援に名前を付け、「所得制限が外れたのは減免だけ」を図の中で言う。
+        # 箱の中のラベルは背景が明るいので NAVY。
+        "labels": [
+            {"at": (250, 63),  "text": "高等教育の修学支援新制度", "size": 13, "align": "center",
+             "width": Inches(2.8)},
+            {"at": (137, 185), "text": "授業料等減免", "size": 14, "align": "center",
+             "width": Inches(1.7), "color": NAVY},
+            {"at": (363, 150), "text": "給付型奨学金", "size": 14, "align": "center",
+             "width": Inches(1.7), "color": NAVY},
+            {"at": (137, 422), "text": "多子世帯は\n所得制限なし", "size": 10, "align": "center",
+             "width": Inches(1.7)},
+            {"at": (363, 422), "text": "収入の基準が\n残っている", "size": 10, "align": "center",
+             "width": Inches(1.7), "color": AZURE},
+        ],
         "note": "数字は私立大学の年額（給付型は自宅外）",
     },
     {
@@ -114,9 +144,18 @@ SLIDES = [
         "title": "高額療養費の年間上限",
         "title_size": 34,
         "subtitle": "2026年8月から\n年単位の上限額が入った",
-        "legend": [("実際に払う自己負担", WHITE), ("払わずに済む分", AZURE)],
-        # 図に数字は入れない。軸が何かだけを書く（金額は本文の表が持つ）。
-        "note": "横＝8月から翌年7月の12か月　縦＝自己負担の積み上がり\n破線＝年間上限。ここから先は払わなくてよい",
+        # 軸と破線を注記で説明していたが、図の中で直に言えるようになったので移した。
+        "labels": [
+            {"at": (44, 122),  "text": "年間上限", "size": 12, "color": WARN},
+            # ⚠️ 階段の中に収める。左に寄せると白の外へ出て NAVY の字が読めなくなる。
+            {"at": (250, 355), "text": "実際に払う自己負担", "size": 13, "align": "center",
+             "width": Inches(2.0), "color": NAVY},
+            {"at": (372, 62),  "text": "払わずに済む分", "size": 11, "align": "center",
+             "width": Inches(1.6)},
+            {"at": (60, 430),  "text": "8月", "size": 10, "align": "center", "width": Inches(0.8)},
+            {"at": (432, 430), "text": "翌年7月", "size": 10, "align": "center", "width": Inches(0.9)},
+        ],
+        "note": "1段＝1か月ぶんの自己負担。破線から先は払わなくてよい",
     },
     {
         "svg": "jidouteate.svg",
@@ -125,10 +164,16 @@ SLIDES = [
         "title": "児童手当の「第3子」",
         "title_size": 34,
         "subtitle": "3人いても\n第3子とは限らない",
-        # ⚠️ 凡例は1つ 11文字くらいまで。長いと折り返して下の注記に重なる。
-        "legend": [("加算の対象になる子", WHITE), ("数に入る上の子", AZURE)],
-        # 図に数字は入れない。左の点の数が数える順番。金額は本文の表が持つ。
-        "note": "上の子から順に数える（左の点＝数える順番）\n上の子を数に入れるには経済的負担と確認書が要る",
+        # 何番目の子かを箱の中で直に言う。3人目だけ背景が白なので NAVY。
+        "labels": [
+            {"at": (300, 98),  "text": "1人目", "size": 14, "align": "center",
+             "width": Inches(1.8), "color": AZURE},
+            {"at": (300, 218), "text": "2人目", "size": 14, "align": "center",
+             "width": Inches(1.8), "color": AZURE},
+            {"at": (300, 338), "text": "3人目＝加算の対象", "size": 13, "align": "center",
+             "width": Inches(1.9), "color": NAVY},
+        ],
+        "note": "点線＝経済的負担と確認書があれば数に入る上の子\n左の点＝数える順番（上の子から数える）",
     },
     {
         "svg": "iryouhi-koujo.svg",
@@ -137,10 +182,17 @@ SLIDES = [
         "title": "医療費控除の下限額",
         "title_size": 34,
         "subtitle": "10万円とは限らない\n引く順番も決まっている",
-        # ⚠️ 凡例は1つ 11文字くらいまで。長いと折り返して下の注記に重なる。
-        "legend": [("控除の対象", WHITE), ("差し引かれる分", AZURE)],
-        # 図に数字は入れない。縦軸が何かだけを書く（金額は本文の表が持つ）。
-        "note": "縦＝1年間に支払った医療費の積み上がり\n破線まで＝保険金などと下限額。ここまでは引かれる",
+        # 3段それぞれに名前を付け、破線が何かも図の中で言う。
+        "labels": [
+            {"at": (312, 150), "text": "控除の対象\nになる分", "size": 12, "width": Inches(1.8)},
+            # ⚠️ 破線の右端（x=302）より右に置く。重ねると字が線に食われる。
+            {"at": (318, 248), "text": "ここまでが引かれる", "size": 10, "width": Inches(1.8),
+             "color": WARN},
+            {"at": (312, 285), "text": "適用下限額", "size": 11, "width": Inches(1.8), "color": AZURE},
+            {"at": (312, 362), "text": "保険金などで\n補てんされた分", "size": 10, "width": Inches(1.8),
+             "color": AZURE},
+        ],
+        "note": "縦＝1年間に支払った医療費の積み上がり",
     },
     {
         "svg": "jutaku-loan-koujo.svg",
@@ -149,10 +201,16 @@ SLIDES = [
         "title": "住宅ローン減税の区分",
         "title_size": 34,
         "subtitle": "省エネ基準を満たさない\n新築は支援対象外",
-        # ⚠️ 凡例は1つ 11文字くらいまで。長いと折り返して下の注記に重なる。
+        # 1段が2本（新築＝白／既存＝青）なので凡例は残す。区分の名前は図の中に置く。
         "legend": [("新築住宅", WHITE), ("既存住宅（中古）", AZURE)],
-        # 図に数字は入れない。横軸が何かだけを書く（金額は本文の表が持つ）。
-        "note": "横の長さ＝借入限度額　上から省エネ性能の高い区分\n黄の破線＝支援対象外（新築のその他住宅）",
+        "labels": [
+            {"at": (340, 93),  "text": "長期優良住宅\n低炭素住宅", "size": 11, "width": Inches(1.8)},
+            {"at": (340, 189), "text": "ZEH水準\n省エネ住宅", "size": 11, "width": Inches(1.8)},
+            {"at": (340, 285), "text": "省エネ基準\n適合住宅", "size": 11, "width": Inches(1.8)},
+            {"at": (340, 381), "text": "その他住宅\n新築は支援対象外", "size": 11, "width": Inches(1.8),
+             "color": WARN},
+        ],
+        "note": "横の長さ＝借入限度額（令和8年〜令和12年に入居した場合）",
     },
     {
         "svg": "shogakukin-henkan.svg",
@@ -161,10 +219,15 @@ SLIDES = [
         "title": "奨学金の返還が苦しいとき",
         "title_size": 30,
         "subtitle": "減額返還も猶予も\n返す総額は減らない",
-        # ⚠️ 凡例は1つ 11文字くらいまで。長いと折り返して下の注記に重なる。
+        # 段の順番を注記で書いていたが、図の中で直に名乗れるようになったので移した。
         "legend": [("返す分", WHITE), ("待つ期間", AZURE)],
-        # 図に数字は入れない。段の順番と面積の意味だけを書く（金額は本文の表が持つ）。
-        "note": "上から 元の返還／減額返還／返還期限猶予／返還免除\n白の合計＝返す総額。減るのは免除だけ（黄の破線）",
+        "labels": [
+            {"at": (358, 77),  "text": "元の返還", "size": 12, "width": Inches(1.7)},
+            {"at": (358, 167), "text": "減額返還", "size": 12, "width": Inches(1.7)},
+            {"at": (358, 257), "text": "返還期限猶予", "size": 12, "width": Inches(1.7)},
+            {"at": (358, 347), "text": "返還免除", "size": 12, "width": Inches(1.7), "color": WARN},
+        ],
+        "note": "白の合計＝返す総額。減るのは免除だけ",
     },
     {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
