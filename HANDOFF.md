@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。⚠️ 手元は記事8本、本番は7本。8本目（住宅ローン減税）は書き上がっていて、`main` へマージすれば自動デプロイされる（この worktree のブランチにいるあいだは本番に出ない）。**
+**公開済み。手元と本番はどちらも記事8本で一致している（未反映は無い）。8本目は `main` への push から自動デプロイされ、本番と手元ビルドの差分0を実測済み。**
 
 | | |
 |---|---|
@@ -16,14 +16,14 @@
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
 | デプロイ | **`main` への push で自動**（Cloudflare Workers Builds）。手動は `npm run deploy`（`site/` で実行。Worker 名 `kakei-log`） |
-| 記事 | 手元 **8本** / 本番 **7本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ `zeikin/kougaku-ryouyouhi` 高額療養費 ／ `kyoikuhi/jidouteate` 児童手当 ／ `zeikin/iryouhi-koujo` 医療費控除 ／ **`zeikin/jutaku-loan-koujo` 住宅ローン減税（本番未反映）**） |
-| sitemap | 手元ビルド **14URL**（実測） / 本番 **13URL** |
+| 記事 | 手元 **8本** / 本番 **8本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ `zeikin/kougaku-ryouyouhi` 高額療養費 ／ `kyoikuhi/jidouteate` 児童手当 ／ `zeikin/iryouhi-koujo` 医療費控除 ／ **`zeikin/jutaku-loan-koujo` 住宅ローン減税**。8本すべて本番反映済み） |
+| sitemap | 手元ビルド **14URL** / 本番 **14URL**（どちらも実測） |
 | カテゴリ | **2つ**（税と社会保険5本・教育費3本）（`zeikin` 税と社会保険 ／ `kyoikuhi` 教育費）。**2つになったのでカテゴリページは index 対象になり、sitemap にも載った** |
 | 広告リンク | 0本。`affiliateEnabled` は `false` |
 | 計測 | Cloudflare Web Analytics 稼働中（トークン `b6fa8119b49a44f5bde1f57e383bd689`） |
 | Search Console | `sc-domain:nexeed-lab.com`。サイトマップ送信済み。**2026-09-02 に未登録の8URLへインデックス登録をリクエスト済み**（下記） |
 
-## 8本目の記事（2026-09-04・**本番未反映**）
+## 8本目の記事（2026-09-04・**本番反映まで確認済み**）
 
 `zeikin/jutaku-loan-koujo`「住宅ローン減税は「年末残高の0.7％」だけでは決まらない ― 令和8年入居からの5年延長と、
 新築で控除が0円になる区分を国税庁・国土交通省の原文で確かめる」。**税と社会保険カテゴリの5本目。**
@@ -70,7 +70,23 @@ cd site && npm test      → ℹ tests 37 / ℹ pass 37 / ℹ fail 0
 python tools/verify-quotes.py → 合計 224 行 / 一致 224 / 不一致 0（新記事は 29/29）
 表の数値トークン18件を原文と突き合わせ → 原文に無いのは「4000」の1件（上記の割り戻し値。記事にそう明記）
 手元 dist の sitemap → 14URL
+
+本番（main への push から自動ビルド。curl の実測）:
+200 text/html 38824  /zeikin/jutaku-loan-koujo/
+200 image/png 58456  /img/og/jutaku-loan-koujo.png
+200 text/html 10552  /zeikin/
+sitemap.xml → 14URL（13→14）
+canonical = https://kakei.nexeed-lab.com/zeikin/jutaku-loan-koujo/
+og:image  = https://kakei.nexeed-lab.com/img/og/jutaku-loan-koujo.png
+本番と手元ビルドの突き合わせ（記事・カテゴリ・トップ・sitemap・PNG）→ 差分0
 ```
+
+⚠️ **本番を Python の urllib で取ると 403 になる。** User-Agent を付ければ通る（Cloudflare が既定のUAを弾く）。
+⚠️ **突き合わせは改行コードを揃えてから行う。**手元は CRLF、Cloudflare の Linux ビルドは LF。
+
+⚠️ **この worktree からは `main` へマージできない**（`main` はプライマリのチェックアウトが持っているため
+git が更新を拒む）。`git push origin HEAD:main` で origin を fast-forward した。
+**プライマリ側のローカル `main` は遅れているので `git pull` が要る。**
 
 **`assertNoRawEmphasis` に1回落ちた**（`**……できませんでした。**ページに` の形）。閉じの `**` の直前から
 約物を外して直した。⚠️ **一括置換で直そうとすると、開きの `**` の直後にも約物を送り込んでしまう**
@@ -828,16 +844,15 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## 次にやること
 
-1. **8本目（住宅ローン減税）を `main` へマージする。**マージすれば Cloudflare Workers Builds が自動で本番へ出す。
-   出たら `/zeikin/jutaku-loan-koujo/` と `/img/og/jutaku-loan-koujo.png` を curl して 200 を確認する
-2. **⚠️ 2026-10-01 に1本目（`zeikin-fuyou-no-kabe.md`）の `revisionAt` が切れて、`main` への push でビルドが落ちる。**
+1. **⚠️ 2026-10-01 に1本目（`zeikin-fuyou-no-kabe.md`）の `revisionAt` が切れて、`main` への push でビルドが落ちる。**
    あと1か月を切っている。対処は「出典を取り直して本文を確認し、`checkedAt` と `revisionAt` を両方更新する」。
    **`revisionAt` だけを先に進めない**
-3. **Search Console のインデックス登録リクエスト**（本人のダッシュボード操作）。8本目が本番に出てから
-4. **9本目の記事。**テーマは**まだ判断待ち**。8本目を選ぶときに調べて外した候補が3つある
+2. **Search Console のインデックス登録リクエスト**（本人のダッシュボード操作）。
+   未登録のままの URL に加えて、新しく出た `/zeikin/jutaku-loan-koujo/` を出す
+3. **9本目の記事。**テーマは**まだ判断待ち**。8本目を選ぶときに調べて外した候補が3つある
    （国民年金保険料の免除・学生納付特例 ／ 奨学金の返還の減額・免除（JASSO） ／ 遺族年金の2028年見直し）。
    ⚠️ **`shisan` は姉妹サイト `nisa` が NISA を持っている。**territory が重ならない題材にすること
-5. 記事が10本たまったら ASP の提携申請（`CLAUDE.md` の方針）。**あと2本**
+4. 記事が10本たまったら ASP の提携申請（`CLAUDE.md` の方針）。**あと2本**
 
 ## 触ってはいけないところ
 
