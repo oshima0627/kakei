@@ -129,6 +129,18 @@ SLIDES = [
         "note": "縦＝1年間に支払った医療費の積み上がり\n破線まで＝保険金などと下限額。ここまでは引かれる",
     },
     {
+        "svg": "jutaku-loan-koujo.svg",
+        "png": "jutaku-loan-koujo.png",
+        "category": "税と社会保険",
+        "title": "住宅ローン減税の区分",
+        "title_size": 34,
+        "subtitle": "省エネ基準を満たさない\n新築は支援対象外",
+        # ⚠️ 凡例は1つ 11文字くらいまで。長いと折り返して下の注記に重なる。
+        "legend": [("新築住宅", WHITE), ("既存住宅（中古）", AZURE)],
+        # 図に数字は入れない。横軸が何かだけを書く（金額は本文の表が持つ）。
+        "note": "横の長さ＝借入限度額　上から省エネ性能の高い区分\n黄の破線＝支援対象外（新築のその他住宅）",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="450" viewBox="0 0 520 450" role="img" aria-label="住宅の区分ごとの借入限度額を横棒の長さで表した図。上から省エネ性能の高い順に4段あり、白が新築、青が既存住宅。いちばん下の段は新築の棒が無く破線の枠だけになっている">
+  <!-- 記事「住宅ローン減税」の図版。背景は透過（PowerPoint 側の紺の上に置く）。
+       横＝借入限度額の大きさ。上から順に
+         1段目 長期優良住宅・低炭素住宅   新築 4,500 / 既存 3,500
+         2段目 ZEH水準省エネ住宅          新築 3,500 / 既存 3,500
+         3段目 省エネ基準適合住宅          新築 2,000 / 既存 2,000
+         4段目 その他住宅                  新築 なし（支援対象外） / 既存 2,000
+       白＝新築、青＝既存住宅。黄の破線の枠＝支援対象外。
+       日本語も数字も入れない（数字だけ置いても何の数字か分からないため。金額は本文の表が持つ）。
+       ⚠️ ふるさと納税・高額療養費の図で「数字を単独で置くと読めない」指摘を受けている。同じことをしない。
+       目盛りは 4,500万円 = 260px（1万円あたり 0.0578px）で引いた。 -->
+
+  <!-- 左の基準線（借入限度額の起点） -->
+  <line x1="70" y1="46" x2="70" y2="404" stroke="#ffffff" stroke-width="4"
+        stroke-linecap="round" opacity="0.55"/>
+
+  <!-- 1段目 長期優良住宅・低炭素住宅 -->
+  <rect x="70" y="56"  width="260" height="34" rx="8" fill="#ffffff" opacity="0.92"/>
+  <rect x="70" y="96"  width="202" height="34" rx="8" fill="#8ec5e8" opacity="0.9"/>
+
+  <!-- 2段目 ZEH水準省エネ住宅 -->
+  <rect x="70" y="152" width="202" height="34" rx="8" fill="#ffffff" opacity="0.92"/>
+  <rect x="70" y="192" width="202" height="34" rx="8" fill="#8ec5e8" opacity="0.9"/>
+
+  <!-- 3段目 省エネ基準適合住宅 -->
+  <rect x="70" y="248" width="116" height="34" rx="8" fill="#ffffff" opacity="0.92"/>
+  <rect x="70" y="288" width="116" height="34" rx="8" fill="#8ec5e8" opacity="0.9"/>
+
+  <!-- 4段目 その他住宅。新築は棒を描かず、破線の枠だけを置く（＝支援対象外） -->
+  <rect x="70" y="344" width="116" height="34" rx="8" fill="none"
+        stroke="#e7cd7a" stroke-width="4" stroke-dasharray="14 10"/>
+  <rect x="70" y="384" width="116" height="34" rx="8" fill="#8ec5e8" opacity="0.9"/>
+</svg>
