@@ -141,6 +141,18 @@ SLIDES = [
         "note": "横の長さ＝借入限度額　上から省エネ性能の高い区分\n黄の破線＝支援対象外（新築のその他住宅）",
     },
     {
+        "svg": "shogakukin-henkan.svg",
+        "png": "shogakukin-henkan.png",
+        "category": "教育費",
+        "title": "奨学金の返還が苦しいとき",
+        "title_size": 30,
+        "subtitle": "減額返還も猶予も\n返す総額は減らない",
+        # ⚠️ 凡例は1つ 11文字くらいまで。長いと折り返して下の注記に重なる。
+        "legend": [("返す分", WHITE), ("待つ期間", AZURE)],
+        # 図に数字は入れない。段の順番と面積の意味だけを書く（金額は本文の表が持つ）。
+        "note": "上から 元の返還／減額返還／返還期限猶予／返還免除\n白の合計＝返す総額。減るのは免除だけ（黄の破線）",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",
@@ -287,7 +299,13 @@ def embed_svg(pptx_path):
         ct = ct.replace("<Default", '<Default Extension="svg" ContentType="image/svg+xml"/><Default', 1)
         parts["[Content_Types].xml"] = ct.encode("utf-8")
 
-    slide_names = sorted(n for n in names if re.fullmatch(r"ppt/slides/slide\d+\.xml", n))
+    # ⚠️ 辞書順で並べてはいけない。slide1, slide10, slide2 ... の順になり、
+    #    スライドが10枚を超えた瞬間に SVG が1枚ずつずれる（2026-09-04 に実際に起きた）。
+    #    ずれても例外は出ず、書き出した PNG に別の記事の図が入るだけなので、目で見るまで気づけない。
+    slide_names = sorted(
+        (n for n in names if re.fullmatch(r"ppt/slides/slide\d+\.xml", n)),
+        key=lambda n: int(re.search(r"slide(\d+)\.xml", n).group(1)),
+    )
     if len(slide_names) != len(SLIDES):
         raise RuntimeError(f"スライド数が合いません: {len(slide_names)} != {len(SLIDES)}")
 

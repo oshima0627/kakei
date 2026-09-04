@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="450" viewBox="0 0 420 450" role="img" aria-label="返す総額を白いブロックの量で表した図。上から元の返還・減額返還・返還期限猶予・返還免除の4段。減額返還は1つが半分の幅で数が倍、猶予は青い待ち時間のぶん右にずれるが、白の量はどれも同じ。いちばん下の返還免除だけ白が無く、黄色い破線の枠になっている">
+  <!-- 記事「奨学金の減額返還・返還期限猶予・返還免除」の図版。背景は透過（PowerPoint 側の紺の上に置く）。
+       横＝時間。1ブロック＝1回の返還で、幅＝1回に払う額。白いブロックの合計＝返す総額。
+         1段目 元の返還       白 4個 × 幅30
+         2段目 減額返還       白 8個 × 幅15（1回の額が半分、回数が倍。合計は同じ）
+         3段目 返還期限猶予   青の待つ期間のあと、1段目と同じ 白 4個 × 幅30 が右へずれる
+         4段目 返還免除       黄の破線の枠だけ。白が無い＝総額が消える
+       ⚠️ 最初は「同じ面積の長方形を横に伸ばして薄くする」形にしたが、
+          2段目が「長い＝多い」に読めた。数えられる形に描き直してある。
+       日本語も数字も入れない（数字だけ置いても何の数字か分からないため。金額は本文の表が持つ）。
+       段の意味は PowerPoint 側の note で「上から」と明示している。 -->
+
+  <!-- 左の基準線（返還が始まる時点） -->
+  <line x1="52" y1="46" x2="52" y2="404" stroke="#ffffff" stroke-width="4"
+        stroke-linecap="round" opacity="0.55"/>
+
+  <!-- 1段目 元の返還：幅30を4個（ピッチ38） -->
+  <g fill="#ffffff" opacity="0.92">
+    <rect x="60"  y="62" width="30" height="30" rx="6"/>
+    <rect x="98"  y="62" width="30" height="30" rx="6"/>
+    <rect x="136" y="62" width="30" height="30" rx="6"/>
+    <rect x="174" y="62" width="30" height="30" rx="6"/>
+  </g>
+
+  <!-- 2段目 減額返還：幅15を8個（ピッチ38）。白の合計は1段目と同じ -->
+  <g fill="#ffffff" opacity="0.92">
+    <rect x="60"  y="152" width="15" height="30" rx="5"/>
+    <rect x="98"  y="152" width="15" height="30" rx="5"/>
+    <rect x="136" y="152" width="15" height="30" rx="5"/>
+    <rect x="174" y="152" width="15" height="30" rx="5"/>
+    <rect x="212" y="152" width="15" height="30" rx="5"/>
+    <rect x="250" y="152" width="15" height="30" rx="5"/>
+    <rect x="288" y="152" width="15" height="30" rx="5"/>
+    <rect x="326" y="152" width="15" height="30" rx="5"/>
+  </g>
+
+  <!-- 3段目 返還期限猶予：青＝待つ期間。白は1段目と同じものが右へずれる -->
+  <rect x="60" y="242" width="106" height="30" rx="6" fill="#8ec5e8" opacity="0.9"/>
+  <g fill="#ffffff" opacity="0.92">
+    <rect x="174" y="242" width="30" height="30" rx="6"/>
+    <rect x="212" y="242" width="30" height="30" rx="6"/>
+    <rect x="250" y="242" width="30" height="30" rx="6"/>
+    <rect x="288" y="242" width="30" height="30" rx="6"/>
+  </g>
+
+  <!-- 4段目 返還免除：白を置かない -->
+  <g fill="none" stroke="#e7cd7a" stroke-width="3.5" stroke-dasharray="9 7">
+    <rect x="60"  y="332" width="30" height="30" rx="6"/>
+    <rect x="98"  y="332" width="30" height="30" rx="6"/>
+    <rect x="136" y="332" width="30" height="30" rx="6"/>
+    <rect x="174" y="332" width="30" height="30" rx="6"/>
+  </g>
+</svg>
