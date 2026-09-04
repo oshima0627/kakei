@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。⚠️ 手元は記事9本、本番は8本。9本目（奨学金の返還）はこの worktree のブランチにあり、`main` へ push すれば自動デプロイされる。**
+**公開済み。手元と本番はどちらも記事9本で一致している（未反映は無い）。**
 
 | | |
 |---|---|
@@ -16,14 +16,14 @@
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
 | デプロイ | **`main` への push で自動**（Cloudflare Workers Builds）。手動は `npm run deploy`（`site/` で実行。Worker 名 `kakei-log`） |
-| 記事 | 手元 **9本** / 本番 **8本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ `zeikin/kougaku-ryouyouhi` 高額療養費 ／ `kyoikuhi/jidouteate` 児童手当 ／ `zeikin/iryouhi-koujo` 医療費控除 ／ `zeikin/jutaku-loan-koujo` 住宅ローン減税 ／ **`kyoikuhi/shogakukin-henkan` 奨学金の返還（本番未反映）**） |
-| sitemap | 手元ビルド **15URL**（実測） / 本番 **14URL** |
+| 記事 | 手元 **9本** / 本番 **9本**（`zeikin/fuyou-no-kabe` ／ `zeikin/furusato-nozei-jogen` ／ `kyoikuhi/koukou-mushouka` ／ `kyoikuhi/daigaku-mushouka` ／ `zeikin/kougaku-ryouyouhi` 高額療養費 ／ `kyoikuhi/jidouteate` 児童手当 ／ `zeikin/iryouhi-koujo` 医療費控除 ／ `zeikin/jutaku-loan-koujo` 住宅ローン減税 ／ **`kyoikuhi/shogakukin-henkan` 奨学金の返還**。9本すべて本番反映済み） |
+| sitemap | 手元ビルド **15URL** / 本番 **15URL**（どちらも実測） |
 | カテゴリ | **2つ**（税と社会保険5本・教育費4本）（`zeikin` 税と社会保険 ／ `kyoikuhi` 教育費）。**2つになったのでカテゴリページは index 対象になり、sitemap にも載った** |
 | 広告リンク | 0本。`affiliateEnabled` は `false` |
 | 計測 | Cloudflare Web Analytics 稼働中（トークン `b6fa8119b49a44f5bde1f57e383bd689`） |
 | Search Console | `sc-domain:nexeed-lab.com`。サイトマップ送信済み。**2026-09-02 に未登録の8URLへインデックス登録をリクエスト済み**（下記） |
 
-## 9本目の記事（2026-09-04・**本番未反映**）
+## 9本目の記事（2026-09-04・**本番反映まで確認済み**）
 
 `kyoikuhi/shogakukin-henkan`「奨学金の「減額返還」と「返還期限猶予」は、返す総額が1円も減らない ―
 返還が本当に消える条件を JASSO の原文で確かめる」。**教育費カテゴリの4本目。**
@@ -80,6 +80,15 @@ python tools/verify-quotes.py → 合計 258 行 / 一致 258 / 不一致 0（�
 手元 dist の sitemap → 15URL
 既存8枚の PNG → git 上で1バイトも変わっていない
 375px で実測 → body に横スクロールなし。表は .table-wrap 内で横スクロール
+
+本番（main への push から自動ビルド。curl の実測）:
+200 text/html 36755  /kyoikuhi/shogakukin-henkan/
+200 image/png 61287  /img/og/shogakukin-henkan.png
+200 text/html  9460  /kyoikuhi/
+sitemap.xml → 15URL（14→15）
+canonical と og:image は実URLと一致
+本番と手元ビルドの突き合わせ（記事・カテゴリ・トップ・sitemap）→ 差分0
+本番の og 画像10枚すべてを手元とバイト比較 → 全一致（build.py のずれが本番に出ていないことの確認）
 ```
 
 **`assertNoRawEmphasis` に1回落ちた**（8本目と同じ形）。閉じの `**` の直前から約物を外して直した。
@@ -908,17 +917,16 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 
 ## 次にやること
 
-1. **9本目（奨学金の返還）を `main` へ push する。**push すれば Cloudflare Workers Builds が自動で本番へ出す。
-   出たら `/kyoikuhi/shogakukin-henkan/` と `/img/og/shogakukin-henkan.png` を curl して 200 を確認する
-2. **⚠️ 2026-10-01 に1本目（`zeikin-fuyou-no-kabe.md`）の `revisionAt` が切れて、`main` への push でビルドが落ちる。**
+1. **⚠️ 2026-10-01 に1本目（`zeikin-fuyou-no-kabe.md`）の `revisionAt` が切れて、`main` への push でビルドが落ちる。**
    あと1か月を切っている。対処は「出典を取り直して本文を確認し、`checkedAt` と `revisionAt` を両方更新する」。
    **`revisionAt` だけを先に進めない**
-3. **Search Console のインデックス登録リクエスト**（本人のダッシュボード操作）。
-   未登録のままの URL に加えて、新しく出た `/zeikin/jutaku-loan-koujo/` を出す
-4. **10本目の記事。**テーマは**まだ判断待ち**。調べて外した候補が2つ残っている
+2. **Search Console のインデックス登録リクエスト**（本人のダッシュボード操作）。
+   未登録のままの URL に加えて、新しく出た `/zeikin/jutaku-loan-koujo/` と
+   `/kyoikuhi/shogakukin-henkan/` を出す
+3. **10本目の記事。**テーマは**まだ判断待ち**。調べて外した候補が2つ残っている
    （国民年金保険料の免除・学生納付特例 ／ 遺族年金の2028年見直し）。
    ⚠️ **`shisan` は姉妹サイト `nisa` が NISA を持っている。**territory が重ならない題材にすること
-5. 記事が10本たまったら ASP の提携申請（`CLAUDE.md` の方針）。**あと1本**
+4. 記事が10本たまったら ASP の提携申請（`CLAUDE.md` の方針）。**あと1本**
 
 ## 触ってはいけないところ
 
