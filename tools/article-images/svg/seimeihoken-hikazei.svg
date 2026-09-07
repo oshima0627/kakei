@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="340" viewBox="0 0 520 340" role="img" aria-label="受取人ごとに死亡保険金が非課税枠に入るかを表した図。左に受取人の箱が3つ縦に並び、それぞれから右へ矢印が伸びる。上2本は白い非課税枠の中へ入るが、いちばん下の1本だけ枠に入らず、黄色い破線の枠の外側に置かれている">
+  <!-- 記事「生命保険金の非課税枠」の図版。背景は透過（PowerPoint 側の紺の上に置く）。
+
+       ⚠️ **量のグラフではない。** 箱の大きさは金額を表していない。
+       表しているのは「非課税枠の中か外か」の2択だけ。
+
+       左の3つ＝受取人（上から 配偶者 / 子 / 孫）。
+       右の白い大きな枠＝非課税枠（500万円×法定相続人の数）。
+       右下の黄の破線＝枠の外（相続人以外なので非課税の適用がない）。
+
+       日本語は SVG に入れない（ラスタライズをフォントに依存させないため）。
+       受取人名・枠の名前・注記はすべて PowerPoint 側（build.py の labels / note）。 -->
+
+  <!-- 左: 受取人の箱 -->
+  <rect x="20" y="48"  width="92" height="56" rx="8" fill="#ffffff" opacity="0.92"/>
+  <rect x="20" y="118" width="92" height="56" rx="8" fill="#ffffff" opacity="0.92"/>
+  <rect x="20" y="236" width="92" height="56" rx="8" fill="#ffffff" opacity="0.92"/>
+
+  <!-- 矢印: 上2本は枠へ届く -->
+  <line x1="118" y1="76"  x2="236" y2="76"  stroke="#8ec5e8" stroke-width="5" stroke-linecap="round"/>
+  <polygon points="236,66 250,76 236,86" fill="#8ec5e8"/>
+  <line x1="118" y1="146" x2="236" y2="146" stroke="#8ec5e8" stroke-width="5" stroke-linecap="round"/>
+  <polygon points="236,136 250,146 236,156" fill="#8ec5e8"/>
+
+  <!-- 矢印: いちばん下も同じ長さだが、行き先が枠の外 -->
+  <line x1="118" y1="264" x2="236" y2="264" stroke="#e7cd7a" stroke-width="5" stroke-linecap="round"/>
+  <polygon points="236,254 250,264 236,274" fill="#e7cd7a"/>
+
+  <!-- 右上: 非課税枠（中に入る） -->
+  <rect x="256" y="34" width="244" height="154" rx="10" fill="#ffffff" opacity="0.92"/>
+
+  <!-- 右下: 枠の外（破線の枠だけ。中身が無い＝非課税の適用がない） -->
+  <rect x="256" y="232" width="244" height="64" rx="10" fill="none"
+        stroke="#e7cd7a" stroke-width="4" stroke-dasharray="14 10"/>
+</svg>

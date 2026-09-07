@@ -7,10 +7,13 @@
   "//origin": "本番の公開URL。canonical と sitemap がこの値を使う。wrangler.jsonc の routes と必ず同じ値にする。",
   "origin": "https://kakei.nexeed-lab.com",
 
-  "//categories": "記事の front matter の category は、この slug のどれかでなければビルドが落ちる。⚠️ 記事が0本のカテゴリをここに置くとビルドが落ちる（assertNoEmptyCategories）。1本目が書けた時点で足す。最終形は zeikin / kyoikuhi / shisan の3つ。",
+  "//categories": "記事の front matter の category は、この slug のどれかでなければビルドが落ちる。⚠️ 記事が0本のカテゴリをここに置くとビルドが落ちる（assertNoEmptyCategories）。1本目が書けた時点で足す。2026-09-07 に題材の範囲を広げ、nenkin / shisan / sozoku を足した（CLAUDE.md の「扱わないもの」を参照）。",
   "categories": [
     { "slug": "zeikin", "name": "税と社会保険" },
-    { "slug": "kyoikuhi", "name": "教育費" }
+    { "slug": "kyoikuhi", "name": "教育費" },
+    { "slug": "nenkin", "name": "年金" },
+    { "slug": "shisan", "name": "資産形成" },
+    { "slug": "sozoku", "name": "相続" }
   ],
 
   "//author": "JSON-LD の author に出す書き手。制度・税金は YMYL なので、書き手が誰かを構造化データにも出す。url は about ページへのサイト内パス。",
