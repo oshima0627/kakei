@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="320" viewBox="0 0 520 320" role="img" aria-label="同じ土地を誰が相続するかで満たすべき要件の数が変わることを表した図。左に取得者の箱が3つ縦に並び、右にはその要件の数だけ小さな四角が並ぶ。いちばん上は四角が0個、真ん中は白い四角が2個、いちばん下は黄色い破線の四角が6個">
+  <!-- 記事「小規模宅地等の特例」の図版。背景は透過（PowerPoint 側の紺の上に置く）。
+
+       ⚠️ **面積のグラフではない。** 四角の数＝満たすべき要件の数。
+       330平方メートルや80％とは無関係で、大きさにも意味を持たせていない。
+
+       左の3つ＝取得者（上から 配偶者 / 同居していた親族 / それ以外の親族）。
+       右の四角＝その取得者が満たすべき要件の数（0個 / 2個 / 6個）。
+       いちばん下だけ黄の破線にしてあるのは、6つ全部を満たす必要があるため。
+
+       日本語は SVG に入れない。取得者名・要件の中身・注記は PowerPoint 側。 -->
+
+  <!-- 左: 取得者の箱 -->
+  <rect x="20" y="50"  width="112" height="54" rx="8" fill="#ffffff" opacity="0.92"/>
+  <rect x="20" y="140" width="112" height="54" rx="8" fill="#ffffff" opacity="0.92"/>
+  <rect x="20" y="230" width="112" height="54" rx="8" fill="#ffffff" opacity="0.92"/>
+
+  <!-- 区切りの縦線（ここから右が「満たすべき要件」） -->
+  <line x1="164" y1="44" x2="164" y2="290" stroke="#ffffff" stroke-width="4"
+        stroke-linecap="round" opacity="0.55"/>
+
+  <!-- 1段目 配偶者: 四角なし（要件なし） -->
+
+  <!-- 2段目 同居していた親族: 2つ -->
+  <rect x="190" y="154" width="26" height="26" rx="5" fill="#ffffff" opacity="0.92"/>
+  <rect x="226" y="154" width="26" height="26" rx="5" fill="#ffffff" opacity="0.92"/>
+
+  <!-- 3段目 それ以外の親族: 6つ。全部満たす必要があるので黄の破線 -->
+  <rect x="190" y="244" width="26" height="26" rx="5" fill="none"
+        stroke="#e7cd7a" stroke-width="3" stroke-dasharray="7 5"/>
+  <rect x="226" y="244" width="26" height="26" rx="5" fill="none"
+        stroke="#e7cd7a" stroke-width="3" stroke-dasharray="7 5"/>
+  <rect x="262" y="244" width="26" height="26" rx="5" fill="none"
+        stroke="#e7cd7a" stroke-width="3" stroke-dasharray="7 5"/>
+  <rect x="298" y="244" width="26" height="26" rx="5" fill="none"
+        stroke="#e7cd7a" stroke-width="3" stroke-dasharray="7 5"/>
+  <rect x="334" y="244" width="26" height="26" rx="5" fill="none"
+        stroke="#e7cd7a" stroke-width="3" stroke-dasharray="7 5"/>
+  <rect x="370" y="244" width="26" height="26" rx="5" fill="none"
+        stroke="#e7cd7a" stroke-width="3" stroke-dasharray="7 5"/>
+</svg>

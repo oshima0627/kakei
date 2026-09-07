@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="350" viewBox="0 0 520 350" role="img" aria-label="受け取り始める年齢ごとの年金額を縦棒で表した図。左から60歳・65歳・75歳の3本で、60歳が最も低く75歳が最も高い。3本とも棒の上に同じ大きさの黄色い破線の区画が乗っており、これは繰上げでも繰下げでも増減しない部分を表す">
+  <!-- 記事「年金の繰上げ・繰下げ」の図版。背景は透過（PowerPoint 側の紺の上に置く）。
+
+       縦＝年金額。65歳を100%として、減額率・増額率で目盛りを引いた。
+         60歳 100-24 = 76%  → 83px
+         65歳 100%          → 109px
+         75歳 100+84 = 184% → 200px
+       （1% = 1.087px）
+
+       ⚠️ 3本の上に乗せた黄の破線の区画は **3本とも同じ大きさ**にしてある。
+       加給年金額・振替加算額は、減額の対象にも増額の対象にもならないため
+       （日本年金機構は減額率も増額率も「加給年金額を除く」額に乗じると書いている）。
+       ここを棒と一緒に伸縮させると、原文と食い違う図になる。
+
+       日本語も数字も SVG に入れない。年齢・割合・注記は PowerPoint 側。 -->
+
+  <!-- 底の基準線 -->
+  <line x1="40" y1="300" x2="500" y2="300" stroke="#ffffff" stroke-width="4"
+        stroke-linecap="round" opacity="0.55"/>
+
+  <!-- 60歳（繰上げ） -->
+  <rect x="60"  y="217" width="76" height="83"  rx="7" fill="#ffffff" opacity="0.92"/>
+  <rect x="60"  y="193" width="76" height="24"  rx="6" fill="none"
+        stroke="#e7cd7a" stroke-width="3" stroke-dasharray="10 7"/>
+
+  <!-- 65歳（基準） -->
+  <rect x="220" y="191" width="76" height="109" rx="7" fill="#ffffff" opacity="0.92"/>
+  <rect x="220" y="167" width="76" height="24"  rx="6" fill="none"
+        stroke="#e7cd7a" stroke-width="3" stroke-dasharray="10 7"/>
+
+  <!-- 75歳（繰下げ） -->
+  <rect x="380" y="100" width="76" height="200" rx="7" fill="#ffffff" opacity="0.92"/>
+  <rect x="380" y="76"  width="76" height="24"  rx="6" fill="none"
+        stroke="#e7cd7a" stroke-width="3" stroke-dasharray="10 7"/>
+</svg>

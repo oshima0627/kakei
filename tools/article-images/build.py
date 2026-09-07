@@ -323,6 +323,74 @@ SLIDES = [
         "note": "縦＝1か月の掛金上限（円）\n第1号＝自営業者等　第2号＝会社員・公務員",
     },
     {
+        "svg": "kuriage-kurisage.svg",
+        "png": "kuriage-kurisage.png",
+        "category": "年金",
+        "title": "年金の繰上げ・繰下げ",
+        "title_size": 34,
+        "subtitle": "繰上げは取り消せず\n繰下げでも増えない部分がある",
+        # 年齢は棒の下、増減は棒の中、破線の意味は上に置く。
+        "labels": [
+            {"at": (98, 322),  "text": "60歳", "size": 12, "align": "center", "width": Inches(0.9)},
+            {"at": (258, 322), "text": "65歳", "size": 12, "align": "center", "width": Inches(0.9)},
+            {"at": (418, 322), "text": "75歳", "size": 12, "align": "center", "width": Inches(0.9)},
+            # ⚠️ 棒の幅は 76px（約0.76インチ）しかない。1行で「84％増える」を置くと
+            #    箱からはみ出し、紺地に紺の字が乗って読めなくなる（実際にそうなった）。
+            {"at": (98, 254),  "text": "24％\n減る", "size": 10, "align": "center",
+             "width": Inches(0.72), "color": NAVY},
+            {"at": (258, 245), "text": "基準", "size": 11, "align": "center",
+             "width": Inches(0.72), "color": NAVY},
+            {"at": (418, 196), "text": "84％\n増える", "size": 10, "align": "center",
+             "width": Inches(0.72), "color": NAVY},
+            {"at": (418, 44),  "text": "加給年金額・振替加算額\nここは増えない", "size": 10,
+             "align": "center", "width": Inches(2.2), "color": WARN},
+        ],
+        "note": "縦＝年金額（65歳を100とした割合）\n黄色い破線＝繰上げでも繰下げでも増減しない部分",
+    },
+    {
+        "svg": "taishoku-shotoku.svg",
+        "png": "taishoku-shotoku.png",
+        "category": "資産形成",
+        "title": "退職所得控除の折れ点",
+        "title_size": 34,
+        "subtitle": "勤続20年を境に\n1年あたり40万円→70万円",
+        # 2つの傾きに名前を付け、折れ点が何年かを軸の下で言う。
+        "labels": [
+            # ⚠️ 折れ線の下（y=272）に置くと線が字を横切った。傾きがゆるい区間なので
+            #    上の余白へ逃がす。
+            {"at": (162, 232), "text": "1年あたり40万円", "size": 11, "align": "center",
+             "width": Inches(1.7)},
+            {"at": (372, 104), "text": "1年あたり70万円", "size": 11, "align": "center",
+             "width": Inches(1.7)},
+            {"at": (280, 324), "text": "勤続20年", "size": 11, "align": "center",
+             "width": Inches(1.3), "color": WARN},
+        ],
+        "note": "横＝勤続年数　縦＝退職所得控除額\n目盛りの数字は置いていない（額は本文の表）",
+    },
+    {
+        "svg": "shoukibo-takuchi.svg",
+        "png": "shoukibo-takuchi.png",
+        "category": "相続",
+        "title": "小規模宅地等の特例",
+        "title_size": 34,
+        "subtitle": "誰が相続するかで\n満たす要件の数が変わる",
+        # 取得者の名前を箱の中に、要件の中身を四角のとなりに置く。
+        "labels": [
+            {"at": (76, 77),  "text": "配偶者", "size": 12, "align": "center",
+             "width": Inches(1.12), "color": NAVY},
+            {"at": (76, 167), "text": "同居していた\n親族", "size": 10, "align": "center",
+             "width": Inches(1.12), "color": NAVY},
+            {"at": (76, 257), "text": "それ以外の\n親族", "size": 10, "align": "center",
+             "width": Inches(1.12), "color": NAVY},
+            {"at": (190, 77),  "text": "要件なし", "size": 13, "width": Inches(1.6)},
+            {"at": (268, 167), "text": "申告期限まで\n居住し、所有する", "size": 10,
+             "width": Inches(1.9)},
+            {"at": (293, 220), "text": "(1)から(6)をすべて満たす", "size": 10, "align": "center",
+             "width": Inches(2.4), "color": WARN},
+        ],
+        "note": "四角の数＝満たすべき要件の数\n面積や金額は表していない",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",

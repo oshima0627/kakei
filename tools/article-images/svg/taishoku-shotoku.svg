@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="350" viewBox="0 0 520 350" role="img" aria-label="勤続年数と退職所得控除額の関係を折れ線で表した図。勤続20年のところで折れ線の傾きが急になり、そこに縦の黄色い破線が引かれている。20年までより20年を超えてからのほうが急に増える">
+  <!-- 記事「退職所得控除」の図版。背景は透過（PowerPoint 側の紺の上に置く）。
+
+       横＝勤続年数（0〜40年）。x = 60 + 年数 × 11px
+       縦＝退職所得控除額（0〜2,200万円）。y = 300 - 万円 × 0.1045px
+         20年 →  800万円 → y=216
+         40年 → 800+70×20 = 2,200万円 → y=70
+       折れ点が勤続20年。ここで1年あたり40万円 → 70万円に変わる。
+
+       ⚠️ この図の主張は「折れ点があること」だけ。金額の目盛りは打っていない
+       （数字だけ置いても何の額か分からなくなるため。金額は本文の表が持つ）。
+       日本語は SVG に入れない。軸の名前・傾き・注記は PowerPoint 側。 -->
+
+  <!-- 軸 -->
+  <line x1="52" y1="300" x2="505" y2="300" stroke="#ffffff" stroke-width="4"
+        stroke-linecap="round" opacity="0.55"/>
+  <line x1="60" y1="56"  x2="60"  y2="308" stroke="#ffffff" stroke-width="4"
+        stroke-linecap="round" opacity="0.55"/>
+
+  <!-- 折れ線: 0年→20年（1年あたり40万円）→40年（1年あたり70万円） -->
+  <polyline points="60,300 280,216 500,70" fill="none" stroke="#ffffff"
+            stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+
+  <!-- 折れ点（勤続20年）を指す縦の破線 -->
+  <line x1="280" y1="204" x2="280" y2="312" stroke="#e7cd7a" stroke-width="4"
+        stroke-dasharray="10 8" stroke-linecap="round"/>
+  <circle cx="280" cy="216" r="8" fill="#e7cd7a"/>
+</svg>
