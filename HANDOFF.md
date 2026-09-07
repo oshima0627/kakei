@@ -367,14 +367,57 @@ Cloudflare の Linux ビルドは LF（記事1本で63バイト差が出る）�
 
 プロパティは `sc-domain:nexeed-lab.com`（uchina-map と共用のドメインプロパティ）。サイトマップ送信済み。
 
-2026-09-02 に、未登録だった8URLへインデックス登録をリクエストした（画面でダイアログを確認済み）。
-**その後どうなったかは未確認。**
+### 2026-09-07 のインデックス登録リクエスト（**2件だけ成功。残り10件は未実施**）
+
+対象は 2026-09-02 以降に出た **12URL**。**画面で確認できた結果だけを書く。**
+
+| URL | 検査したときの状態 | 結果 |
+|---|---|---|
+| `/sozoku/seimeihoken-hikazei/` | 未登録（URL が Google に登録されていません） | **リクエスト送信済み**（「優先クロールキューに追加しました」を画面で確認） |
+| `/nenkin/izoku-nenkin/` | 未登録（同上） | **リクエスト送信済み**（同上） |
+
+**3件目以降は、GSC の URL 検査が「エラーが発生しました。問題が発生しない場合は、数分間待ち
+もう一度お試しください」を返し続けて実施できなかった。**
+約6分待ち、ページの再読み込みと左メニュー経由の再試行もしたが、同じダイアログが出た。
+
+⚠️ **原因は未確認。** 短時間に検査を繰り返したことによる制限と思われるが、
+**GSC は「割り当てを超過しました」とは表示していない**ので、そう決めつけないこと。
+時間を置いて（翌日など）再試行するのが妥当。
+
+### 残り10URL（次に実施する）
+
+```
+https://kakei.nexeed-lab.com/shisan/ideco-jougen/
+https://kakei.nexeed-lab.com/nenkin/kuriage-kurisage/
+https://kakei.nexeed-lab.com/shisan/taishoku-shotoku/
+https://kakei.nexeed-lab.com/sozoku/shoukibo-takuchi/
+https://kakei.nexeed-lab.com/kyoikuhi/hoiku-mushouka/
+https://kakei.nexeed-lab.com/zeikin/jutaku-loan-koujo/
+https://kakei.nexeed-lab.com/kyoikuhi/shogakukin-henkan/
+https://kakei.nexeed-lab.com/sozoku/
+https://kakei.nexeed-lab.com/nenkin/
+https://kakei.nexeed-lab.com/shisan/
+```
+
+### 操作のしかた（実際に通った手順）
+
+1. `https://search.google.com/search-console?resource_id=sc-domain%3Anexeed-lab.com` を開く
+2. **サマリー画面の上部の検索ボックス**をクリックしてURLを入れ、Enter
+3. 「インデックス登録をリクエスト」を押す → 「インデックス登録をリクエスト済み」が出れば成功
+
+⚠️ **検査は「サマリー画面の検索ボックス」からしか発火しない。**
+URL検査の結果画面で検索ボックスに打ち直しても、前のURLの結果が表示されたままになる。
+
+⚠️ **`&url=` を付けたディープリンクは効かない**（サマリーへリダイレクトされる）。
+検査結果のURLは `&id=<ハッシュ>` なので、URLを組み立てて直接開くことはできない。
+
+### 2026-09-02 のリクエスト（8URL・送信済み）
+
+`/kyoikuhi/daigaku-mushouka/`・`/zeikin/furusato-nozei-jogen/`・`/kyoikuhi/koukou-mushouka/`・
+`/zeikin/`・`/kyoikuhi/`・`/about/`・`/privacy/`・`/sitemap/` の8件。
+**その後どうなったかは未確認**（今回は確認していない）。
 
 ⚠️ **リクエストは優先クロールキューに入れるだけで、登録を保証しない。**
-
-**次にやること（本人のダッシュボード操作）**: 送った8URLの状態を URL 検査で見る。
-加えて、その後に出た `/zeikin/jutaku-loan-koujo/`・`/kyoikuhi/shogakukin-henkan/`・
-`/kyoikuhi/hoiku-mushouka/` の3本もリクエストする。
 
 ## 引用を照合する方法
 
@@ -505,8 +548,9 @@ cd site && npm test        # ガードの回帰テスト（test/guards.test.mjs�
 3. **A8・バリューコマースへの登録を検討する。** もしもに無いもの
    （さとふる・ふるなび・大手ネット証券・教育ローン）は、そちらにある
 4. **⚠️ 2026-12-01 に iDeCo 記事の `revisionAt` が切れる**（上の節）
-5. **Search Console のインデックス登録リクエスト**（本人のダッシュボード操作）。
-   `/sozoku/`・`/nenkin/`・`/shisan/` の3カテゴリと、そこに入った記事6本が対象
+5. **⚠️ Search Console のインデックス登録リクエストが10件残っている。**
+   2026-09-07 に12件やろうとして2件で GSC がエラーを返し続けた（上の節に残りのURLと手順）。
+   **時間を置いて再試行する**
 6. **記事を増やす。** 次の候補（一次情報が揃っているもの）:
    国民年金の学生納付特例（日本年金機構）／国民年金保険料の免除・納付猶予（同）／
    加給年金と振替加算（同）／相続税の基礎控除と税率（国税庁）／
