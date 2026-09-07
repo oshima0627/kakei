@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="380" viewBox="0 0 520 380" role="img" aria-label="園に払うお金を4つの区画に分けた表。上段は3歳から5歳児クラス、下段は0歳から2歳児クラス。左端の利用料の区画だけ、上段は黄色い破線の枠で中身が無く、下段は白で残っている。残りの3区画はどちらの段も白">
+  <!-- 記事「幼児教育・保育の無償化」の図版。背景は透過（PowerPoint 側の紺の上に置く）。
+
+       ⚠️ **これは棒グラフではない。** 4つの区画は「園に払うお金の項目」であって、
+       金額の大小を表していない。だから4列とも同じ幅・同じ高さにして、
+       表（マトリクス）に見えるようにしてある。長さで量を語らせない。
+
+       列は左から 利用料 / 食材料費 / 通園送迎費 / 行事費。
+       行は上が3〜5歳児クラス、下が0〜2歳児クラス。
+       白＝保護者が払う。黄の破線の枠＝無償化で払わなくなる分（中身が無い）。
+
+       日本語は SVG に入れない（ラスタライズをフォントに依存させないため）。
+       列名・行名・注記はすべて PowerPoint のテキストボックス側（build.py の labels / note）。
+
+       ⚠️ viewBox の縦横比と図版の枠（FIG_W×FIG_H）の縦横比は一致していない。
+       高さを 380 にしてあるのは、420 だと下に何も無い帯ができて図が上に寄って見えたため。 -->
+
+  <!-- 行の基準線（左端。ここから右が「園に払うお金」） -->
+  <line x1="118" y1="58" x2="118" y2="334" stroke="#ffffff" stroke-width="4"
+        stroke-linecap="round" opacity="0.55"/>
+
+  <!-- 上段: 3〜5歳児クラス。利用料は無償化で消えるので破線の枠だけ -->
+  <rect x="124" y="66" width="88" height="112" rx="9" fill="none"
+        stroke="#e7cd7a" stroke-width="4" stroke-dasharray="14 10"/>
+  <rect x="224" y="66" width="88" height="112" rx="9" fill="#ffffff" opacity="0.92"/>
+  <rect x="324" y="66" width="88" height="112" rx="9" fill="#ffffff" opacity="0.92"/>
+  <rect x="424" y="66" width="88" height="112" rx="9" fill="#ffffff" opacity="0.92"/>
+
+  <!-- 下段: 0〜2歳児クラス。利用料は原則そのまま払う（住民税非課税世帯だけ無償） -->
+  <rect x="124" y="214" width="88" height="112" rx="9" fill="#ffffff" opacity="0.92"/>
+  <rect x="224" y="214" width="88" height="112" rx="9" fill="#ffffff" opacity="0.92"/>
+  <rect x="324" y="214" width="88" height="112" rx="9" fill="#ffffff" opacity="0.92"/>
+  <rect x="424" y="214" width="88" height="112" rx="9" fill="#ffffff" opacity="0.92"/>
+</svg>

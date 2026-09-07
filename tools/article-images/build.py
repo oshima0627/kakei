@@ -230,6 +230,31 @@ SLIDES = [
         "note": "白の合計＝返す総額。減るのは免除だけ",
     },
     {
+        "svg": "hoiku-mushouka.svg",
+        "png": "hoiku-mushouka.png",
+        "category": "教育費",
+        "title": "「保育の無償化」の中身",
+        "title_size": 34,
+        "subtitle": "無料になるのは利用料だけ\n0〜2歳児クラスは原則対象外",
+        # 列名（何の費目か）と行名（どの年齢か）を図の中で名乗らせる。
+        # ⚠️ 棒グラフではないので、区画の幅で量を語らせない（SVG のコメント参照）。
+        "labels": [
+            {"at": (168, 42), "text": "利用料", "size": 11, "align": "center",
+             "width": Inches(0.95), "color": WARN},
+            {"at": (268, 42), "text": "食材料費", "size": 11, "align": "center",
+             "width": Inches(0.95)},
+            {"at": (368, 42), "text": "通園送迎費", "size": 11, "align": "center",
+             "width": Inches(0.95)},
+            {"at": (468, 42), "text": "行事費", "size": 11, "align": "center",
+             "width": Inches(0.95)},
+            {"at": (108, 122), "text": "3〜5歳児\nクラス", "size": 11, "align": "right",
+             "width": Inches(1.2)},
+            {"at": (108, 270), "text": "0〜2歳児\nクラス", "size": 11, "align": "right",
+             "width": Inches(1.2)},
+        ],
+        "note": "白＝払う分　黄色い破線＝無償化で払わなくなる分\n0〜2歳児クラスは住民税非課税世帯だけ利用料が無償",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",
