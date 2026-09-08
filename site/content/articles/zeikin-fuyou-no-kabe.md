@@ -6,15 +6,15 @@ category: zeikin
 eyecatch: /img/og/fuyou-no-kabe.png
 eyecatchAlt: 高さの違う5本の壁に103・106・130・150・160（単位は万円）と書かれた図。壁の下に何の壁かが1本ずつ書いてあり、左から所得税（〜令和6年分）、社会保険の適用拡大、健康保険の被扶養者、配偶者特別控除、所得税（令和7年分〜）。白が税の壁、青が社会保険の壁。
 published: 2026-09-01
-updated: 2026-09-02
-sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1800.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1177.htm | https://www.nta.go.jp/users/gensen/2025kiso/index.htm | https://www.nta.go.jp/users/gensen/2026kiso/index.htm | https://www.keisan.nta.go.jp/r7yokuaru/cat2/cat22/cat22b/cid1238.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2025/20250417syotoku.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm | https://www.mof.go.jp/public_relations/finance/202604/202604c.html | https://www.mhlw.go.jp/tekiyoukakudai/jugyouin/taisho/ | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000147284_00021.html | https://www.mhlw.go.jp/stf/taiou_001_00002.html | https://www.nenkin.go.jp/service/kounen/tekiyo/hihokensha1/20141202.html | https://www.nenkin.go.jp/oshirase/taisetu/2025/202508/0819.html | https://www.nenkin.go.jp/oshirase/taisetu/jigyosho/2026/202605/0501.html
-checkedAt: 2026-09-01
+updated: 2026-09-08
+sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1800.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1177.htm | https://www.nta.go.jp/users/gensen/2025kiso/index.htm | https://www.nta.go.jp/users/gensen/2026kiso/index.htm | https://www.keisan.nta.go.jp/r7yokuaru/cat2/cat22/cat22b/cid1238.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2025/20250417syotoku.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm | https://www.mof.go.jp/public_relations/finance/202604/202604c.html | https://www.mhlw.go.jp/tekiyoukakudai/jugyouin/taisho/ | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000147284_00021.html | https://www.mhlw.go.jp/stf/taiou_001_00002.html | https://www.nenkin.go.jp/service/kounen/tekiyo/hihokensha1/20141202.html | https://www.nenkin.go.jp/oshirase/taisetu/2025/202508/0819.html | https://www.nenkin.go.jp/oshirase/taisetu/jigyosho/2026/202605/0501.html | https://www.mhlw.go.jp/stf/newpage_75950.html | https://www.mhlw.go.jp/content/11200000/001571192.pdf
+checkedAt: 2026-09-08
 revisionAt: 2026-10-01
 ---
 
 扶養の壁と呼ばれている数字は、**ひとつの制度の話ではありません**。所得税の話、社会保険の話、配偶者側の控除の話、子側の控除の話が、たまたま近い金額で並んでいるだけです。
 
-この記事は、103万・106万・130万・150万・160万のそれぞれについて、**公式ページに実際に書いてある文言と金額だけ**を並べたものです。2026-09-01 に各ページを取得して確認しました。金額の暗算や「たぶんこうなる」は入れていません。入れる場合は推論だと明記します。
+この記事は、103万・106万・130万・150万・160万のそれぞれについて、**公式ページに実際に書いてある文言と金額だけ**を並べたものです。2026-09-08 に各ページを取得し直して確認しました。金額の暗算や「たぶんこうなる」は入れていません。入れる場合は推論だと明記します。
 
 ## 先に結論 ― 5つの壁の一覧
 
@@ -33,7 +33,7 @@ revisionAt: 2026-10-01
 ```seido
 制度: 160万円の壁
 根拠: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1800.htm
-確認日: 2026-09-01
+確認日: 2026-09-08
 何の壁か: 本人の所得税
 所得税がかからないパート収入: 160万円以下
 内訳: 給与所得控除65万円＋基礎控除95万円
@@ -65,7 +65,7 @@ revisionAt: 2026-10-01
 ```seido
 制度: 106万円の壁
 根拠: https://www.mhlw.go.jp/tekiyoukakudai/jugyouin/taisho/
-確認日: 2026-09-01
+確認日: 2026-09-08
 何の壁か: 社会保険（被用者保険の適用拡大）
 週の所定労働時間: 20時間以上
 所定内賃金: 月額8.8万円以上
@@ -97,7 +97,45 @@ revisionAt: 2026-10-01
 
 一方、政策ページ「社会保険の加入対象の拡大について」は、条件つきの書き方です。
 
-> 撤廃の時期は、法律の公布から３年以内で、全国の最低賃金が1,016円以上となることを見極めて判断します
+> 撤廃の時期は、法律の公布から３年以内で、 全国の最低賃金が1,016円以上となることを見極めて判断 します（最低賃金1,016円以上の地域で週20時間以上働くと、年額換算で約106万円となります。）。
+
+同じページは、撤廃するもの自体もはっきり書いています。
+
+> いわゆる 「年収106万円の壁」 として意識されていた、月額8.8万円以上の要件を撤廃します。
+
+**この括弧の中が、106万円という数字の出どころです。** 最低賃金1,016円で週20時間働くと、年額でおよそ106万円になる、という関係です。
+
+### 撤廃の条件になっている1,016円は、すでに満たされている（2026-09-08 に確認）
+
+政策ページが条件に挙げている「全国の最低賃金が1,016円以上」が、いま満たされているかを確かめました。
+
+厚生労働省の「令和７年度地域別最低賃金全国一覧」（現在発効しているもの）を見ると、**いちばん低い県で1,023円**です。
+
+| 令和7年度の地域別最低賃金 | 額 |
+|---|---|
+| いちばん低い県（高知・宮崎・沖縄） | 1,023円 |
+| いちばん高い都（東京） | 1,226円 |
+| 全国加重平均 | 1,121円 |
+
+> 高　知 1,023
+
+> 沖　縄 1,023
+
+⚠️ **この表は括弧つきの数字が並んでいるので読み違えやすいところです。** 一覧の注記に、こうあります。
+
+> ※　括弧内の数字は改定前の地域別最低賃金額
+
+括弧の中は前年度（令和6年度）の額で、そちらのいちばん低い額は1,000円台前半です。**括弧の中を読むと1,016円を下回っているように見えます。**
+
+さらに、令和8年度の改定額も答申が出ています。
+
+> 改定額の全国加重平均額は1,177円（昨年度1,121円）
+
+> 最高額（1,280円）に対する最低額（1,085円）の比率は84.8％（昨年度は83.4％。なお、この比率は12年連続の改善）
+
+> 答申された改定額は、都道府県労働局での関係労使からの異議申出に関する手続を経た上で、都道府県労働局長の決定により、令和８年10月１日から令和８年12月２日までの間に順次発効される予定です。
+
+> ⚠️ ここは推論です。条件の「全国の最低賃金が1,016円以上」は令和7年度の時点ですでに満たされており（最低額1,023円）、令和8年度の答申額でも最低額は1,085円です。この点で、特設サイトの「2026年10月に賃金要件を撤廃予定」と、政策ページの「1,016円以上となることを見極めて判断」は、食い違っているのではなく繋がっていると読めます。ただし、**「条件を満たしたので撤廃する」と書いた公式ページは確認できていません。** 撤廃を告げる告示や施行日の記載も見つけられませんでした。
 
 この記事の次の改定予定日を 2026-10-01 にしているのはこのためです。**この記事の106万円の部分は、2026年10月に内容が変わる可能性が高いところです**。
 
@@ -106,7 +144,7 @@ revisionAt: 2026-10-01
 ```seido
 制度: 130万円の壁
 根拠: https://www.nenkin.go.jp/service/kounen/tekiyo/hihokensha1/20141202.html
-確認日: 2026-09-01
+確認日: 2026-09-08
 何の壁か: 社会保険（健康保険の被扶養者）
 年間収入: 130万円未満
 60歳以上または障害者: 180万円未満
@@ -154,7 +192,7 @@ revisionAt: 2026-10-01
 ```seido
 制度: 配偶者特別控除
 根拠: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm
-確認日: 2026-09-01
+確認日: 2026-09-08
 対象となる配偶者: 合計所得金額58万円超133万円以下
 控除額が満額になる範囲: 合計所得金額58万円超95万円以下
 満額の控除額: 38万円
@@ -211,7 +249,7 @@ No.1177 の表は「58万円超85万円以下」から始まっていて、合�
 
 財務省の広報誌の特集（令和8年4月号）では、「基礎控除の本則については改正前58万円を62万円に」「給与所得控除の最低保障額については改正前65万円を69万円に」と説明されています。
 
-一方で、**国税庁のタックスアンサー No.1800 は、2026-09-01 時点でも「令和7年4月1日現在法令等」のままで、160万円と書かれています**。このページに「令和8年」という記述は見当たりませんでした。つまり、**同じ国税庁のサイトの中に、改正を反映したページと、令和7年分の金額のままのページが同時にある**状態です。どちらかが間違っているのではなく、タックスアンサーが「令和7年4月1日現在の法令」を示すページだからです。
+一方で、**国税庁のタックスアンサー No.1800 は、2026-09-08 時点でも「令和7年4月1日現在法令等」のままで、160万円と書かれています**。このページに「令和8年」という記述は見当たりませんでした。つまり、**同じ国税庁のサイトの中に、改正を反映したページと、令和7年分の金額のままのページが同時にある**状態です。どちらかが間違っているのではなく、タックスアンサーが「令和7年4月1日現在の法令」を示すページだからです。
 
 > ⚠️ ここは推論です。基礎控除の本則と給与所得控除の最低保障額がどちらも引き上げられている以上、令和8年分の「パート収入はいくらまで所得税がかからないか」の金額は160万円から動くと考えられます。ただし、**その具体的な金額は、確認した公式ページのどこにも書かれていませんでした**。基礎控除には所得に応じた上乗せの特例があり、その額が令和8年分でどうなるかまで確定させないと金額が出ないため、この記事では計算しません。
 
@@ -223,9 +261,9 @@ No.1177 の表は「58万円超85万円以下」から始まっていて、合�
 - **令和8年分のパート収入の非課税ライン**。上に書いたとおり、公式ページに数字として書かれていません
 - **特定扶養親族の年齢範囲**。国税庁 No.1180 のページ本文では確認できませんでした
 - **19歳以上23歳未満の被扶養者認定を150万円未満に変えた省令・通知の名称**。日本年金機構のお知らせページには、根拠として令和7年度税制改正としか書かれていません
-- **賃金要件が撤廃される正確な日**。厚生労働省の特設サイトは「2026年10月に賃金要件を撤廃予定」、政策ページは「公布から３年以内で、全国の最低賃金が1,016円以上となることを見極めて判断」で、日付が確定した形では書かれていません
+- **賃金要件が撤廃される正確な日**。厚生労働省の特設サイトは「2026年10月に賃金要件を撤廃予定」と書いていますが、政策ページは「公布から３年以内で、全国の最低賃金が1,016円以上となることを見極めて判断」で、**日付が確定した形では書かれていません**。条件のほうは満たされていますが（後述）、**「条件を満たしたので撤廃する」と書いた公式ページは見つけられませんでした**
 
-## 出典一覧（すべて 2026-09-01 に取得）
+## 出典一覧（すべて 2026-09-08 に取得）
 
 - [No.1800 パート収入はいくらまで所得税がかからないか｜国税庁](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1800.htm)
 - [No.1191 配偶者控除｜国税庁](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm)
@@ -244,5 +282,7 @@ No.1177 の表は「58万円超85万円以下」から始まっていて、合�
 - [従業員が家族を被扶養者にするとき、被扶養者に異動があったときの手続き｜日本年金機構](https://www.nenkin.go.jp/service/kounen/tekiyo/hihokensha1/20141202.html)
 - [19歳以上23歳未満の方の被扶養者認定における年間収入要件が変わります｜日本年金機構](https://www.nenkin.go.jp/oshirase/taisetu/2025/202508/0819.html)
 - [労働契約内容による年間収入での被扶養者の認定の取り扱いについて｜日本年金機構](https://www.nenkin.go.jp/oshirase/taisetu/jigyosho/2026/202605/0501.html)
+- [全ての都道府県で地域別最低賃金の改定額が答申されました（令和8年9月3日）｜厚生労働省](https://www.mhlw.go.jp/stf/newpage_75950.html)
+- [令和７年度地域別最低賃金全国一覧（PDF）｜厚生労働省](https://www.mhlw.go.jp/content/11200000/001571192.pdf)
 
 制度は改定されます。手続きの前に、必ず上のページを自分で開いて確認してください。
