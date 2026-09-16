@@ -222,7 +222,7 @@ sitemap.xml → 22URL（16→22）
 | `zeikin/furusato-nozei-jogen` | `furusato-nippon`・`rakuten-ichiba` | 申込先の例（広告を含みます） |
 | `sozoku/shoukibo-takuchi` ／ `sozoku/seimeihoken-hikazei` | `zeirishi-dotcom`・`zeirishi-agent` | 税理士に相談するときの窓口（広告を含みます） |
 
-**FP相談2件（`fp-madoguchi`・`hoken-total-pro`）はまだどの記事にも置いていない。** 年金・iDeCo の記事に置くかは判断待ち。
+**FP相談2件（`fp-madoguchi`・`hoken-total-pro`）は遺族年金・退職所得に配置済み（2026-09-16）。** おすすめ比較にせず「相談窓口の例」として書いた。iDeCo記事には置かない。
 
 書き方の決まり: 「どれを使っても制度上の扱いは変わらない」「使わなくても手続きはできる」を必ず添える。
 おすすめ・比較・ランキングにしない。楽天は「このリンクから購入してください」等の誘導文言が禁止。
@@ -235,7 +235,7 @@ sitemap.xml → 22URL（16→22）
 ### 次にやること（広告）
 
 1. 申請中5件（Amazon 含む）の結果を見る。通ったら `links.json` に足す
-2. FP相談2件を置くか決める（判断待ち）
+2. ~~FP相談2件を置くか決める~~ → 遺族年金・退職所得に配置済み（2026-09-16）
 3. 楽天ふるさと納税の個別ページへ飛ばすなら「どこでもリンク」で作り直す
 
 ## 10本目の記事（2026-09-07・**本番反映まで確認済み**）
