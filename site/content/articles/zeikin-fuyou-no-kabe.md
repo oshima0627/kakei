@@ -8,13 +8,13 @@ eyecatchAlt: 高さの違う5本の壁に103・106・130・150・160（単位は
 published: 2026-09-01
 updated: 2026-09-16
 sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1800.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1177.htm | https://www.nta.go.jp/users/gensen/2025kiso/index.htm | https://www.nta.go.jp/users/gensen/2026kiso/index.htm | https://www.keisan.nta.go.jp/r7yokuaru/cat2/cat22/cat22b/cid1238.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2025/20250417syotoku.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm | https://www.mof.go.jp/public_relations/finance/202604/202604c.html | https://www.mhlw.go.jp/tekiyoukakudai/jugyouin/taisho/ | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000147284_00021.html | https://www.mhlw.go.jp/stf/taiou_001_00002.html | https://www.nenkin.go.jp/service/kounen/tekiyo/hihokensha1/20141202.html | https://www.nenkin.go.jp/oshirase/taisetu/2025/202508/0819.html | https://www.nenkin.go.jp/oshirase/taisetu/jigyosho/2026/202605/0501.html | https://www.mhlw.go.jp/stf/newpage_75950.html | https://www.mhlw.go.jp/content/11200000/001571192.pdf
-checkedAt: 2026-09-08
+checkedAt: 2026-09-16
 revisionAt: 2026-10-01
 ---
 
 扶養の壁と呼ばれている数字は、**ひとつの制度の話ではありません**。所得税の話、社会保険の話、配偶者側の控除の話、子側の控除の話が、たまたま近い金額で並んでいるだけです。
 
-この記事は、103万・106万・130万・150万・160万のそれぞれについて、**公式ページに実際に書いてある文言と金額だけ**を並べたものです。2026-09-08 に各ページを取得し直して確認しました。金額の暗算や「たぶんこうなる」は入れていません。入れる場合は推論だと明記します。
+この記事は、103万・106万・130万・150万・160万のそれぞれについて、**公式ページに実際に書いてある文言と金額だけ**を並べたものです。2026-09-16 に賃金要件まわりの厚労省ページを再取得して確認しました（本文の金額・要件は前回から変わっていません）。金額の暗算や「たぶんこうなる」は入れていません。入れる場合は推論だと明記します。
 
 ## 先に結論 ― 5つの壁の一覧
 
@@ -65,7 +65,7 @@ revisionAt: 2026-10-01
 ```seido
 制度: 106万円の壁
 根拠: https://www.mhlw.go.jp/tekiyoukakudai/jugyouin/taisho/
-確認日: 2026-09-08
+確認日: 2026-09-16
 何の壁か: 社会保険（被用者保険の適用拡大）
 週の所定労働時間: 20時間以上
 所定内賃金: 月額8.8万円以上
@@ -105,7 +105,7 @@ revisionAt: 2026-10-01
 
 **この括弧の中が、106万円という数字の出どころです。** 最低賃金1,016円で週20時間働くと、年額でおよそ106万円になる、という関係です。
 
-### 撤廃の条件になっている1,016円は、すでに満たされている（2026-09-08 に確認）
+### 撤廃の条件になっている1,016円は、すでに満たされている（2026-09-16 にも再確認）
 
 政策ページが条件に挙げている「全国の最低賃金が1,016円以上」が、いま満たされているかを確かめました。
 
