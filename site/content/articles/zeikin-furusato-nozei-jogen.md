@@ -1,12 +1,12 @@
 ---
-title: ふるさと納税の「上限額」は何で決まるのか ― 総務省の計算式を原文で確かめる
-description: ふるさと納税の控除上限は、総務省のページに書かれている3本の計算式で決まります。所得税・住民税（基本分）・住民税（特例分）のそれぞれの上限と、実質負担が2,000円を超える条件を、総務省と国税庁の原文で確認しました。出典URLと確認日つきです。
+title: ふるさと納税の控除上限・限度額は早見表では決まらない ― 総務省の3本の計算式を原文で確かめる
+description: ふるさと納税の控除上限（限度額）に公式の早見表はありません。総務省が書いているのは3本の計算式です。所得税・住民税の上限と、実質負担が2,000円を超える条件を原文で確認しました。出典URLと確認日つきです。
 slug: zeikin/furusato-nozei-jogen
 category: zeikin
 eyecatch: /img/og/furusato-nozei-jogen.png
 eyecatchAlt: 控除を下から積み上げた図。それぞれの段に(1)所得税から、(2)住民税の基本分、(3)住民税の特例分と書かれ、下の白が所得税、上の青2段が住民税。その上に黄色い破線で「住民税所得割額の20％＝ここが天井」が引かれ、破線より上にはみ出した枠が控除されない分を表す。
 published: 2026-09-01
-updated: 2026-09-02
+updated: 2026-09-16
 sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1150.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm
 checkedAt: 2026-09-01
 ---
