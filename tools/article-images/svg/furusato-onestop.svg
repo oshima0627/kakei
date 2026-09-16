@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="binary compare tax return vs onestop with one warn badge">
-  <!-- 申告 vs ワンストップ。黄×は右列の上・ラベルを隠さない位置。 -->
+  <!-- 申告 vs ワンストップ。黄×は両列のあいだ・ラベル外に置き、どの文字にも乗せない。 -->
 
   <!-- 左：確定申告 -->
   <rect x="28" y="88" width="190" height="280" rx="18" fill="none"
@@ -18,10 +18,10 @@
   <text x="377" y="240" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
         font-size="44" font-weight="700" fill="#014172">ALL</text>
 
-  <!-- 唯一の warn：右列の上端中央（列ラベルの右隣に置く想定） -->
-  <circle cx="455" cy="58" r="30" fill="none" stroke="#e7cd7a" stroke-width="5"/>
-  <line x1="437" y1="40" x2="473" y2="76" stroke="#e7cd7a" stroke-width="5" stroke-linecap="round"/>
-  <line x1="473" y1="40" x2="437" y2="76" stroke="#e7cd7a" stroke-width="5" stroke-linecap="round"/>
+  <!-- warn：両列のすき間。確定申告→ワンストップを無効にする、の印。文字から離す -->
+  <circle cx="250" cy="200" r="32" fill="#014172" stroke="#e7cd7a" stroke-width="5"/>
+  <line x1="231" y1="181" x2="269" y2="219" stroke="#e7cd7a" stroke-width="6" stroke-linecap="round"/>
+  <line x1="269" y1="181" x2="231" y2="219" stroke="#e7cd7a" stroke-width="6" stroke-linecap="round"/>
 
   <!-- 5団体（中央下） -->
   <rect x="155" y="398" width="26" height="32" rx="4" fill="#8ec5e8"/>
