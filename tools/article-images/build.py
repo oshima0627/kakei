@@ -443,6 +443,27 @@ SLIDES = [
         "note": "黄の空枠＝遺族基礎が出ない　白帯＝寡婦年金（60〜65歳）\n青箱＝死亡一時金（一回）　OR＝どちらか一方",
     },
     {
+        "svg": "gakusei-nofu-tokurei.svg",
+        "png": "gakusei-nofu-tokurei.png",
+        "category": "年金",
+        "title": "学生納付特例",
+        "title_size": 36,
+        "subtitle": "受給資格期間には入る\n年金額には入らない",
+        "labels": [
+            {"at": (150, 12), "text": "受給資格期間", "size": 12, "align": "center",
+             "width": Inches(1.35)},
+            {"at": (310, 12), "text": "年金額への反映", "size": 12, "align": "center",
+             "width": Inches(1.35)},
+            {"at": (28, 110), "text": "納付", "size": 14, "align": "center",
+             "width": Inches(1.0)},
+            {"at": (28, 212), "text": "学生納付\n特例", "size": 12, "align": "center",
+             "width": Inches(1.0), "color": WARN},
+            {"at": (28, 330), "text": "未納", "size": 14, "align": "center",
+             "width": Inches(1.0)},
+        ],
+        "note": "白の実線＝入る　黄色い破線の空枠＝入らない\n○×はリーフレットの表と同じ構図",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",

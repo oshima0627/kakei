@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。記事は手元18本（本番は push 後に18本になる想定）。**
+**公開済み。記事は手元19本（本番は push 後に19本になる想定）。制度ログのキューは空。**
 
 | | |
 |---|---|
@@ -16,8 +16,8 @@
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
 | デプロイ | **`main` への push で自動**（Cloudflare Workers Builds） |
-| 記事 | 手元 **18本**（下の表） |
-| カテゴリ | **5つ**（`zeikin` 6本 ／ `kyoikuhi` 5本 ／ `nenkin` 3本 ／ `shisan` 2本 ／ `sozoku` 2本） |
+| 記事 | 手元 **19本**（下の表） |
+| カテゴリ | **5つ**（`zeikin` 6本 ／ `kyoikuhi` 5本 ／ `nenkin` 4本 ／ `shisan` 2本 ／ `sozoku` 2本） |
 | 広告リンク | `affiliateEnabled` は `true`。もしもで発行した8本が `links.json` にある |
 | 計測 | Cloudflare Web Analytics 稼働中 |
 
@@ -39,6 +39,7 @@
 | `sozoku/seimeihoken-hikazei` | 受取人が相続人でないと非課税枠を使えない | なし |
 | `nenkin/izoku-nenkin` | 遺族基礎年金は子がいないと出ない | 2027-04-01 |
 | `nenkin/kafu-nenkin` | 寡婦年金と死亡一時金は第1号独自給付。併給不可・選択 | **2028-04-01** |
+| `nenkin/gakusei-nofu-tokurei` | 学生納付特例は資格期間に入り年金額に入らない。免除とは別制度 | なし |
 | `shisan/ideco-jougen` | iDeCoの掛金上限が2026年12月1日から変わる | **2026-12-01** ⚠️ |
 | `nenkin/kuriage-kurisage` | 繰上げは取り消せず、繰下げでも増えない部分がある | なし |
 | `shisan/taishoku-shotoku` | 退職所得控除は勤続20年で1年40万円→70万円 | なし |
@@ -46,26 +47,32 @@
 
 ## いま入れたもの（2026-09-16）
 
-`nenkin/kafu-nenkin` を新規追加。`izoku-nenkin` の未確認にあった「寡婦年金・死亡一時金」の深掘り。1本に両方。
+`nenkin/gakusei-nofu-tokurei` を新規追加。キュー最後の1本。カテゴリは `nenkin`（機構の国民年金制度）。
 
-- 出典: 日本年金機構（独自給付概要／寡婦年金／死亡一時金／手続2本）＋遺族年金ガイドPDF（令和8年度版）＋e-Gov 国民年金法
-- 引用照合: `verify-quotes.py` で 22/22 一致
-- 画像: `tools/article-images/svg/kafu-nenkin.svg` ＋ `site/public/img/og/kafu-nenkin.png`（1200×630）。Linux 上で `build.py` を1枚だけ書き出し（既存PNGは触っていない）
-- AF: なし（橋が弱く、`fp-madoguchi` / `hoken-total-pro` は izoku 側に既出）
-- 内部リンク: `/nenkin/izoku-nenkin/`
+- 出典: 日本年金機構（学生納付特例本体／学生向け案内／ケース12／追納／免除・納付猶予／申請可能期間／令和8年度版リーフレットPDF／追納FAQ）
+- 引用照合: `verify-quotes.py` で 38/38 一致
+- 画像: `tools/article-images/svg/gakusei-nofu-tokurei.svg` ＋ `site/public/img/og/gakusei-nofu-tokurei.png`（1200×630）。Linux 上で1枚だけ書き出し（既存PNGは触っていない）。`build.py` の `SLIDES` には追加済み（フル再生成は未実施）
+- AF: なし（学生・国民年金の橋が弱く、`links.json` に合う案件なし）
+- 内部リンク: `/nenkin/izoku-nenkin/`、`/nenkin/kafu-nenkin/`
 
 ### 検証
 
 ```
-cd site && npm run build → built: 18 article(s), …
+cd site && npm run build → built: 19 article(s), …
 node --test test/guards.test.mjs → 38 pass / 0 fail
-python tools/verify-quotes.py nenkin-kafu-nenkin.md → 22/22
+python tools/verify-quotes.py nenkin-gakusei-nofu-tokurei.md → 38/38
 ```
 
 ### 未確認（記事本文にも書いた）
 
-- 寡婦年金の請求時効5年を、機構の寡婦年金ページがどう書いているか（法102条1項は確認）
-- 寡婦年金と遺族基礎年金の併給可否の、機構による一文
-- 寡婦年金額の円額早見表（4分の3の式のみ）
-- 生計維持・生計同一の収入基準の詳細
-- 令和10年4月以後の子と父または母がいる場合の死亡一時金運用細部
+- 所得基準の「社会保険料控除等」の項目一覧
+- 対象校一覧の個別校・課程の掲載可否
+- 令和8年度追納月額表の学生納付特例分だけの切り出し・検算
+- マイナポータル電子申請の操作手順・アップロード形式の細部
+- 退職（失業）を理由とする申請と特例免除の条文対応
+- 追納後の個人シミュレーション（公式は約2万円／年の目安まで）
+
+## 次にやること
+
+- 制度ログの記事キューは空。次の題材は未定
+- `revisionAt` 接近: `fuyou-no-kabe`（2026-10-01）、`ideco-jougen`（2026-12-01）
