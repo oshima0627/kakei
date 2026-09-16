@@ -45,6 +45,22 @@
 | `shisan/taishoku-shotoku` | 退職所得控除は勤続20年で1年40万円→70万円 | なし |
 | `sozoku/shoukibo-takuchi` | 330㎡・80％減は誰が相続しても使えるわけではない | なし |
 
+## いま入れたもの（2026-09-16・OG再設計）
+
+SERPサムネ（約160–300px）で読めるよう、次の5枚の eyecatch/OG を再設計して `main` に反映。
+
+| slug | 変更の要点 |
+|---|---|
+| `zeikin/fuyou-no-kabe` | 巨大数字壁（103/106/130/150/160）。棒下の詳細ラベルと凡例を削除。タイトル「年収の壁」＋「税と社保を分けて確認」。白＝税／青＝社保 |
+| `zeikin/furusato-nozei-jogen` | 1本スタック＋黄の天井。(1)(2)(3)のみ大きく。脚注削除。タイトル「控除上限は3本の式」 |
+| `zeikin/furusato-onestop` | 申告 vs ワンストップの二択。黄×バッジ1つ。5団体チップ。タイトル「ワンストップ特例」＋「申告すると無効」 |
+| `nenkin/gakusei-nofu-tokurei` | 資格期間○／年金額×の2結論を拡大。微細凡例・3行比較を削除 |
+| `nenkin/kafu-nenkin` | OR二択を拡大（寡婦年金 vs 死亡一時金）。上段空枠・細注を削除 |
+
+実装: `tools/article-images/svg/*.svg` と `build.py` の `SLIDES` を更新。`build.py --only ...` で当該5枚だけ再書き出し（他PNG・`article-images.pptx` は未更新）。各記事の `eyecatchAlt` も新図に合わせて更新。160/300pxプレビューは `/workspace/kakei-img-research/out/`。
+
+---
+
 ## いま入れたもの（2026-09-16）
 
 `nenkin/gakusei-nofu-tokurei` を新規追加。キュー最後の1本。カテゴリは `nenkin`（機構の国民年金制度）。

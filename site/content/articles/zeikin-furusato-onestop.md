@@ -4,7 +4,7 @@ description: ふるさと納税ワンストップ特例は、確定申告の不�
 slug: zeikin/furusato-onestop
 category: zeikin
 eyecatch: /img/og/furusato-onestop.png
-eyecatchAlt: 左が確定申告（下の白が所得税、上の青が住民税）、右がワンストップ（青の一本が全額住民税）の対比図。右の上に黄色い×で「確定申告で無効」、下に青い5本の棒が5団体以内、黄色い破線の1本が6団体以上を表す。
+eyecatchAlt: 左が確定申告（上の青と下の白の二段）、右がワンストップ（青のALL）の対比図。右上に黄色い×、下に青い5本の棒で5団体以内。タイトルは「ワンストップ特例」、一文で「申告すると無効」。
 published: 2026-09-16
 updated: 2026-09-16
 sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.soumu.go.jp/main_content/000397109.pdf

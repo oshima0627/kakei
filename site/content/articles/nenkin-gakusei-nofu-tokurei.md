@@ -4,7 +4,7 @@ description: 学生納付特例は、前年所得が一定以下の学生が申�
 slug: nenkin/gakusei-nofu-tokurei
 category: nenkin
 eyecatch: /img/og/gakusei-nofu-tokurei.png
-eyecatchAlt: 納付・学生納付特例・未納の3行比較図。左列は受給資格期間、右列は年金額への反映。納付は左右とも白い実線の箱、学生納付特例は左だけ白で右は黄色い破線の空枠、未納は左右とも黄色い破線の空枠。学生納付特例が資格期間には入り年金額には入らないことを示す。
+eyecatchAlt: 左の白い箱に資格期間の○、右の黄色い破線枠に年金額の×を大きく置いた図。タイトルは「学生納付特例」。字幕は「資格期間には入る」「年金額には入らない」。
 published: 2026-09-16
 updated: 2026-09-16
 sources: https://www.nenkin.go.jp/service/kokunen/menjo/20150514.html | https://www.nenkin.go.jp/tokusetsu/gakusei.html | https://www.nenkin.go.jp/shinsei/kokunen/menjoyuyo/gakusei.html | https://www.nenkin.go.jp/service/kokunen/menjo/20150331.html | https://www.nenkin.go.jp/service/kokunen/menjo/20150428.html | https://www.nenkin.go.jp/service/kokunen/menjo/20150402-01.html | https://www.nenkin.go.jp/service/pamphlet/kokuminnenkin.files/point.pdf | https://www.nenkin.go.jp/section/faq/kokunen/seido/hokenryo/tsuino/20200820.html

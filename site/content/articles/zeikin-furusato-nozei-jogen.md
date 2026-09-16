@@ -4,7 +4,7 @@ description: ふるさと納税の控除上限（限度額）に公式の早見�
 slug: zeikin/furusato-nozei-jogen
 category: zeikin
 eyecatch: /img/og/furusato-nozei-jogen.png
-eyecatchAlt: 控除を下から積み上げた図。それぞれの段に(1)所得税から、(2)住民税の基本分、(3)住民税の特例分と書かれ、下の白が所得税、上の青2段が住民税。その上に黄色い破線で「住民税所得割額の20％＝ここが天井」が引かれ、破線より上にはみ出した枠が控除されない分を表す。
+eyecatchAlt: 控除を1本に積み上げた図。下から(1)(2)(3)が大きく書かれ、上に黄色い破線の天井。タイトルは「控除上限は3本の式」、一文で「黄色い破線が天井」。
 published: 2026-09-01
 updated: 2026-09-16
 sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1150.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm

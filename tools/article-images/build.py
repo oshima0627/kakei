@@ -68,36 +68,29 @@ SLIDES = [
         "svg": "fuyou-no-kabe.svg",
         "png": "fuyou-no-kabe.png",
         "category": "税と社会保険",
-        "title": "扶養の壁",
-        "title_size": 46,
-        "subtitle": "103・106・130・150・160 は\n何の壁なのか",
-        # 壁の下に「何の壁か」を1本ずつ置く。色分け（白＝税／青＝社会保険）は
-        # ラベルで言い換えられるので凡例は置かない。
-        "labels": [
-            {"at": (70, 428),  "text": "所得税\n〜令和6年分", "size": 10, "align": "center", "width": Inches(0.94)},
-            {"at": (160, 428), "text": "社会保険\n適用拡大", "size": 10, "align": "center", "width": Inches(0.94), "color": AZURE},
-            {"at": (250, 428), "text": "健康保険の\n被扶養者", "size": 10, "align": "center", "width": Inches(0.94), "color": AZURE},
-            {"at": (340, 428), "text": "配偶者\n特別控除", "size": 10, "align": "center", "width": Inches(0.94)},
-            {"at": (430, 428), "text": "所得税\n令和7年分〜", "size": 10, "align": "center", "width": Inches(0.94)},
-        ],
-        "note": "単位：万円　白＝税の壁　青＝社会保険の壁",
+        "title": "年収の壁",
+        "title_size": 54,
+        "subtitle": "税と社保を分けて確認",
+        "subtitle_size": 28,
+        # サムネでは数字壁がヒーロー。棒下の詳細ラベルと長い凡例は置かない。
+        # 色分けは数字の色（白＝税／青＝社保）と字幕で伝える。
+        "labels": [],
+        "note": "",
     },
     {
         "svg": "furusato-nozei-jogen.svg",
         "png": "furusato-nozei-jogen.png",
         "category": "税と社会保険",
-        "title": "ふるさと納税の上限額",
-        "title_size": 34,
-        "subtitle": "決めているのは\n総務省の3本の計算式",
-        # ラベルで名前が付いたので凡例は置かない（色と名前を二度説明することになる）
+        "title": "控除上限は3本の式",
+        "title_size": 42,
+        "subtitle": "黄色い破線が天井",
+        "subtitle_size": 28,
+        # 段の中身は大きい (1)(2)(3)。詳細名と脚注はサムネでは置かない。
         "labels": [
-            {"at": (212, 345), "text": "(1) 所得税から", "size": 15},
-            {"at": (212, 263), "text": "(2) 住民税の基本分", "size": 15},
-            {"at": (212, 169), "text": "(3) 住民税の特例分", "size": 15},
-            {"at": (212, 74), "text": "住民税所得割額の20％\n＝ここが天井",
-             "size": 13, "color": WARN},
+            {"at": (250, 58), "text": "天井", "size": 22, "align": "center",
+             "width": Inches(1.6), "color": WARN},
         ],
-        "note": "破線の上にはみ出した分は控除されず、自己負担として残る",
+        "note": "",
     },
     {
         "svg": "koukou-mushouka.svg",
@@ -398,70 +391,54 @@ SLIDES = [
         "svg": "furusato-onestop.svg",
         "png": "furusato-onestop.png",
         "category": "税と社会保険",
-        "title": "ふるさと納税ワンストップ特例",
-        "title_size": 30,
-        "subtitle": "控除は全額・翌年度の住民税\n確定申告すると申請は無効",
+        "title": "ワンストップ特例",
+        "title_size": 44,
+        "subtitle": "申告すると無効",
+        "subtitle_size": 30,
+        # 二択を大きく。warn は黄×バッジ1つだけ。脚注凡例は置かない。
         "labels": [
-            {"at": (73, 62),  "text": "確定申告", "size": 12, "align": "center",
-             "width": Inches(1.1)},
-            {"at": (183, 62), "text": "ワンストップ", "size": 12, "align": "center",
-             "width": Inches(1.3)},
-            {"at": (73, 308), "text": "所得税", "size": 12, "align": "center",
-             "width": Inches(1.0), "color": NAVY},
-            {"at": (73, 160), "text": "住民税", "size": 12, "align": "center",
-             "width": Inches(1.0), "color": NAVY},
-            {"at": (183, 200), "text": "全額\n住民税", "size": 13, "align": "center",
-             "width": Inches(1.0), "color": NAVY},
-            {"at": (250, 48), "text": "確定申告で無効", "size": 12, "color": WARN},
-            {"at": (72, 430), "text": "5団体以内", "size": 11, "align": "center",
-             "width": Inches(1.4)},
-            {"at": (153, 430), "text": "6団体〜", "size": 11, "align": "center",
-             "width": Inches(0.9), "color": WARN},
+            {"at": (123, 52), "text": "確定申告", "size": 20, "align": "center",
+             "width": Inches(1.9)},
+            {"at": (377, 52), "text": "ワンストップ", "size": 20, "align": "center",
+             "width": Inches(2.1)},
+            {"at": (250, 430), "text": "5団体以内", "size": 18, "align": "center",
+             "width": Inches(2.0)},
         ],
-        "note": "白＝所得税　青＝住民税　黄＝無効・対象外の目印",
+        "note": "",
     },
     {
         "svg": "kafu-nenkin.svg",
         "png": "kafu-nenkin.png",
         "category": "年金",
-        "title": "寡婦年金・死亡一時金",
-        "title_size": 34,
-        "subtitle": "遺族基礎年金が出ない世帯向けの\n第1号独自給付",
+        "title": "寡婦年金か死亡一時金",
+        "title_size": 36,
+        "subtitle": "どちらか一方を選ぶ",
+        "subtitle_size": 28,
+        # OR の二択を大きく。細注・上段の空枠ラベルは置かない。
         "labels": [
-            {"at": (40, 28),  "text": "遺族基礎年金が出ない", "size": 12,
-             "width": Inches(2.6), "color": WARN},
-            {"at": (40, 188), "text": "寡婦年金", "size": 13},
-            {"at": (52, 300), "text": "60歳", "size": 11, "align": "center",
-             "width": Inches(0.7)},
-            {"at": (180, 300), "text": "65歳", "size": 11, "align": "center",
-             "width": Inches(0.7)},
-            {"at": (280, 172), "text": "死亡一時金", "size": 12,
-             "width": Inches(1.4)},
-            {"at": (40, 340), "text": "第1号被保険者だけの給付\n（厚生年金には無い）", "size": 11,
-             "width": Inches(3.0), "color": AZURE},
+            {"at": (118, 100), "text": "寡婦年金", "size": 22, "align": "center",
+             "width": Inches(1.9)},
+            {"at": (382, 100), "text": "死亡一時金", "size": 22, "align": "center",
+             "width": Inches(2.0)},
         ],
-        "note": "黄の空枠＝遺族基礎が出ない　白帯＝寡婦年金（60〜65歳）\n青箱＝死亡一時金（一回）　OR＝どちらか一方",
+        "note": "",
     },
     {
         "svg": "gakusei-nofu-tokurei.svg",
         "png": "gakusei-nofu-tokurei.png",
         "category": "年金",
         "title": "学生納付特例",
-        "title_size": 36,
-        "subtitle": "受給資格期間には入る\n年金額には入らない",
+        "title_size": 42,
+        "subtitle": "資格期間には入る\n年金額には入らない",
+        "subtitle_size": 30,
+        # 2結論を左の字幕＋右の大きい○×で見せる。微細凡例は置かない。
         "labels": [
-            {"at": (150, 12), "text": "受給資格期間", "size": 12, "align": "center",
-             "width": Inches(1.35)},
-            {"at": (310, 12), "text": "年金額への反映", "size": 12, "align": "center",
-             "width": Inches(1.35)},
-            {"at": (28, 110), "text": "納付", "size": 14, "align": "center",
-             "width": Inches(1.0)},
-            {"at": (28, 212), "text": "学生納付\n特例", "size": 12, "align": "center",
-             "width": Inches(1.0), "color": WARN},
-            {"at": (28, 330), "text": "未納", "size": 14, "align": "center",
-             "width": Inches(1.0)},
+            {"at": (125, 36), "text": "資格期間", "size": 24, "align": "center",
+             "width": Inches(2.0)},
+            {"at": (375, 36), "text": "年金額", "size": 24, "align": "center",
+             "width": Inches(2.0), "color": WARN},
         ],
-        "note": "白の実線＝入る　黄色い破線の空枠＝入らない\n○×はリーフレットの表と同じ構図",
+        "note": "",
     },
     {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
@@ -613,8 +590,9 @@ def build_pptx(png_paths):
                      [spec["category"]], 18, bold=True, color=AZURE)
             add_text(slide, Inches(0.78), Inches(2.12), Inches(5.75), Inches(1.0),
                      [spec["title"]], spec["title_size"], bold=True)
-            add_text(slide, Inches(0.78), Inches(3.28), Inches(5.6), Inches(1.4),
-                     spec["subtitle"].split(chr(10)), 26, spacing=1.35, color=WHITE)
+            add_text(slide, Inches(0.78), Inches(3.28), Inches(5.6), Inches(1.6),
+                     spec["subtitle"].split(chr(10)),
+                     spec.get("subtitle_size", 26), spacing=1.35, color=WHITE)
             add_text(slide, Inches(0.78), Inches(5.62), Inches(5.6), Inches(0.4),
                      ["家計の制度ログ　kakei.nexeed-lab.com"], 17, color=AZURE)
 
@@ -743,23 +721,60 @@ def export_pngs(pptx_path):
     return made
 
 
-def main():
+def select_slides(only):
+    """--only で指定した png ベース名だけ返す。未指定なら全件。"""
+    if not only:
+        return list(SLIDES)
+    wanted = {s.strip().removesuffix(".png") for s in only.split(",") if s.strip()}
+    selected = [s for s in SLIDES if s["png"].removesuffix(".png") in wanted]
+    missing = wanted - {s["png"].removesuffix(".png") for s in selected}
+    if missing:
+        raise RuntimeError(f"--only に未知の名前があります: {sorted(missing)}")
+    if not selected:
+        raise RuntimeError("--only の結果が空です")
+    return selected
+
+
+def main(argv=None):
+    import argparse
+    global SLIDES, PPTX
+
+    p = argparse.ArgumentParser(description="記事 eyecatch / OG PNG を書き出す")
+    p.add_argument(
+        "--only",
+        help="カンマ区切りの png ベース名（拡張子なし）。指定時はそれだけ書き、"
+             "他の PNG と article-images.pptx は触らない",
+    )
+    args = p.parse_args(argv)
+
+    selected = select_slides(args.only)
+
     shutil.rmtree(WORK, ignore_errors=True)
     os.makedirs(WORK, exist_ok=True)
 
+    # --only 時は一時 pptx。フル実行時だけリポジトリの article-images.pptx を更新する。
+    pptx_path = os.path.join(WORK, "partial.pptx") if args.only else PPTX
+
     png_paths = {}
-    for spec in SLIDES:
+    for spec in selected:
         src = os.path.join(SVG_DIR, spec["svg"])
         # PowerPoint 上の表示は 500×450 なので、代替 PNG は 2 倍で持たせる
         png_paths[spec["svg"]] = svg_to_png(src, WORK, 1000, 900)
         print(f"svg -> png: {spec['svg']}")
 
-    build_pptx(png_paths)
-    embed_svg(PPTX)
-    print(f"pptx: {PPTX}")
-
-    for out, size in export_pngs(PPTX):
-        print(f"png : {out} ({size:,} bytes)")
+    # build_pptx / embed_svg / export_pngs はモジュール定数 SLIDES / PPTX を見る。
+    saved_slides, saved_pptx = SLIDES, PPTX
+    SLIDES = selected
+    PPTX = pptx_path
+    try:
+        build_pptx(png_paths)
+        embed_svg(PPTX)
+        print(f"pptx: {PPTX}")
+        for out, size in export_pngs(PPTX):
+            print(f"png : {out} ({size:,} bytes)")
+    finally:
+        SLIDES = saved_slides
+        PPTX = saved_pptx
 
 
 if __name__ == "__main__":

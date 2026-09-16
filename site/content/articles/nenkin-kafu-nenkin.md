@@ -4,7 +4,7 @@ description: 寡婦年金は婚姻10年以上の妻が60歳から65歳まで、�
 slug: nenkin/kafu-nenkin
 category: nenkin
 eyecatch: /img/og/kafu-nenkin.png
-eyecatchAlt: 上段は遺族基礎年金が出ないことを黄色い破線の空枠と×で示す。下段左は白い帯（寡婦年金・60歳から65歳）、下段右は青い箱に1×（死亡一時金・一回払い）。中央の黄色いORはどちらか一方の選択を表す。下の枠は第1号のみの給付であることを示す。
+eyecatchAlt: 左に寡婦年金（白い帯と60〜65）、右に死亡一時金（青い箱に1×）、中央に黄色いORの二択図。タイトルは「寡婦年金か死亡一時金」、一文で「どちらか一方を選ぶ」。
 published: 2026-09-16
 updated: 2026-09-16
 sources: https://www.nenkin.go.jp/service/jukyu/seido/sonota-kyufu/1go-dokuji/20140422-03.html | https://www.nenkin.go.jp/service/jukyu/seido/sonota-kyufu/1go-dokuji/20140422-02.html | https://www.nenkin.go.jp/service/jukyu/seido/sonota-kyufu/1go-dokuji/20140422-01.html | https://www.nenkin.go.jp/service/pamphlet/kyufu.files/LK03-3.pdf | https://www.nenkin.go.jp/service/jukyu/tetsuduki/sonota-kyufu/20140422.html | https://www.nenkin.go.jp/service/jukyu/tetsuduki/sonota-kyufu/20140708.html | https://laws.e-gov.go.jp/law/334AC0000000141
