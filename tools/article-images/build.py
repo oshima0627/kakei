@@ -37,7 +37,11 @@ WORK = os.path.join(HERE, "_work")
 PPTX = os.path.join(HERE, "article-images.pptx")
 OUT_DIR = os.path.join(REPO, "site", "public", "img", "og")
 
-SOFFICE = r"C:\Program Files\LibreOffice\program\soffice.exe"
+SOFFICE = (
+    r"C:\Program Files\LibreOffice\program\soffice.exe"
+    if os.path.exists(r"C:\Program Files\LibreOffice\program\soffice.exe")
+    else "soffice"
+)
 # 実行中の LibreOffice と衝突しないよう、専用のユーザープロファイルを使う
 LO_PROFILE = "file:///" + os.path.join(WORK, "loprofile").replace("\\", "/")
 
@@ -47,7 +51,7 @@ NAVY = RGBColor(0x01, 0x41, 0x72)   # --navy
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
 AZURE = RGBColor(0x8E, 0xC5, 0xE8)  # --link (#0077c6) を紺の上で読める明るさにしたもの
 WARN = RGBColor(0xE7, 0xCD, 0x7A)   # --warn-line。図の黄色い破線と、それを指すラベルに使う
-JP_FONT = "Yu Gothic UI"
+JP_FONT = "Noto Sans CJK JP" if os.name != "nt" else "Yu Gothic UI"
 
 # 1200×630 px を 96dpi として inch に直した値
 SLIDE_W = Inches(12.5)
@@ -389,6 +393,32 @@ SLIDES = [
              "width": Inches(2.4), "color": WARN},
         ],
         "note": "四角の数＝満たすべき要件の数\n面積や金額は表していない",
+    },
+    {
+        "svg": "furusato-onestop.svg",
+        "png": "furusato-onestop.png",
+        "category": "税と社会保険",
+        "title": "ふるさと納税ワンストップ特例",
+        "title_size": 30,
+        "subtitle": "控除は全額・翌年度の住民税\n確定申告すると申請は無効",
+        "labels": [
+            {"at": (73, 62),  "text": "確定申告", "size": 12, "align": "center",
+             "width": Inches(1.1)},
+            {"at": (183, 62), "text": "ワンストップ", "size": 12, "align": "center",
+             "width": Inches(1.3)},
+            {"at": (73, 308), "text": "所得税", "size": 12, "align": "center",
+             "width": Inches(1.0), "color": NAVY},
+            {"at": (73, 160), "text": "住民税", "size": 12, "align": "center",
+             "width": Inches(1.0), "color": NAVY},
+            {"at": (183, 200), "text": "全額\n住民税", "size": 13, "align": "center",
+             "width": Inches(1.0), "color": NAVY},
+            {"at": (250, 48), "text": "確定申告で無効", "size": 12, "color": WARN},
+            {"at": (72, 430), "text": "5団体以内", "size": 11, "align": "center",
+             "width": Inches(1.4)},
+            {"at": (153, 430), "text": "6団体〜", "size": 11, "align": "center",
+             "width": Inches(0.9), "color": WARN},
+        ],
+        "note": "白＝所得税　青＝住民税　黄＝無効・対象外の目印",
     },
     {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
