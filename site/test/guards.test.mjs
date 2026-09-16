@@ -216,6 +216,16 @@ test('[[AF:]] を置いた固定ページには、広告リンクとPR表記の�
   assert.match(html, /class="pr-notice"/);
 });
 
+test('affiliateEnabled=true でも、[[AF:]] を置いていない記事にはPR表記が出ない', () => {
+  // 2026-09-16 にリンクを出し始めたとき、全記事に「この記事には広告が含まれます」が付いていた。
+  // 広告の無い記事に広告があると書くのは事実に反するので、置いた記事だけに出す。
+  const r = runBuild('page-af-link', { KAKEI_TODAY: '2026-09-01' });
+  assert.equal(r.code, 0, r.stderr);
+  const html = fs.readFileSync(path.join(SITE, 'test/.out/page-af-link/zeikin/seido-ok/index.html'), 'utf8');
+  assert.doesNotMatch(html, /class="buy"/);
+  assert.doesNotMatch(html, /class="pr-notice/);
+});
+
 test('checkedAt が実在しない日付だとビルドが落ちる', () => {
   const r = runBuild('checked-bad-date', { KAKEI_TODAY: '2026-09-01' });
   assert.notEqual(r.code, 0);

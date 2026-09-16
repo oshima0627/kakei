@@ -717,7 +717,9 @@ for (const a of articles) {
       a.updated !== a.published ? ` ／ <time datetime="${esc(a.updated)}">更新 ${esc(a.updated)}</time>` : ''
     }</p>` +
     eyecatch +
-    prNoticeHtml +
+    // PR表記は広告リンクを含む記事にだけ出す。含まない記事に「広告が含まれます」と書くのは事実に反する。
+    // affiliateEnabled=false のあいだは全記事に「リンクは無い」の注記（prNoticeHtml の pending 版）を出す。
+    (a.body.includes('[[AF:') || !site.affiliateEnabled ? prNoticeHtml : '') +
     (hasToc(parsed.headings) ? `<nav class="toc"><p class="toc__title">目次</p>${tocList(parsed.headings)}</nav>` : '') +
     html +
     shareButtons(a.title, a.url) +
