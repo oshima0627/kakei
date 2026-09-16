@@ -421,6 +421,28 @@ SLIDES = [
         "note": "白＝所得税　青＝住民税　黄＝無効・対象外の目印",
     },
     {
+        "svg": "kafu-nenkin.svg",
+        "png": "kafu-nenkin.png",
+        "category": "年金",
+        "title": "寡婦年金・死亡一時金",
+        "title_size": 34,
+        "subtitle": "遺族基礎年金が出ない世帯向けの\n第1号独自給付",
+        "labels": [
+            {"at": (40, 28),  "text": "遺族基礎年金が出ない", "size": 12,
+             "width": Inches(2.6), "color": WARN},
+            {"at": (40, 188), "text": "寡婦年金", "size": 13},
+            {"at": (52, 300), "text": "60歳", "size": 11, "align": "center",
+             "width": Inches(0.7)},
+            {"at": (180, 300), "text": "65歳", "size": 11, "align": "center",
+             "width": Inches(0.7)},
+            {"at": (280, 172), "text": "死亡一時金", "size": 12,
+             "width": Inches(1.4)},
+            {"at": (40, 340), "text": "第1号被保険者だけの給付\n（厚生年金には無い）", "size": 11,
+             "width": Inches(3.0), "color": AZURE},
+        ],
+        "note": "黄の空枠＝遺族基礎が出ない　白帯＝寡婦年金（60〜65歳）\n青箱＝死亡一時金（一回）　OR＝どちらか一方",
+    },
+    {
         # 記事に eyecatch が無いときの既定の og:image（site.json の defaultOgImage）
         "kind": "site",
         "svg": "brand-mark.svg",

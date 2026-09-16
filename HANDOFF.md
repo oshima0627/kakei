@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。記事は手元17本（本番は push 後に17本になる想定）。**
+**公開済み。記事は手元18本（本番は push 後に18本になる想定）。**
 
 | | |
 |---|---|
@@ -16,8 +16,8 @@
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
 | デプロイ | **`main` への push で自動**（Cloudflare Workers Builds） |
-| 記事 | 手元 **17本**（下の表） |
-| カテゴリ | **5つ**（`zeikin` 6本 ／ `kyoikuhi` 5本 ／ `nenkin` 2本 ／ `shisan` 2本 ／ `sozoku` 2本） |
+| 記事 | 手元 **18本**（下の表） |
+| カテゴリ | **5つ**（`zeikin` 6本 ／ `kyoikuhi` 5本 ／ `nenkin` 3本 ／ `shisan` 2本 ／ `sozoku` 2本） |
 | 広告リンク | `affiliateEnabled` は `true`。もしもで発行した8本が `links.json` にある |
 | 計測 | Cloudflare Web Analytics 稼働中 |
 
@@ -38,6 +38,7 @@
 | `kyoikuhi/hoiku-mushouka` | 無料になるのは利用料だけ | なし |
 | `sozoku/seimeihoken-hikazei` | 受取人が相続人でないと非課税枠を使えない | なし |
 | `nenkin/izoku-nenkin` | 遺族基礎年金は子がいないと出ない | 2027-04-01 |
+| `nenkin/kafu-nenkin` | 寡婦年金と死亡一時金は第1号独自給付。併給不可・選択 | **2028-04-01** |
 | `shisan/ideco-jougen` | iDeCoの掛金上限が2026年12月1日から変わる | **2026-12-01** ⚠️ |
 | `nenkin/kuriage-kurisage` | 繰上げは取り消せず、繰下げでも増えない部分がある | なし |
 | `shisan/taishoku-shotoku` | 退職所得控除は勤続20年で1年40万円→70万円 | なし |
@@ -45,23 +46,26 @@
 
 ## いま入れたもの（2026-09-16）
 
-`zeikin/furusato-onestop` を新規追加。既存の `furusato-nozei-jogen` にあるワンストップ節の深掘り。
+`nenkin/kafu-nenkin` を新規追加。`izoku-nenkin` の未確認にあった「寡婦年金・死亡一時金」の深掘り。1本に両方。
 
-- 出典: 総務省（控除／流れ／制度改正2015-04-01／FAQ／概要）＋国税庁 No.1155 ＋申告特例申請書PDF
-- 引用照合: `verify-quotes.py` で 21/21 一致
-- 画像: `tools/article-images/svg/furusato-onestop.svg` ＋ `site/public/img/og/furusato-onestop.png`（1200×630）。Linux 上で `build.py` の1枚だけ書き出し（既存PNGは触っていない）。`article-images.pptx` への全スライド再生成は未実施（Windows＋Yu Gothic 想定の本番ビルドとはフォントが違うため）
-- `build.py` に Linux 用 `soffice` フォールバックと `Noto Sans CJK JP` 切替を足した
+- 出典: 日本年金機構（独自給付概要／寡婦年金／死亡一時金／手続2本）＋遺族年金ガイドPDF（令和8年度版）＋e-Gov 国民年金法
+- 引用照合: `verify-quotes.py` で 22/22 一致
+- 画像: `tools/article-images/svg/kafu-nenkin.svg` ＋ `site/public/img/og/kafu-nenkin.png`（1200×630）。Linux 上で `build.py` を1枚だけ書き出し（既存PNGは触っていない）
+- AF: なし（橋が弱く、`fp-madoguchi` / `hoken-total-pro` は izoku 側に既出）
+- 内部リンク: `/nenkin/izoku-nenkin/`
 
 ### 検証
 
 ```
-cd site && npm run build → built: 17 article(s), …
+cd site && npm run build → built: 18 article(s), …
 node --test test/guards.test.mjs → 38 pass / 0 fail
-（`npm test` の glob は Node v20 だと展開されず失敗。Node >=22 か上記の直接指定で通る）
-python tools/verify-quotes.py zeikin-furusato-onestop.md → 21/21
+python tools/verify-quotes.py nenkin-kafu-nenkin.md → 22/22
 ```
 
 ### 未確認（記事本文にも書いた）
 
-- ワンストップ**申請書本体**の提出期限（変更届出書の翌年1月10日は確認済み）
-- 自治体ごとの申請書様式・本人確認書類
+- 寡婦年金の請求時効5年を、機構の寡婦年金ページがどう書いているか（法102条1項は確認）
+- 寡婦年金と遺族基礎年金の併給可否の、機構による一文
+- 寡婦年金額の円額早見表（4分の3の式のみ）
+- 生計維持・生計同一の収入基準の詳細
+- 令和10年4月以後の子と父または母がいる場合の死亡一時金運用細部

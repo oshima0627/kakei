@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" role="img" aria-label="When survivor basic pension is empty, widow pension fills ages 60-65 and death lump sum is a one-time block; choose one">
+  <!-- Article: 寡婦年金・死亡一時金. Transparent bg (navy PPT slide behind).
+       Top: empty dashed yellow = survivor basic pension not paid (no child).
+       Bottom-left white bar = widow pension ages 60 to 65.
+       Bottom-right white block = death lump sum (one-time).
+       Yellow OR between them = mutual exclusivity.
+       No Japanese text in SVG. -->
+
+  <!-- Top: survivor basic pension gap -->
+  <rect x="40" y="48" width="300" height="70" rx="10" fill="none"
+        stroke="#e7cd7a" stroke-width="4" stroke-dasharray="14 10"/>
+  <line x1="70" y1="68" x2="100" y2="98" stroke="#e7cd7a" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="100" y1="68" x2="70" y2="98" stroke="#e7cd7a" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- Arrow down from gap to alternatives -->
+  <line x1="190" y1="128" x2="190" y2="168" stroke="#ffffff" stroke-width="3"
+        stroke-linecap="round" opacity="0.55"/>
+  <polygon points="190,184 178,164 202,164" fill="#ffffff" opacity="0.55"/>
+
+  <!-- Left: widow pension (continuous bar 60→65) -->
+  <rect x="40" y="210" width="180" height="56" rx="9" fill="#ffffff" opacity="0.92"/>
+  <!-- age ticks under the bar -->
+  <line x1="52" y1="280" x2="208" y2="280" stroke="#ffffff" stroke-width="3"
+        stroke-linecap="round" opacity="0.45"/>
+  <line x1="52" y1="274" x2="52" y2="286" stroke="#ffffff" stroke-width="3" opacity="0.55"/>
+  <line x1="208" y1="274" x2="208" y2="286" stroke="#ffffff" stroke-width="3" opacity="0.55"/>
+
+  <!-- Right: death lump sum (single block) -->
+  <rect x="280" y="200" width="100" height="76" rx="10" fill="#8ec5e8" opacity="0.92"/>
+  <text x="330" y="248" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="22" font-weight="700" fill="#014172">1×</text>
+
+  <!-- OR / choose one -->
+  <circle cx="250" cy="238" r="22" fill="none" stroke="#e7cd7a" stroke-width="3.5"/>
+  <text x="250" y="245" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="14" font-weight="700" fill="#e7cd7a">OR</text>
+
+  <!-- Bottom note strip: Category-1 only -->
+  <rect x="40" y="360" width="300" height="48" rx="8" fill="none"
+        stroke="#ffffff" stroke-width="2.5" opacity="0.4"/>
+  <text x="190" y="392" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="18" font-weight="700" fill="#8ec5e8">No.1 only</text>
+</svg>
