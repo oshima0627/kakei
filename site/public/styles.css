@@ -171,15 +171,21 @@ h1 {
   margin: 3rem 0;
 }
 
+/* 原文引用・強調枠。背景は淡く、文字は本文色で読む。
+ * ⚠️ color: var(--muted) だと --surface の上でコントラストが足りず、
+ * 「強調なのに字が薄い」状態になる（2026-09-17 指摘）。 */
 .post blockquote {
   margin: 1.6rem 0;
-  padding: .9rem 1.1rem;
-  background: var(--surface);
-  border-left: 3px solid var(--line);
-  color: var(--muted);
-  font-size: 1rem;
+  padding: .95rem 1.15rem;
+  background: #eef3f8;              /* 紺寄りのごく薄い地 */
+  border-left: 4px solid var(--navy);
+  color: var(--fg);                 /* 本文と同じ濃さ */
+  font-size: 1.02rem;
+  line-height: 1.75;
 }
+.post blockquote p { color: inherit; }
 .post blockquote p:last-child { margin-bottom: 0; }
+.post blockquote strong { color: var(--fg-strong); }
 
 /* ---------------------------------------------------------------- 目次 */
 
