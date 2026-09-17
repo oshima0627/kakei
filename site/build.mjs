@@ -201,15 +201,32 @@ function sideAdsWidget(sides) {
  * リンクや強調を含む段落でも、テキスト中の 。！？ の直後だけを対象にする。
  */
 function breakJapaneseSentences(html) {
-  return html.replace(/<p>([\s\S]*?)<\/p>/g, (full, inner) => {
-    // ブロック要素を内包する p は触らない（通常は無い）
-    if (/<(?:div|aside|ul|ol|table|pre|blockquote)\b/i.test(inner)) return full;
+  const breakInner = (inner) => {
+    // ブロック要素を内包する場合は触らない
+    if (/<(?:div|aside|ul|ol|table|pre|blockquote)\b/i.test(inner)) return null;
     let out = inner;
-    // すでに <br> 直後でない句点のあと、まだ続きがあるときに改行
+    // 1) 句点のあとで改行（次の文が行の途中から始まらないように）
     out = out.replace(/([。！？])(?!(?:<\/|$|<br\s*\/?>))(?=\S)/g, '$1<br>');
     out = out.replace(/([。！？][」』）])(?!(?:<\/|$|<br\s*\/?>))(?=\S)/g, '$1<br>');
-    return `<p>${out}</p>`;
-  });
+    // 2) 長い文は読点でも切る（前後がそれぞれ十分な長さのときだけ）
+    //    HTMLタグをまたがないよう、タグ以外の文字だけで判定する
+    out = out.replace(
+      /(?![^<]*>)([^<>\n]{10,}?、)(?!<br)(?=[^<>\n]{10,})/g,
+      '$1<br>',
+    );
+    return out;
+  };
+  return html
+    .replace(/<p>([\s\S]*?)<\/p>/g, (full, inner) => {
+      const out = breakInner(inner);
+      return out == null ? full : `<p>${out}</p>`;
+    })
+    .replace(/<li>([\s\S]*?)<\/li>/g, (full, inner) => {
+      // ネストしたリストやブロックは触らない
+      if (/<(?:ul|ol|div|aside|p)\b/i.test(inner)) return full;
+      const out = breakInner(inner);
+      return out == null ? full : `<li>${out}</li>`;
+    });
 }
 
 function resolveLinks(html) {

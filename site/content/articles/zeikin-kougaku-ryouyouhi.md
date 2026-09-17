@@ -1,12 +1,12 @@
 ---
-title: 高額療養費の自己負担限度額は2026年8月から変わった ― 新設された「年間上限」を厚生労働省の原文で確かめる
+title: 高額療養費は2026年8月から年間上限が入った
 description: 高額療養費制度の上限額は令和8年8月診療分から改定され、月単位の限度額に加えて年単位の「年間上限」が新設されました。令和9年8月にはさらに所得区分が細分化されます。改定前後の金額と多数回該当の扱いを、厚生労働省のページと公開資料の原文で確認しました。出典URLと確認日つきです。
 slug: zeikin/kougaku-ryouyouhi
 category: zeikin
 eyecatch: /img/og/kougaku-ryouyouhi.png
 eyecatchAlt: 自己負担が1か月ぶんずつ階段状に積み上がり、「年間上限」と書かれた破線に当たってそこから水平になる図。横軸の両端に8月と翌年7月。破線より下の白い部分が「実際に払う自己負担」、上の青い部分が「払わずに済む分」。
 published: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-17
 sources: https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/iryouhoken/juuyou/kougakuiryou/index.html | https://www.mhlw.go.jp/content/001726232.pdf | https://www.mhlw.go.jp/content/001729632.pdf | https://www.mhlw.go.jp/stf/shingi/other-hoken_474087_00004.html
 checkedAt: 2026-09-02
 revisionAt: 2027-08-01

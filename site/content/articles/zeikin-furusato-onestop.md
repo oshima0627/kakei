@@ -1,12 +1,12 @@
 ---
-title: ふるさと納税ワンストップ特例 ― 使える人・5団体の条件・確定申告で無効になる理由を総務省と国税庁の原文で確かめる
+title: ふるさと納税ワンストップ特例の条件と、無効になる場合
 description: ふるさと納税ワンストップ特例は、確定申告の不要な給与所得者等で寄附先が5団体以内のときに申請できます。控除は所得税から行われず全額が翌年度の住民税から、確定申告をすると申請は無効になります。変更届出書の期限は翌年1月10日です。総務省・国税庁の原文で確認しました。
 slug: zeikin/furusato-onestop
 category: zeikin
 eyecatch: /img/og/furusato-onestop.png
 eyecatchAlt: 左が確定申告（上の青と下の白の二段）、右がワンストップ（青のALL）の対比図。右上に黄色い×、下に青い5本の棒で5団体以内。タイトルは「ワンストップ特例」、一文で「申告すると無効」。
 published: 2026-09-16
-updated: 2026-09-16
+updated: 2026-09-17
 sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.soumu.go.jp/main_content/000397109.pdf
 checkedAt: 2026-09-16
 ---

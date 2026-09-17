@@ -1,12 +1,12 @@
 ---
-title: 「高校無償化」は制度の名前ではない ― 高等学校等就学支援金を文科省の原文で確かめる
+title: 「高校無償化」の中身は高等学校等就学支援金
 description: 高校無償化と呼ばれている支援の正式名称は高等学校等就学支援金です。令和8年度から所得制限が撤廃され、支給限度額は公立118,800円・私立457,200円。授業料以外を支える高校生等奨学給付金との違いも、文部科学省の原文と資料で確認しました。
 slug: kyoikuhi/koukou-mushouka
 category: kyoikuhi
 eyecatch: /img/og/koukou-mushouka.png
 eyecatchAlt: 「高校でかかる費用」と書かれた枠が「授業料」と「授業料以外」の2つに割れ、それぞれ下向きの矢印で別の制度に受け止められている図。白の授業料は高等学校等就学支援金で457,200円、青の授業料以外は高校生等奨学給付金で152,000円。どちらも私立高校の年額。
 published: 2026-09-01
-updated: 2026-09-02
+updated: 2026-09-17
 sources: https://www.mext.go.jp/a_menu/shotou/mushouka/index.htm | https://www.mext.go.jp/content/20260616-mxt_shuukyo03-100002595_7.pdf | https://www.mext.go.jp/content/20260408-mxt_shuukyo03-100002595_4.pdf | https://www.mext.go.jp/a_menu/shotou/mushouka/1342674.htm | https://www.mext.go.jp/a_menu/shotou/mushouka/1344089.htm
 checkedAt: 2026-09-01
 ---

@@ -1,12 +1,12 @@
 ---
-title: 奨学金の「減額返還」と「返還期限猶予」は、返す総額が1円も減らない ― 返還が本当に消える条件を JASSO の原文で確かめる
+title: 奨学金の減額返還・猶予では、返す総額は減らない
 description: 日本学生支援機構（JASSO）の減額返還制度と返還期限猶予は、どちらも返す総額を減らす制度ではありません。JASSO 自身が両方のページにそう書いています。総額が消えるのは死亡または精神・身体の障害による返還免除だけで、他の免除は廃止済みです。収入の基準・上限年数・申請できる条件を原文で確認しました。出典URLと確認日つきです。
 slug: kyoikuhi/shogakukin-henkan
 category: kyoikuhi
 eyecatch: /img/og/shogakukin-henkan.png
 eyecatchAlt: 1回の返還を1個の白いブロックで表し、その合計が返す総額になる図。上から順に、元の返還・減額返還・返還期限猶予・返還免除の4段が並ぶ。減額返還はブロックの幅が半分で数が倍、返還期限猶予は青い待ち時間のぶん右にずれるが、白の合計はどれも同じ。いちばん下の返還免除だけ白が無く、黄色い破線の枠だけになっている。
 published: 2026-09-04
-updated: 2026-09-04
+updated: 2026-09-17
 sources: https://www.jasso.go.jp/shogakukin/henkan_konnan/index.html | https://www.jasso.go.jp/shogakukin/henkan_konnan/gengaku/seido.html | https://www.jasso.go.jp/shogakukin/henkan_konnan/yuyo/index.html | https://www.jasso.go.jp/shogakukin/henkan_konnan/yuyo/ippan/teishutusyo/index.html | https://www.jasso.go.jp/shogakukin/henkan_konnan/yuyo/ippan/teishutusyo/keikon/index.html | https://www.jasso.go.jp/shogakukin/henkan_konnan/ippan_menjyo.html | https://www.jasso.go.jp/shogakukin/henkan/menjo/index.html | https://www.jasso.go.jp/shogakukin/entai/entaikin.html | https://www.jasso.go.jp/shogakukin/entai/kojinjoho/index.html | https://www.jasso.go.jp/shogakukin/henkan/houhou/henkan_hoshiki/shotokurendo/index.html
 checkedAt: 2026-09-04
 revisionAt: 2027-04-01

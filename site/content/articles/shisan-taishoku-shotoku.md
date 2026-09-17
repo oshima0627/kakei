@@ -1,12 +1,12 @@
 ---
-title: 退職金の控除は勤続20年を境に1年あたり40万円から70万円へ変わる ― 退職所得控除とiDeCoの一時金を国税庁の原文で確かめる
+title: 退職所得控除は勤続20年で増え方が変わる
 description: 退職所得控除は勤続20年以下が1年あたり40万円、20年超は800万円＋70万円×（勤続年数－20年）です。国税庁はiDeCoなど個人型年金の老齢給付金の一時金も退職所得とみなすと書いています。「退職所得の受給に関する申告書」を出さないと20.42％が源泉徴収されます。出典URLと確認日つきです。
 slug: shisan/taishoku-shotoku
 category: shisan
 eyecatch: /img/og/taishoku-shotoku.png
 eyecatchAlt: 勤続年数に対して退職所得控除額がどう増えるかを、折れ線で表した図。横軸が勤続年数、縦軸が控除額。勤続20年のところで折れ線の傾きが急になり、その手前と奥で角度が違う。折れ点には黄色い破線の縦線が引かれている。左側は1年あたり40万円、右側は1年あたり70万円で増える。
 published: 2026-09-07
-updated: 2026-09-07
+updated: 2026-09-17
 sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1420.htm
 checkedAt: 2026-09-07
 ---

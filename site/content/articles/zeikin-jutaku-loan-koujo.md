@@ -1,12 +1,12 @@
 ---
-title: 住宅ローン減税は「年末残高の0.7％」だけでは決まらない ― 令和8年入居からの5年延長と、新築で控除が0円になる区分を国税庁・国土交通省の原文で確かめる
+title: 住宅ローン減税 ― 0.7％だけでは決まらない条件
 description: 住宅ローン減税は令和8年度税制改正で入居の期限が令和12年12月31日まで5年延長されました。国税庁のタックスアンサーは令和7年12月31日入居分までしか書いていません。新築で省エネ基準を満たさない住宅は支援対象外、既存住宅は借入限度額と控除期間が拡充など、住宅の区分ごとの違いを国税庁と国土交通省の原文で確認しました。出典URLと確認日つきです。
 slug: zeikin/jutaku-loan-koujo
 category: zeikin
 eyecatch: /img/og/jutaku-loan-koujo.png
 eyecatchAlt: 住宅の区分ごとに借入限度額を横棒の長さで表した図。上から順に省エネ性能が高い区分が並び、白い棒が新築、青い棒が既存住宅を表す。いちばん下のその他住宅は新築の棒が無く、黄色い破線の枠だけになっていて支援対象外であることを表す。
 published: 2026-09-04
-updated: 2026-09-04
+updated: 2026-09-17
 sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1210.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1211-1.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1211-3.htm | https://www.mlit.go.jp/jutakukentiku/house/jutakukentiku_house_tk2_000017.html | https://www.mlit.go.jp/jutakukentiku/house/jutakukentiku_house_tk4_000325.html | https://www.mlit.go.jp/jutakukentiku/house/jutakukentiku_house_tk4_000327.html | https://www.mlit.go.jp/report/press/house02_hh_000241.html | https://www.mlit.go.jp/page/content/001975596.pdf
 checkedAt: 2026-09-04
 revisionAt: 2027-04-01

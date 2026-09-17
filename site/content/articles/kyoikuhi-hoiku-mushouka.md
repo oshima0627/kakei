@@ -1,12 +1,12 @@
 ---
-title: 「幼児教育・保育の無償化」で無料になるのは利用料だけ ― 給食費・通園送迎費・行事費は残り、0歳から2歳児クラスは原則として対象外
+title: 幼児教育・保育の無償化で無料になるのは利用料だけ
 description: 幼児教育・保育の無償化で無料になるのは利用料だけです。こども家庭庁は通園送迎費・食材料費・行事費について「これまでどおり保護者の負担になります」と書いており、国の資料は食材料費を「保護者が負担する考え方を維持」としています。0歳から2歳児クラスが原則対象外であること、施設の種類ごとの上限額と手続きを原文で確認しました。出典URLと確認日つきです。
 slug: kyoikuhi/hoiku-mushouka
 category: kyoikuhi
 eyecatch: /img/og/hoiku-mushouka.png
 eyecatchAlt: 園に払うお金を、利用料・食材料費・通園送迎費・行事費の4つの列に分けた表の図。上段が3歳から5歳児クラス、下段が0歳から2歳児クラス。8つの区画のうち、上段の利用料だけが黄色い破線の枠で中身が無く（無償化で払わなくなる分）、残りの7つは白いまま（払う分）。区画はすべて同じ大きさで、金額の大小は表していない。
 published: 2026-09-07
-updated: 2026-09-07
+updated: 2026-09-17
 sources: https://www.cfa.go.jp/policies/kokoseido/mushouka | https://www.cfa.go.jp/policies/kokoseido/mushouka/gaiyou | https://www.cfa.go.jp/policies/kokoseido/mushouka/about/ | https://www.cfa.go.jp/policies/kokoseido/mushouka/about/faq1 | https://www.cfa.go.jp/policies/kokoseido/mushouka/about/faq2 | https://www.cfa.go.jp/policies/kokoseido/mushouka/about/faq3 | https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/e4b817c9-5282-4ccc-b0d5-ce15d7b5018c/0cd8a3fc/20251029_policies_hoiku_169.pdf | https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/fbea17f8-33d0-4a70-8ea6-84f3402bad73/15f5e496/20240711_policies_kokoseido_mushouka_23.pdf
 checkedAt: 2026-09-07
 ---

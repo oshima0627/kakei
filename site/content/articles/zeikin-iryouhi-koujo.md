@@ -1,12 +1,12 @@
 ---
-title: 医療費控除の下限は10万円とは限らない ― 国税庁の原文と、2027年1月に延長・恒久化されるセルフメディケーション税制を確かめる
+title: 医療費控除の下限は10万円とは限らない
 description: 医療費控除の適用下限額は「10万円と総所得金額等の5パーセント相当額のいずれか低い方」であり、10万円とは限りません。保険金等を差し引く順番、対象になる親族の範囲、選択適用のセルフメディケーション税制の適用期限が令和9年1月1日施行の改正で変わることを、国税庁と厚生労働省の原文で確認しました。出典URLと確認日つきです。
 slug: zeikin/iryouhi-koujo
 category: zeikin
 eyecatch: /img/og/iryouhi-koujo.png
 eyecatchAlt: 1年間に支払った医療費を縦に積み上げた棒の図。下から順に、保険金などで補てんされた分と適用下限額が青で差し引かれ、破線より上の白い部分だけが控除の対象になることを表す。
 published: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-17
 sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1120.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1122.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1126.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1128.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1129.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1131.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1133.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2030.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/yogo/senmon.htm | https://www.nta.go.jp/law/shitsugi/shotoku/05/25.htm | https://www.nta.go.jp/law/shitsugi/shotoku/05/28.htm | https://www.nta.go.jp/law/shitsugi/shotoku/05/58.htm | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000124853.html | https://www.mhlw.go.jp/content/10800000/001277656.pdf | https://www.mhlw.go.jp/content/10800000/001738404.pdf | https://www.mhlw.go.jp/content/10800000/000852630.pdf
 checkedAt: 2026-09-02
 revisionAt: 2027-01-01

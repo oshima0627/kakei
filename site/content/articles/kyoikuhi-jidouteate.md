@@ -1,12 +1,12 @@
 ---
-title: 児童手当の「第3子は月3万円」は、子どもが3人いれば当たるわけではない ― こども家庭庁の原文で確かめる
+title: 児童手当の「第3子月3万円」は、子が3人いれば当たるわけではない
 description: 児童手当の第3子以降は月30,000円ですが、こども家庭庁は「子供が3人以上いる場合に必ずしも第3子以降としてカウントされるわけではありません」と書いています。数え方は22歳年度末までの兄姉等を含み、経済的負担の条件と確認書の提出が要ります。支給額・支給月・申請期限を原文で確認しました。
 slug: kyoikuhi/jidouteate
 category: kyoikuhi
 eyecatch: /img/og/jidouteate.png
 eyecatchAlt: 縦に並んだ3人の子を上から数える図。左の点の数が数える順番で、それぞれ1人目・2人目・3人目と書かれている。上の2人は条件つきで数に入ることを示す点線の枠、いちばん下だけが白く塗られ「3人目＝加算の対象」と書かれている。
 published: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-17
 sources: https://www.cfa.go.jp/policies/kokoseido/jidouteate | https://www.cfa.go.jp/policies/kokoseido/jidouteate/annai | https://www.cfa.go.jp/policies/kokoseido/jidouteate/mottoouen | https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/c9d07fdc-1873-4b62-ba35-b38a62a471a6/9f5267a3/20250213_policies_kokoseido_jidouteate_annai_05.pdf | https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/6a83b8eb-4e0e-4754-b96d-c83e66a6ac81/e935b433/20240809_policies_kokoseido_jidouteate_mottoouen_04.pdf
 checkedAt: 2026-09-02
 ---

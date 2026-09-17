@@ -1,12 +1,12 @@
 ---
-title: 年金の繰上げは取り消せず、繰下げでは増えない部分がある ― 0.4％と0.7％の外側にある条件を日本年金機構の原文で確かめる
+title: 年金の繰上げは取り消せず、繰下げでも増えない部分がある
 description: 年金の繰上げは1か月あたり0.4％の減額、繰下げは0.7％の増額で、どちらも一生変わりません。ただし繰上げは請求後に取り消せず、寡婦年金や事後重症の障害年金を請求できなくなります。繰下げでは加給年金額と振替加算額が増額の対象になりません。日本年金機構の原文で確認しました。出典URLと確認日つきです。
 slug: nenkin/kuriage-kurisage
 category: nenkin
 eyecatch: /img/og/kuriage-kurisage.png
 eyecatchAlt: 年金を受け取り始める年齢と年金額の関係を縦棒で表した図。左から60歳・65歳・75歳の3本が並び、60歳が最も低く（24％減る）、65歳が基準、75歳が最も高い（84％増える）。3本とも棒の上に黄色い破線で囲んだ区画が乗っていて、この区画だけは3本とも同じ大きさになっている。加給年金額と振替加算額が、繰上げでも繰下げでも増減しないことを表す。縦は65歳を100とした年金額の割合。
 published: 2026-09-07
-updated: 2026-09-07
+updated: 2026-09-17
 sources: https://www.nenkin.go.jp/service/jukyu/seido/roureinenkin/kuriage-kurisage/20140421-01.html | https://www.nenkin.go.jp/service/jukyu/seido/roureinenkin/kuriage-kurisage/20140421-02.html
 checkedAt: 2026-09-07
 ---

@@ -1,12 +1,12 @@
 ---
-title: 生命保険金の「500万円×法定相続人」は、受取人を間違えると1円も使えない ― 相続税の非課税枠を国税庁の原文で確かめる
+title: 生命保険金の非課税枠は、受取人を間違えると使えない
 description: 死亡保険金の非課税枠は「500万円×法定相続人の数」ですが、国税庁は「相続人以外の人が取得した死亡保険金には、非課税の適用はありません」と書いています。孫や兄弟を受取人にすると枠は使えません。相続放棄した人の扱い、死亡退職金の別枠、基礎控除との違いを原文で確認しました。出典URLと確認日つきです。
 slug: sozoku/seimeihoken-hikazei
 category: sozoku
 eyecatch: /img/og/seimeihoken-hikazei.png
 eyecatchAlt: 死亡保険金が非課税枠に入るかどうかを受取人ごとに並べた図。左に受取人の箱が3つ縦に並び（上から配偶者・子・孫）、それぞれから右へ矢印が伸びる。配偶者と子の青い矢印は白く塗られた大きな箱（非課税枠に入る）へ入るが、孫の黄色い矢印だけは別の行き先で、中身の無い黄色い破線の箱（枠の外・非課税の適用なし）に入っている。箱の大小は金額を表していない。
 published: 2026-09-07
-updated: 2026-09-07
+updated: 2026-09-17
 sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/sozoku/4114.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/sozoku/4108.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/sozoku/4117.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/sozoku/4152.htm
 checkedAt: 2026-09-07
 ---

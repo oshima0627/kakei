@@ -1,12 +1,12 @@
 ---
-title: iDeCoの掛金上限は、2026年12月1日から変わる ― 会社員の上限が勤務先の企業年金で違う仕組みと、その差が無くなる改正を厚生労働省の原文で確かめる
+title: iDeCo掛金上限は2026年12月から変わる
 description: iDeCoの拠出限度額は、会社員なら勤務先に企業年金があるかで月2.3万円と月2.0万円に分かれています。2026年12月1日から、この差が解消されて共通の月6.2万円に一本化され、第1号被保険者は月6.8万円から月7.5万円になる予定です。加入可能年齢の引き上げとあわせて厚生労働省の原文で確認しました。出典URLと確認日つきです。
 slug: shisan/ideco-jougen
 category: shisan
 eyecatch: /img/og/ideco-jougen.png
 eyecatchAlt: iDeCoの毎月の掛金上限を縦棒の高さで表した図。左の3本が2026年11月30日まで、右の3本が2026年12月1日から。どちらの組も左から第1号・第2号（企業年金なし）・第2号（企業年金あり）の順。左の組は3本とも高さが違い、第2号の2本は第1号よりかなり低い。右の組は第2号の2本が同じ高さに揃っており、その高さに黄色い破線が引かれている。第1号も左より高い。縦は1か月の掛金上限の円で、横幅に意味は無い。
 published: 2026-09-07
-updated: 2026-09-07
+updated: 2026-09-17
 sources: https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/nenkin/kyoshutsu/ideco.html | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/nenkin/nenkin/kyoshutsu/2025kaisei.html | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/nenkin/nenkin/kyoshutsu/taishousha.html
 checkedAt: 2026-09-07
 revisionAt: 2026-12-01

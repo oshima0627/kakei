@@ -31,8 +31,8 @@
   --surface: #f5f6f8;
   --warn-bg: #fff9e8;
   --warn-line: #e7cd7a;
-  --content: 716px;
-  --side: 304px;
+  --content: 900px;
+  --side: 260px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -70,7 +70,7 @@ a:hover { text-decoration: none; }
 }
 
 .site-header__inner {
-  max-width: calc(var(--content) + var(--side) + 40px);
+  max-width: calc(var(--content) + var(--side) + 24px);
   margin-inline: auto;
   min-height: 94px;
   padding: 0 1.15rem;
@@ -93,7 +93,7 @@ a:hover { text-decoration: none; }
 /* ---------------------------------------------------------------- レイアウト */
 
 .l-wrap {
-  max-width: calc(var(--content) + var(--side) + 40px);
+  max-width: calc(var(--content) + var(--side) + 24px);
   margin-inline: auto;
   padding: 2rem 1.15rem 4rem;
   display: grid;
@@ -210,7 +210,8 @@ h1 {
 /* ---------------------------------------------------------------- 表 */
 
 .table-wrap {
-  overflow-x: auto;
+  /* 横スクロールさせず、セル内で折り返す */
+  overflow-x: visible;
   margin: 1.6rem 0;
   border: 1px solid var(--cell-line);
 }
@@ -218,16 +219,20 @@ h1 {
 .post table {
   border-collapse: collapse;
   width: 100%;
+  table-layout: fixed;
   font-size: .86rem;
   line-height: 1.55;
 }
 
 .post th, .post td {
-  padding: .6rem .75rem;
+  padding: .55rem .65rem;
   border-bottom: 1px solid var(--cell-line);
   border-right: 1px solid var(--cell-line);
   text-align: left;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-break: strict;
   vertical-align: top;
 }
 .post th:last-child, .post td:last-child { border-right: 0; }
@@ -295,7 +300,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
  * 色は PR表記と同じ琥珀系（--warn-bg / --warn-line）を土台にしている。
  * サイトの主色（青・紺）と衝突せず、「ここから外に出る」を色で示せるため。
  *
- * 表のセルは white-space: nowrap なので、横幅を増やす装飾は表をそのまま広げる。
+ * 表のセルは折り返す（white-space: normal）。横スクロールは使わない。
  * だからパディングは最小限に留める。
  *
  * ⚠️ site.json の affiliateEnabled が false の間、resolveLinks は .buy を出さず
@@ -529,7 +534,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 }
 
 .site-footer__inner {
-  max-width: calc(var(--content) + var(--side) + 40px);
+  max-width: calc(var(--content) + var(--side) + 24px);
   margin-inline: auto;
   padding: 1.8rem 1.15rem 3rem;
 }

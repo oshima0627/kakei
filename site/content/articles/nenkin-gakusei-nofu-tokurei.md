@@ -1,12 +1,12 @@
 ---
-title: 国民年金の学生納付特例 ― 在学中の納付猶予が受給資格期間に入り、年金額には入らないことを日本年金機構の原文で確かめる
+title: 学生納付特例は受給資格期間に入り、年金額には入らない
 description: 学生納付特例は、前年所得が一定以下の学生が申請すると在学中の国民年金保険料の納付が猶予される制度です。本人所得のみ審査し、家族の所得は問いません。承認期間は老齢・障害・遺族の受給資格期間に入りますが、老齢基礎年金額には反映されません。10年以内の追納と、免除・納付猶予との違いを日本年金機構の原文で確認しました。
 slug: nenkin/gakusei-nofu-tokurei
 category: nenkin
 eyecatch: /img/og/gakusei-nofu-tokurei.png
 eyecatchAlt: 左の白い箱に資格期間の○、右の黄色い破線枠に年金額の×を大きく置いた図。タイトルは「学生納付特例」。字幕は「資格期間には入る」「年金額には入らない」。
 published: 2026-09-16
-updated: 2026-09-16
+updated: 2026-09-17
 sources: https://www.nenkin.go.jp/service/kokunen/menjo/20150514.html | https://www.nenkin.go.jp/tokusetsu/gakusei.html | https://www.nenkin.go.jp/shinsei/kokunen/menjoyuyo/gakusei.html | https://www.nenkin.go.jp/service/kokunen/menjo/20150331.html | https://www.nenkin.go.jp/service/kokunen/menjo/20150428.html | https://www.nenkin.go.jp/service/kokunen/menjo/20150402-01.html | https://www.nenkin.go.jp/service/pamphlet/kokuminnenkin.files/point.pdf | https://www.nenkin.go.jp/section/faq/kokunen/seido/hokenryo/tsuino/20200820.html
 checkedAt: 2026-09-16
 ---

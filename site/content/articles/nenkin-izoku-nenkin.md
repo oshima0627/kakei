@@ -1,12 +1,12 @@
 ---
-title: 遺族年金は、配偶者が亡くなれば必ず出るわけではない ― 「子がいるか」で分かれる仕組みと、2028年4月の見直しを日本年金機構・厚生労働省の原文で確かめる
+title: 遺族年金は「子がいるか」で分かれ、2028年4月に見直しがある
 description: 遺族基礎年金は「子のある配偶者」か「子」にしか支給されず、子が18歳到達年度の末日を過ぎると止まります。遺族厚生年金は妻と夫で受給条件が違い、2028年4月からその扱いが見直されます。令和8年4月分からの年金額、中高齢寡婦加算、5年間の有期給付を原文で確認しました。出典URLと確認日つきです。
 slug: nenkin/izoku-nenkin
 category: nenkin
 eyecatch: /img/og/izoku-nenkin.png
 eyecatchAlt: 遺族基礎年金が出ている期間を横の帯で表した図。上段は子がいる世帯で、白い帯が縦の黄色い破線（子が18歳到達年度の末日）のところで終わり、その先は中身の無い黄色い破線の枠（止まる）になる。下段は子がいない世帯で、白い帯が最初から無く、全体が黄色い破線の枠（はじめから出ない）だけになっている。横方向は時間で、帯の長さは期間の目安、金額は表していない。
 published: 2026-09-07
-updated: 2026-09-07
+updated: 2026-09-17
 sources: https://www.nenkin.go.jp/service/jukyu/seido/izokunenkin/jukyu-yoken/20150401-04.html | https://www.nenkin.go.jp/service/jukyu/seido/izokunenkin/jukyu-yoken/20150424.html | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000147284_00020.html
 checkedAt: 2026-09-07
 revisionAt: 2027-04-01
