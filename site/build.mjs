@@ -128,8 +128,9 @@ const analyticsHtml = site.webAnalyticsToken
  *   - **未登録のキーはビルドを落とす。**「リンクのつもりが素のテキストだった」は起きない
  *
  * 書き方:
- *   [[AF:example]]                … links.json の label をそのまま出す
+ *   [[AF:example]]                … links.json の label をそのまま出す（本文）
  *   [[AF:example::無料で申し込む]] … 表示文言だけ差し替える
+ *   [[AFSide:example]]            … 右サイドバーへ出す（本文には出さない・連続掲載を避ける）
  *
  * ⚠️ 区切りは `|` ではなく `::`。resolveLinks は Markdown → HTML の**後**に走るので、
  * 表の行に `|` を書くとセルの区切りとして先に解釈され、表が壊れる。
@@ -137,8 +138,82 @@ const analyticsHtml = site.webAnalyticsToken
  * affiliateEnabled が false の間、および url が空のキーは、リンクにせずプレースホルダを出す。
  * **存在しないリンクを出さないための安全弁**で、これがあるので提携前の案件も先に書いておける。
  */
+
+/**
+ * 本文の [[AFSide:キー]] を抜き出し、右サイドバー用のカードHTMLにする。
+ * 本文に広告を2連で積むとくどいので、対になる案件はサイドへ散らす。
+ * 抜き出したマーカーは本文から削除する（空のリスト項目も掃除）。
+ */
+function extractSideAds(md) {
+  const sides = [];
+  let body = md.replace(/\[\[AFSide:([^\]]+)\]\]/g, (_, raw) => {
+    const [key, label] = raw.split('::').map((x) => x.trim());
+    if (!key) throw new Error(`[[AFSide:...]] のキーが空です: ${raw}`);
+    sides.push({ key, label });
+    return '';
+  });
+  // マーカーだけだったリスト行・余分な空行を軽く整える
+  body = body.replace(/^[ \t]*-[ \t]*\n/gm, '');
+  body = body.replace(/\n{3,}/g, '\n\n');
+  return { body, sides };
+}
+
+/** links.json の1件を公式バナー＋CTAカードにする（本文・サイド共用）。 */
+function renderAfCard(entry, label, { side = false } = {}) {
+  const text = label || entry.label;
+  if (!text) throw new Error('AF card: label がありません');
+  if (!site.affiliateEnabled || !entry.url) {
+    return `<span class="link-todo" title="広告リンク未設定">${esc(text)}</span>`;
+  }
+  const cta = `<a class="buy" href="${esc(entry.url)}" rel="nofollow sponsored noopener" target="_blank">${esc(text)}</a>`;
+  const cls = side ? 'af-card af-card--side' : 'af-card';
+  if (entry.bannerHtml) {
+    return (
+      `<aside class="${cls}">` +
+        `<p class="af-card__badge">広告</p>` +
+        `<div class="af-card__banner">${entry.bannerHtml}</div>` +
+        `<p class="af-card__cta">${cta}</p>` +
+      `</aside>`
+    );
+  }
+  return cta;
+}
+
+function sideAdsWidget(sides) {
+  if (!sides.length) return '';
+  const cards = sides.map(({ key, label }) => {
+    const entry = links[key];
+    if (!entry) {
+      throw new Error(
+        `[[AFSide:${key}]] が content/links.json にありません` +
+          ' / 対処: content/links.json にキーを足す',
+      );
+    }
+    return renderAfCard(entry, label, { side: true });
+  });
+  return widget('広告', cards.join('\n'));
+}
+
+
+/**
+ * 本文の読みやすさ用に、句点のあとを改行する。
+ * 「行の途中から次の文が始まる」のを避け、文の切れ目で視線が戻るようにする。
+ * リンクや強調を含む段落でも、テキスト中の 。！？ の直後だけを対象にする。
+ */
+function breakJapaneseSentences(html) {
+  return html.replace(/<p>([\s\S]*?)<\/p>/g, (full, inner) => {
+    // ブロック要素を内包する p は触らない（通常は無い）
+    if (/<(?:div|aside|ul|ol|table|pre|blockquote)\b/i.test(inner)) return full;
+    let out = inner;
+    // すでに <br> 直後でない句点のあと、まだ続きがあるときに改行
+    out = out.replace(/([。！？])(?!(?:<\/|$|<br\s*\/?>))(?=\S)/g, '$1<br>');
+    out = out.replace(/([。！？][」』）])(?!(?:<\/|$|<br\s*\/?>))(?=\S)/g, '$1<br>');
+    return `<p>${out}</p>`;
+  });
+}
+
 function resolveLinks(html) {
-  return html.replace(/\[\[AF:([^\]]+)\]\]/g, (_, raw) => {
+  let out = html.replace(/\[\[AF:([^\]]+)\]\]/g, (_, raw) => {
     const [key, label] = raw.split('::').map((x) => x.trim());
     if (!key) throw new Error(`[[AF:...]] のキーが空です: ${raw}`);
     const entry = links[key];
@@ -148,26 +223,11 @@ function resolveLinks(html) {
           ' / 対処: content/links.json にキーを足す（url はまだ空でよい）',
       );
     }
-    const text = label || entry.label;
-    if (!text) throw new Error(`content/links.json の ${key} に label がありません`);
-    if (!site.affiliateEnabled || !entry.url) {
-      return `<span class="link-todo" title="広告リンク未設定（ASPで発行したURLを content/links.json に入れる）">${esc(text)}</span>`;
-    }
-    // rel: sponsored は Google 側の要請、nofollow は各ASPの規約側。noopener は target=_blank の安全対策。
-    // 公式バナー（bannerHtml）があるときはバナー＋テキストCTAのカードにする。
-    // bannerHtml はもしも管理画面からコピーした発行済み素材のみ。URLを組み立て直さない。
-    const cta = `<a class="buy" href="${esc(entry.url)}" rel="nofollow sponsored noopener" target="_blank">${esc(text)}</a>`;
-    if (entry.bannerHtml) {
-      return (
-        `<aside class="af-card">` +
-          `<p class="af-card__badge">広告</p>` +
-          `<div class="af-card__banner">${entry.bannerHtml}</div>` +
-          `<p class="af-card__cta">${cta}</p>` +
-        `</aside>`
-      );
-    }
-    return cta;
+    return renderAfCard(entry, label, { side: false });
   });
+  // marked がインライン扱いした [[AF:]] を <p> が包むので、ブロックの aside を外に出す
+  out = out.replace(/<p>\s*(<aside class="af-card[\s\S]*?<\/aside>)\s*<\/p>/g, '$1');
+  return out;
 }
 
 /**
@@ -700,9 +760,11 @@ function crumbs(items) {
 // ---- 記事ページ
 
 for (const a of articles) {
-  const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(a.body, a.file)))));
+  const sideExtract = extractSideAds(a.body);
+  const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(sideExtract.body, a.file)))));
+  const sideAdsHtml = sideAdsWidget(sideExtract.sides);
   assertNoRawEmphasis(parsed.html, a.file);
-  const html = resolveLinks(parsed.html);
+  const html = breakJapaneseSentences(resolveLinks(parsed.html));
   const cname = catName(a.category);
 
   // 関連記事は同じカテゴリを優先し、足りない分だけ他カテゴリで埋める。
@@ -731,7 +793,7 @@ for (const a of articles) {
     eyecatch +
     // PR表記は広告リンクを含む記事にだけ出す。含まない記事に「広告が含まれます」と書くのは事実に反する。
     // affiliateEnabled=false のあいだは全記事に「リンクは無い」の注記（prNoticeHtml の pending 版）を出す。
-    (a.body.includes('[[AF:') || !site.affiliateEnabled ? prNoticeHtml : '') +
+    (a.body.includes('[[AF:') || a.body.includes('[[AFSide:') || !site.affiliateEnabled ? prNoticeHtml : '') +
     (hasToc(parsed.headings) ? `<nav class="toc"><p class="toc__title">目次</p>${tocList(parsed.headings)}</nav>` : '') +
     html +
     shareButtons(a.title, a.url) +
@@ -776,6 +838,7 @@ for (const a of articles) {
       ]),
       sidebar:
         (hasToc(parsed.headings) ? widget('目次', `<div class="toc toc--side">${tocList(parsed.headings)}</div>`) : '') +
+        sideAdsHtml +
         aboutWidget +
         widget('新着記事', postListHtml(byRecent.slice(0, 5))) +
         categoryWidget,
@@ -797,7 +860,7 @@ for (const p of pages) {
     `<article class="post"><h1>${esc(p.title)}</h1>` +
     `<p class="dates"><time datetime="${esc(p.updated)}">更新 ${esc(p.updated)}</time></p>` +
     (p.body.includes('[[AF:') ? prNoticeHtml : '') +
-    `${resolveLinks(parsed.html)}</article>`;
+    `${breakJapaneseSentences(resolveLinks(parsed.html))}</article>`;
   assertAdDisclosure(pageHtml, p.file);
 
   writeFile(
