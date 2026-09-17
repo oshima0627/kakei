@@ -327,6 +327,65 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .post p > .buy,
 .post li > .buy { margin: 0 .15em; }
 
+/* ---------------------------------------------------------------- 広告カード（公式バナー＋CTA）
+ *
+ * [[AF:]] はビルド時に .af-card になる。もしも発行のバナーHTMLをそのまま載せ、
+ * 下にテキストCTA（.buy）を置く。おすすめ比較の見た目にはしない。
+ */
+.af-card {
+  display: block;
+  margin: 1.4rem 0;
+  padding: 0.9rem 1rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  text-align: center;
+}
+.af-card__badge {
+  margin: 0 0 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #7a4a00;
+}
+.af-card__banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 0.75rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+.af-card__banner a {
+  display: inline-block;
+  line-height: 0;
+  max-width: 100%;
+}
+.af-card__banner img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+.af-card__cta {
+  margin: 0;
+}
+.af-card__cta .buy {
+  margin: 0;
+}
+
+/* リスト項目にカードが載るとき、箇条書きの点を消してカードを主役にする */
+.post li:has(> .af-card),
+.post li:has(.af-card) {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+.post ul:has(.af-card) {
+  padding-left: 0;
+  margin: 1rem 0;
+}
+
+
 /* ---------------------------------------------------------------- 制度カード */
 
 /* 本文中に置く「この制度の数字」のまとめ。build.mjs の renderSeidoCards が

@@ -154,7 +154,19 @@ function resolveLinks(html) {
       return `<span class="link-todo" title="広告リンク未設定（ASPで発行したURLを content/links.json に入れる）">${esc(text)}</span>`;
     }
     // rel: sponsored は Google 側の要請、nofollow は各ASPの規約側。noopener は target=_blank の安全対策。
-    return `<a class="buy" href="${esc(entry.url)}" rel="nofollow sponsored noopener" target="_blank">${esc(text)}</a>`;
+    // 公式バナー（bannerHtml）があるときはバナー＋テキストCTAのカードにする。
+    // bannerHtml はもしも管理画面からコピーした発行済み素材のみ。URLを組み立て直さない。
+    const cta = `<a class="buy" href="${esc(entry.url)}" rel="nofollow sponsored noopener" target="_blank">${esc(text)}</a>`;
+    if (entry.bannerHtml) {
+      return (
+        `<aside class="af-card">` +
+          `<p class="af-card__badge">広告</p>` +
+          `<div class="af-card__banner">${entry.bannerHtml}</div>` +
+          `<p class="af-card__cta">${cta}</p>` +
+        `</aside>`
+      );
+    }
+    return cta;
   });
 }
 
