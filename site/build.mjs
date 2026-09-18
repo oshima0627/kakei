@@ -319,6 +319,65 @@ function collectAfBannerPool(md) {
   return pool;
 }
 
+
+/**
+ * マーカー無し記事向けの本文バナープール（links.json に bannerHtml があるキーのみ）。
+ * カテゴリ／スラッグで先頭候補を軽く寄せる（無ければ共通デフォルト順）。
+ * URL は組み立てない。bannerHtmlSide のみのキーは本文に入れない。
+ */
+function defaultAfBodyPool(article) {
+  const base = [
+    'yayoi-kakuteishinkoku',
+    'mf-kakuteishinkoku',
+    'furusato-nippon',
+    'rakuten-ichiba',
+    'zeirishi-dotcom',
+    'zeirishi-agent',
+    'hoken-total-pro',
+  ];
+  const hay = `${article.category || ''} ${article.slug || ''}`;
+  let front = [];
+  if (/furusato/.test(hay)) {
+    front = ['furusato-nippon', 'rakuten-ichiba'];
+  } else if (/sozoku/.test(hay)) {
+    front = ['zeirishi-dotcom', 'zeirishi-agent'];
+  } else if (/\bnenkin\b|kafu|izoku/.test(hay) && !/gakusei|kuriage/.test(hay)) {
+    front = ['fp-madoguchi', 'hoken-total-pro'];
+  } else if (/kyoikuhi|ideco|gakusei|kuriage/.test(hay)) {
+    front = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku', 'fp-madoguchi'];
+  } else if (/zeikin|fuyou|iryou|jutaku|kougaku/.test(hay)) {
+    front = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku'];
+  }
+  const seen = new Set();
+  const ordered = [];
+  for (const key of [...front, ...base]) {
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const entry = links[key];
+    if (entry && entry.bannerHtml) ordered.push(key);
+  }
+  return ordered;
+}
+
+/** 右サイド用デフォルト（bannerHtmlSide 必須。無ければ次候補）。 */
+function defaultSideAds() {
+  for (const key of ['mf-kakuteishinkoku', 'yayoi-kakuteishinkoku', 'zeirishi-dotcom']) {
+    const entry = links[key];
+    if (entry && entry.url && entry.bannerHtmlSide) return [{ key }];
+  }
+  return [];
+}
+
+/** 左レール用デフォルト（bannerHtmlSide 必須。無ければ次候補）。 */
+function defaultLeftAds() {
+  for (const key of ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku', 'zeirishi-dotcom']) {
+    const entry = links[key];
+    if (entry && entry.url && entry.bannerHtmlSide) return [{ key }];
+  }
+  return [];
+}
+
+
 /**
  * 本文カード用の [[AF:...]] を Markdown から外す（H2 間自動挿入に任せるため）。
  * AFSide / AFLeft は extract 済み前提。キー未登録は従来どおりビルドを落とす。
@@ -910,13 +969,21 @@ function crumbs(items) {
 
 for (const a of articles) {
   // 本文末尾に固めた [[AF:]] は H2 間自動挿入の素材にし、本文カードとしては出さない（二重掲載防止）。
-  const afPool = collectAfBannerPool(a.body);
+  // マーカーが無い記事は links.json の既存キーでデフォルト配置（URL は組み立てない）。
+  let afPool = collectAfBannerPool(a.body);
   const sideExtract = extractSideAds(a.body);
   const leftExtract = extractLeftAds(sideExtract.body);
+  let sides = sideExtract.sides;
+  let lefts = leftExtract.lefts;
+  if (site.affiliateEnabled) {
+    if (!afPool.length) afPool = defaultAfBodyPool(a);
+    if (!sides.length) sides = defaultSideAds();
+    if (!lefts.length) lefts = defaultLeftAds();
+  }
   const bodyMd = stripBodyAfMarkers(leftExtract.body);
   const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(bodyMd, a.file)))));
-  const sideAdsHtml = sideAdsWidget(sideExtract.sides);
-  const leftAdsHtml = leftAdsWidget(leftExtract.lefts);
+  const sideAdsHtml = sideAdsWidget(sides);
+  const leftAdsHtml = leftAdsWidget(lefts);
   assertNoRawEmphasis(parsed.html, a.file);
   const html = insertAdsBetweenH2s(breakJapaneseSentences(resolveLinks(parsed.html)), afPool);
   const cname = catName(a.category);
@@ -945,9 +1012,9 @@ for (const a of articles) {
       a.updated !== a.published ? ` ／ <time datetime="${esc(a.updated)}">更新 ${esc(a.updated)}</time>` : ''
     }</p>` +
     eyecatch +
-    // PR表記は広告リンクを含む記事にだけ出す。含まない記事に「広告が含まれます」と書くのは事実に反する。
-    // affiliateEnabled=false のあいだは全記事に「リンクは無い」の注記（prNoticeHtml の pending 版）を出す。
-    (a.body.includes('[[AF:') || a.body.includes('[[AFSide:') || a.body.includes('[[AFLeft:') || !site.affiliateEnabled ? prNoticeHtml : '') +
+    // PR表記: affiliateEnabled 時は全記事に広告（マーカー or デフォルト）を出すので常に出す。
+    // affiliateEnabled=false のあいだは pending 版の注記を全記事に出す。
+    prNoticeHtml +
     (hasToc(parsed.headings) ? `<nav class="toc"><p class="toc__title">目次</p>${tocList(parsed.headings)}</nav>` : '') +
     html +
     shareButtons(a.title, a.url) +
