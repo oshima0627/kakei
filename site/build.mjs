@@ -131,6 +131,7 @@ const analyticsHtml = site.webAnalyticsToken
  *   [[AF:example]]                … links.json の label をそのまま出す（本文）
  *   [[AF:example::無料で申し込む]] … 表示文言だけ差し替える
  *   [[AFSide:example]]            … 右サイドバーへ出す（本文には出さない・連続掲載を避ける）
+ *   [[AFLeft:example]]            … 左レールへ出す（本文には出さない・右と別キー）
  *
  * ⚠️ 区切りは `|` ではなく `::`。resolveLinks は Markdown → HTML の**後**に走るので、
  * 表の行に `|` を書くとセルの区切りとして先に解釈され、表が壊れる。
@@ -158,7 +159,9 @@ function extractSideAds(md) {
   return { body, sides };
 }
 
-/** links.json の1件を公式バナー＋CTAカードにする（本文・サイド共用）。 */
+/** links.json の1件を公式バナー＋CTAカードにする（本文・サイド共用）。
+ * サイド／左レール（side=true）は bannerHtmlSide（縦長）があればそれを使い、無ければ bannerHtml。
+ */
 function renderAfCard(entry, label, { side = false } = {}) {
   const text = label || entry.label;
   if (!text) throw new Error('AF card: label がありません');
@@ -167,11 +170,12 @@ function renderAfCard(entry, label, { side = false } = {}) {
   }
   const cta = `<a class="buy" href="${esc(entry.url)}" rel="nofollow sponsored noopener" target="_blank">${esc(text)}</a>`;
   const cls = side ? 'af-card af-card--side' : 'af-card';
-  if (entry.bannerHtml) {
+  const banner = side && entry.bannerHtmlSide ? entry.bannerHtmlSide : entry.bannerHtml;
+  if (banner) {
     return (
       `<aside class="${cls}">` +
         `<p class="af-card__badge">広告</p>` +
-        `<div class="af-card__banner">${entry.bannerHtml}</div>` +
+        `<div class="af-card__banner">${banner}</div>` +
         `<p class="af-card__cta">${cta}</p>` +
       `</aside>`
     );
@@ -186,6 +190,39 @@ function sideAdsWidget(sides) {
     if (!entry) {
       throw new Error(
         `[[AFSide:${key}]] が content/links.json にありません` +
+          ' / 対処: content/links.json にキーを足す',
+      );
+    }
+    return renderAfCard(entry, label, { side: true });
+  });
+  return widget('広告', cards.join('\n'));
+}
+
+/**
+ * 本文の [[AFLeft:キー]] を抜き出し、左レール用のカードHTMLにする。
+ * 右サイド（AFSide）と対になる別案件を左に置き、本文の連続掲載を避ける。
+ * 抜き出したマーカーは本文から削除する。
+ */
+function extractLeftAds(md) {
+  const lefts = [];
+  let body = md.replace(/\[\[AFLeft:([^\]]+)\]\]/g, (_, raw) => {
+    const [key, label] = raw.split('::').map((x) => x.trim());
+    if (!key) throw new Error(`[[AFLeft:...]] のキーが空です: ${raw}`);
+    lefts.push({ key, label });
+    return '';
+  });
+  body = body.replace(/^[ \t]*-[ \t]*\n/gm, '');
+  body = body.replace(/\n{3,}/g, '\n\n');
+  return { body, lefts };
+}
+
+function leftAdsWidget(lefts) {
+  if (!lefts.length) return '';
+  const cards = lefts.map(({ key, label }) => {
+    const entry = links[key];
+    if (!entry) {
+      throw new Error(
+        `[[AFLeft:${key}]] が content/links.json にありません` +
           ' / 対処: content/links.json にキーを足す',
       );
     }
@@ -778,8 +815,10 @@ function crumbs(items) {
 
 for (const a of articles) {
   const sideExtract = extractSideAds(a.body);
-  const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(sideExtract.body, a.file)))));
+  const leftExtract = extractLeftAds(sideExtract.body);
+  const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(leftExtract.body, a.file)))));
   const sideAdsHtml = sideAdsWidget(sideExtract.sides);
+  const leftAdsHtml = leftAdsWidget(leftExtract.lefts);
   assertNoRawEmphasis(parsed.html, a.file);
   const html = breakJapaneseSentences(resolveLinks(parsed.html));
   const cname = catName(a.category);
@@ -810,7 +849,7 @@ for (const a of articles) {
     eyecatch +
     // PR表記は広告リンクを含む記事にだけ出す。含まない記事に「広告が含まれます」と書くのは事実に反する。
     // affiliateEnabled=false のあいだは全記事に「リンクは無い」の注記（prNoticeHtml の pending 版）を出す。
-    (a.body.includes('[[AF:') || a.body.includes('[[AFSide:') || !site.affiliateEnabled ? prNoticeHtml : '') +
+    (a.body.includes('[[AF:') || a.body.includes('[[AFSide:') || a.body.includes('[[AFLeft:') || !site.affiliateEnabled ? prNoticeHtml : '') +
     (hasToc(parsed.headings) ? `<nav class="toc"><p class="toc__title">目次</p>${tocList(parsed.headings)}</nav>` : '') +
     html +
     shareButtons(a.title, a.url) +
@@ -853,6 +892,7 @@ for (const a of articles) {
         { path: `/${a.category}/`, label: cname },
         { label: a.title },
       ]),
+      sidebarLeft: leftAdsHtml,
       sidebar:
         (hasToc(parsed.headings) ? widget('目次', `<div class="toc toc--side">${tocList(parsed.headings)}</div>`) : '') +
         sideAdsHtml +
@@ -897,6 +937,7 @@ for (const p of pages) {
         inLanguage: site.lang,
       }),
       breadcrumb: crumbs([{ path: '/', label: 'ホーム' }, { label: p.title }]),
+      sidebarLeft: '',
       sidebar: aboutWidget + widget('新着記事', postListHtml(byRecent.slice(0, 5))) + categoryWidget,
       content: pageHtml,
       year: String(new Date(p.updated).getFullYear()),
@@ -931,6 +972,7 @@ for (const c of site.categories) {
       // 重複コンテンツとして competing させたくないので noindex にしておく
       // （follow なので記事へのリンクはたどられる）。2つ目のカテゴリができたら自動で index される。
       robots: showCategoryNav ? '' : '<meta name="robots" content="noindex,follow">',
+      sidebarLeft: '',
       sidebar: aboutWidget + widget('新着記事', postListHtml(byRecent.slice(0, 5))) + categoryWidget,
       content:
         `<h1>${esc(c.name)}の記事一覧</h1>` +
@@ -979,6 +1021,7 @@ writeFile(
       inLanguage: site.lang,
     }),
     breadcrumb: '',
+    sidebarLeft: '',
     sidebar: aboutWidget + categoryWidget,
     content: `<h1>${esc(site.name)}</h1><p class="lead">${esc(site.description)}</p>${articleCards(byRecent)}`,
     year: String(new Date().getFullYear()),
@@ -997,6 +1040,7 @@ writeFile(
     ogType: 'website',
     jsonLd: '',
     breadcrumb: crumbs([{ path: '/', label: 'ホーム' }, { label: 'サイトマップ' }]),
+    sidebarLeft: '',
     sidebar: aboutWidget + categoryWidget,
     content:
       '<article class="post"><h1>サイトマップ</h1>' +
@@ -1026,6 +1070,7 @@ writeFile(
     ogType: 'website',
     jsonLd: '',
     breadcrumb: '',
+    sidebarLeft: '',
     sidebar: '',
     content: '<h1>ページが見つかりません</h1><p><a href="/">トップへ戻る</a></p><p><a href="/sitemap/">サイトマップから探す</a></p>',
     year: String(new Date().getFullYear()),

@@ -252,6 +252,7 @@ lead: 長期優良住宅・低炭素住宅・ZEH水準省エネ住宅・省エ�
 
 [[AF:yayoi-kakuteishinkoku]]
 
+[[AFLeft:yayoi-kakuteishinkoku]]
 [[AFSide:mf-kakuteishinkoku]]
 
 ## 出典一覧（すべて 2026-09-04 に取得）

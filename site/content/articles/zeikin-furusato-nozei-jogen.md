@@ -258,6 +258,7 @@ lead: 確定申告をしないで控除を受けるための特例
 
 （右の欄には楽天市場の例もあります。楽天市場の中に「楽天ふるさと納税」があります。）
 
+[[AFLeft:furusato-nippon]]
 [[AFSide:rakuten-ichiba]]
 
 ## 出典

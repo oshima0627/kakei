@@ -16,10 +16,12 @@
     "promotionLinkId": 32450,
     "promotionName": "「弥生シリーズ」会員登録プロモーション / 弥生株式会社",
     "articles": "医療費控除・住宅ローン減税（初年度）・退職所得など確定申告が要る記事",
-    "note": "報酬300〜2,000円（無料体験300円／セルフプラン1,000円 等）。本人申込OK。PPC出稿・ポイントサイト掲載は禁止。既契約者・無料版→有償版は成果対象外 / 公式バナー300x250（pl_id=32450）を記事カード表示に使用。2026-09-17取得。",
+    "note": "報酬300〜2,000円（無料体験300円／セルフプラン1,000円 等）。本人申込OK。PPC出稿・ポイントサイト掲載は禁止。既契約者・無料版→有償版は成果対象外 / 公式バナー300x250（pl_id=32450）を記事カード表示に使用。サイド用160x600（pl_id=32448）は bannerHtmlSide。2026-09-17/09-18取得。",
     "checkedAt": "2026-09-17",
     "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805434&p_id=914&pc_id=1138&pl_id=32450\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0275/000000032450.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805434&p_id=914&pc_id=1138&pl_id=32450\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "300x250"
+    "bannerSize": "300x250",
+    "bannerHtmlSide": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805434&p_id=914&pc_id=1138&pl_id=32448\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0275/000000032448.png\" width=\"160\" height=\"600\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805434&p_id=914&pc_id=1138&pl_id=32448\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeSide": "160x600"
   },
   "mf-kakuteishinkoku": {
     "label": "マネーフォワード クラウド確定申告",
@@ -31,10 +33,12 @@
     "promotionLinkId": 64816,
     "promotionName": "マネーフォワード クラウドの登録プロモーション / 株式会社マネーフォワード",
     "articles": "同上",
-    "note": "報酬500円（法人700円）。本人申込NG（本人はシークレットモードで）。バナーの自社サーバー設置禁止。確定申告LPをリンク先にした場合のみITP対応 / 公式バナー300x250（pl_id=64816）を記事カード表示に使用。2026-09-17取得。",
+    "note": "報酬500円（法人700円）。本人申込NG（本人はシークレットモードで）。バナーの自社サーバー設置禁止。確定申告LPをリンク先にした場合のみITP対応 / 公式バナー300x250（pl_id=64816）を記事カード表示に使用。サイド用160x600（pl_id=38164）は bannerHtmlSide。2026-09-17/09-18取得。",
     "checkedAt": "2026-09-17",
     "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805435&p_id=888&pc_id=1087&pl_id=64816\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0253/000000064816.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805435&p_id=888&pc_id=1087&pl_id=64816\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "300x250"
+    "bannerSize": "300x250",
+    "bannerHtmlSide": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805435&p_id=888&pc_id=1087&pl_id=38164\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0253/000000038164.jpg\" width=\"160\" height=\"600\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805435&p_id=888&pc_id=1087&pl_id=38164\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeSide": "160x600"
   },
   "furusato-nippon": {
     "label": "ふるさと納税ニッポン",
@@ -76,10 +80,12 @@
     "promotionLinkId": 30264,
     "promotionName": "【税理士ドットコム】税理士探しの無料問合せ獲得",
     "articles": "小規模宅地等の特例・生命保険金の非課税枠（相続税の申告が要る記事）",
-    "note": "報酬5,000円/問合せ。本人申込NG。承認条件: 税理士紹介の相談であること・過去1年以内の利用なし・電話本人確認1分以上・3営業日以内に確認・1世帯1回。このリンクは相続LP向け（pl_id=18547） / 公式バナー300x250（pl_id=30264）を記事カード表示に使用。2026-09-17取得。",
+    "note": "報酬5,000円/問合せ。本人申込NG。承認条件: 税理士紹介の相談であること・過去1年以内の利用なし・電話本人確認1分以上・3営業日以内に確認・1世帯1回。このリンクは相続LP向け（pl_id=18547） / 公式バナー300x250（pl_id=30264）を記事カード表示に使用。サイド用160x600（pl_id=30285）は bannerHtmlSide。2026-09-17/09-18取得。",
     "checkedAt": "2026-09-17",
     "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805438&p_id=938&pc_id=1198&pl_id=30264\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0290/000000030264.gif\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805438&p_id=938&pc_id=1198&pl_id=30264\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "300x250"
+    "bannerSize": "300x250",
+    "bannerHtmlSide": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805438&p_id=938&pc_id=1198&pl_id=30285\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0290/000000030285.gif\" width=\"160\" height=\"600\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805438&p_id=938&pc_id=1198&pl_id=30285\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeSide": "160x600"
   },
   "zeirishi-agent": {
     "label": "税理士紹介エージェント",
