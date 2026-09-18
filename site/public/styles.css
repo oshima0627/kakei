@@ -377,23 +377,51 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   text-align: center;
   box-sizing: border-box;
 }
-/* 横長: 本文カラム幅まで広げて大きく見せる */
+/* 横長: リンク先バナー画像だけを本文幅いっぱいに拡大（枠だけの拡大はしない） */
 .af-card--wide {
   width: 100%;
+  position: relative;
 }
-.af-card--wide .af-card__banner a,
-.af-card--wide .af-card__banner img {
+.af-card--wide .af-card__banner {
+  display: block; /* flexだと計測ピクセルと並んで崩れる */
+  width: 100%;
+}
+.af-card--wide .af-card__banner > a {
   display: block;
   width: 100%;
+  line-height: 0;
+}
+.af-card--wide .af-card__banner > a > img {
+  display: block;
+  width: 100% !important; /* HTMLの width="469" より優先 */
   max-width: 100%;
-  height: auto;
+  height: auto !important;
+}
+/* もしも計測ピクセル（1x1）は拡大しない */
+.af-card__banner > img[width="1"],
+.af-banner-only > img[width="1"] {
+  width: 1px !important;
+  height: 1px !important;
+  border: 0 !important;
+  position: absolute;
+  left: -9999px;
+  overflow: hidden;
 }
 /* 300x250・正方形: 実寸のまま中央 */
 .af-card--box {
   width: fit-content;
+  position: relative;
 }
-.af-card--box .af-card__banner a,
-.af-card--box .af-card__banner img {
+.af-card--box .af-card__banner {
+  display: flex;
+  justify-content: center;
+}
+.af-card--box .af-card__banner > a {
+  display: inline-block;
+  width: auto;
+  line-height: 0;
+}
+.af-card--box .af-card__banner > a > img {
   width: auto;
   max-width: 100%;
   height: auto;
@@ -435,14 +463,16 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   vertical-align: top;
 }
 /* サイドに横長しか無いとき: レール幅いっぱいに拡大 */
-.af-banner-only--wide a {
+.af-banner-only--wide > a {
   display: block;
   width: 100%;
+  line-height: 0;
 }
-.af-banner-only--wide img {
-  width: 100%;
+.af-banner-only--wide > a > img {
+  display: block;
+  width: 100% !important;
   max-width: 100%;
-  height: auto;
+  height: auto !important;
 }
 
 .af-card__badge {
