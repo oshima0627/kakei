@@ -128,10 +128,14 @@ const analyticsHtml = site.webAnalyticsToken
  *   - **未登録のキーはビルドを落とす。**「リンクのつもりが素のテキストだった」は起きない
  *
  * 書き方:
- *   [[AF:example]]                … links.json の label をそのまま出す（本文）
- *   [[AF:example::無料で申し込む]] … 表示文言だけ差し替える
+ *   [[AF:example]]                … バナー付きなら H2 間自動挿入のプールに入る（本文末のマーカーは剥がす）
+ *   [[AF:example::無料で申し込む]] … 表示文言だけ差し替える（固定ページ等・resolveLinks 経路）
  *   [[AFSide:example]]            … 右サイドバーへ出す（本文には出さない・連続掲載を避ける）
  *   [[AFLeft:example]]            … 左レールへ出す（本文には出さない・右と別キー）
+ *
+ * 記事本文では、[[AF:]] / [[AFSide:]] / [[AFLeft:]] のバナー付きキーを出現順プールにし、
+ * consecutive な content H2 のあいだにバナーカード（バッジ「広告」＋バナーのみ）を1本ずつ挟む。
+ * 本文の [[AF:]] マーカー自体はビルド時に剥がし、末尾固まりの二重掲載を避ける。
  *
  * ⚠️ 区切りは `|` ではなく `::`。resolveLinks は Markdown → HTML の**後**に走るので、
  * 表の行に `|` を書くとセルの区切りとして先に解釈され、表が壊れる。
@@ -161,6 +165,7 @@ function extractSideAds(md) {
 
 /** links.json の1件を公式バナーカードにする（本文・サイド共用）。
  * サイド／左レール（side=true）は bannerHtmlSide（縦長）があればそれを使い、無ければ bannerHtml。
+ * 本文は bannerHtml を優先し、無ければ bannerHtmlSide にフォールバック。
  * バナーありのとき下のテキストCTAは出さない（サイドは枠・バッジもなし。本文はバッジ＋枠のみ。開示はバッジと冒頭PR）。
  */
 function renderAfCard(entry, label, { side = false } = {}) {
@@ -170,7 +175,10 @@ function renderAfCard(entry, label, { side = false } = {}) {
     return `<span class="link-todo" title="広告リンク未設定">${esc(text)}</span>`;
   }
   const cta = `<a class="buy" href="${esc(entry.url)}" rel="nofollow sponsored noopener" target="_blank">${esc(text)}</a>`;
-  const banner = side && entry.bannerHtmlSide ? entry.bannerHtmlSide : entry.bannerHtml;
+  // 本文: bannerHtml → bannerHtmlSide。サイド: bannerHtmlSide → bannerHtml。
+  const banner = side
+    ? (entry.bannerHtmlSide || entry.bannerHtml)
+    : (entry.bannerHtml || entry.bannerHtmlSide);
   if (banner) {
     // 左右レールはバナーリンクのみ（可視の「広告」文字・枠・CTAなし）
     if (side) {
@@ -288,6 +296,87 @@ function resolveLinks(html) {
   // marked がインライン扱いした [[AF:]] を <p> が包むので、ブロックの aside を外に出す
   out = out.replace(/<p>\s*(<aside class="af-card[\s\S]*?<\/aside>)\s*<\/p>/g, '$1');
   return out;
+}
+
+/**
+ * 記事の [[AF:]] / [[AFSide:]] / [[AFLeft:]] から、バナー付きキーの出現順ユニークなプールを作る。
+ * H2 セクション間への自動挿入に使う。bannerHtml が無くても bannerHtmlSide があれば対象。
+ * URL は links.json にあるものだけ（ここで組み立てない）。
+ */
+function collectAfBannerPool(md) {
+  const seen = new Set();
+  const pool = [];
+  const re = /\[\[(?:AF|AFSide|AFLeft):([^\]]+)\]\]/g;
+  let m;
+  while ((m = re.exec(md)) !== null) {
+    const key = m[1].split('::')[0].trim();
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    const entry = links[key];
+    if (!entry) continue; // 未登録は extract / strip 側で落とす
+    if (entry.bannerHtml || entry.bannerHtmlSide) pool.push(key);
+  }
+  return pool;
+}
+
+/**
+ * 本文カード用の [[AF:...]] を Markdown から外す（H2 間自動挿入に任せるため）。
+ * AFSide / AFLeft は extract 済み前提。キー未登録は従来どおりビルドを落とす。
+ */
+function stripBodyAfMarkers(md) {
+  let body = md.replace(/\[\[AF:([^\]]+)\]\]/g, (_, raw) => {
+    const [key] = raw.split('::').map((x) => x.trim());
+    if (!key) throw new Error(`[[AF:...]] のキーが空です: ${raw}`);
+    if (!links[key]) {
+      throw new Error(
+        `[[AF:${key}]] が content/links.json にありません` +
+          ' / 対処: content/links.json にキーを足す（url はまだ空でよい）',
+      );
+    }
+    return '';
+  });
+  body = body.replace(/^[ \t]*-[ \t]*\n/gm, '');
+  body = body.replace(/\n{3,}/g, '\n\n');
+  return body;
+}
+
+/** 直後の H2 が見出しスキップ対象なら、その直前には広告を挟まない。 */
+const AF_H2_SKIP_RE = /出典|確認できなかった|未確認|広告を含みます|選択肢（広告|相談窓口の例/;
+
+/**
+ * consecutive な content H2 のあいだに、プールのバナー広告を1本ずつ挟む（回転）。
+ * 先頭 H2 の前（導入文の直後）には入れない。プールが空なら何もしない。
+ */
+function insertAdsBetweenH2s(html, pool) {
+  if (!pool.length) return html;
+  const parts = html.split(/(?=<h2\b)/i);
+  if (parts.length < 2) return html;
+  let rotate = 0;
+  const out = [parts[0]];
+  for (let i = 1; i < parts.length; i++) {
+    const prev = parts[i - 1];
+    const next = parts[i];
+    const prevIsContent = /^<h2\b/i.test(prev);
+    const nextIsContent = /^<h2\b/i.test(next);
+    if (prevIsContent && nextIsContent) {
+      const hm = next.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/i);
+      const h2text = hm ? hm[1].replace(/<[^>]+>/g, '') : '';
+      if (!AF_H2_SKIP_RE.test(h2text)) {
+        const key = pool[rotate % pool.length];
+        rotate += 1;
+        const entry = links[key];
+        if (!entry) {
+          throw new Error(
+            `H2間広告のキー ${key} が content/links.json にありません` +
+              ' / 対処: content/links.json にキーを足す',
+          );
+        }
+        out.push(renderAfCard(entry, entry.label, { side: false }));
+      }
+    }
+    out.push(next);
+  }
+  return out.join('');
 }
 
 /**
@@ -820,13 +909,16 @@ function crumbs(items) {
 // ---- 記事ページ
 
 for (const a of articles) {
+  // 本文末尾に固めた [[AF:]] は H2 間自動挿入の素材にし、本文カードとしては出さない（二重掲載防止）。
+  const afPool = collectAfBannerPool(a.body);
   const sideExtract = extractSideAds(a.body);
   const leftExtract = extractLeftAds(sideExtract.body);
-  const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(leftExtract.body, a.file)))));
+  const bodyMd = stripBodyAfMarkers(leftExtract.body);
+  const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(bodyMd, a.file)))));
   const sideAdsHtml = sideAdsWidget(sideExtract.sides);
   const leftAdsHtml = leftAdsWidget(leftExtract.lefts);
   assertNoRawEmphasis(parsed.html, a.file);
-  const html = breakJapaneseSentences(resolveLinks(parsed.html));
+  const html = insertAdsBetweenH2s(breakJapaneseSentences(resolveLinks(parsed.html)), afPool);
   const cname = catName(a.category);
 
   // 関連記事は同じカテゴリを優先し、足りない分だけ他カテゴリで埋める。
