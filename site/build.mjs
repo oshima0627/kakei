@@ -161,6 +161,7 @@ function extractSideAds(md) {
 
 /** links.json の1件を公式バナー＋CTAカードにする（本文・サイド共用）。
  * サイド／左レール（side=true）は bannerHtmlSide（縦長）があればそれを使い、無ければ bannerHtml。
+ * サイドかつバナーありは枠・バッジ・CTAなしでバナーHTMLだけ出す（景表法の開示は記事冒頭PR表記で担保）。
  */
 function renderAfCard(entry, label, { side = false } = {}) {
   const text = label || entry.label;
@@ -169,16 +170,17 @@ function renderAfCard(entry, label, { side = false } = {}) {
     return `<span class="link-todo" title="広告リンク未設定">${esc(text)}</span>`;
   }
   const cta = `<a class="buy" href="${esc(entry.url)}" rel="nofollow sponsored noopener" target="_blank">${esc(text)}</a>`;
-  const cls = side ? 'af-card af-card--side' : 'af-card';
   const banner = side && entry.bannerHtmlSide ? entry.bannerHtmlSide : entry.bannerHtml;
   if (banner) {
-    // 左右レールはバナー＋バッジだけで十分。長いCTAは狭い幅で崩れるので省略する。
-    const ctaHtml = side ? '' : `<p class="af-card__cta">${cta}</p>`;
+    // 左右レールはバナーリンクのみ（可視の「広告」文字・枠・CTAなし）
+    if (side) {
+      return `<div class="af-banner-only">${banner}</div>`;
+    }
     return (
-      `<aside class="${cls}">` +
+      `<aside class="af-card">` +
         `<p class="af-card__badge">広告</p>` +
         `<div class="af-card__banner">${banner}</div>` +
-        ctaHtml +
+        `<p class="af-card__cta">${cta}</p>` +
       `</aside>`
     );
   }
@@ -197,7 +199,7 @@ function sideAdsWidget(sides) {
     }
     return renderAfCard(entry, label, { side: true });
   });
-  // 紺の widget__title「広告」は出さない。カード内バッジだけで開示する。
+  // 可視の「広告」文字は出さない（aria-label のみ）。開示は記事冒頭PR表記。
   return `<div class="af-rail" aria-label="広告">${cards.join('\n')}</div>`;
 }
 
@@ -231,7 +233,7 @@ function leftAdsWidget(lefts) {
     }
     return renderAfCard(entry, label, { side: true });
   });
-  // 紺の widget__title「広告」は出さない。カード内バッジだけで開示する。
+  // 可視の「広告」文字は出さない（aria-label のみ）。開示は記事冒頭PR表記。
   return `<div class="af-rail" aria-label="広告">${cards.join('\n')}</div>`;
 }
 
