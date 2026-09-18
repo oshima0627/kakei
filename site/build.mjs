@@ -186,20 +186,18 @@ function renderAfCard(entry, label, { side = false } = {}) {
     return `<span class="link-todo" title="広告リンク未設定">${esc(text)}</span>`;
   }
   const cta = `<a class="buy" href="${esc(entry.url)}" rel="nofollow sponsored noopener" target="_blank">${esc(text)}</a>`;
-  // 本文: bannerHtml のみ（縦長フォールバック禁止）。サイド: bannerHtmlSide → bannerHtml。
-  const banner = side
-    ? (entry.bannerHtmlSide || entry.bannerHtml)
-    : entry.bannerHtml;
+  // 本文: bannerHtml のみ。左右レール: bannerHtmlSide（160x600）のみ。横長のフォールバック禁止。
+  if (side) {
+    const banner = entry.bannerHtmlSide;
+    if (!banner) return ''; // 縦長が無い案件はレールに出さない（呼び出し側で代替キーへ）
+    return `<div class="af-banner-only">${banner}</div>`;
+  }
+  const banner = entry.bannerHtml;
   if (banner) {
     const geom = bannerGeometry(banner);
     const landscape = geom && geom.w > geom.h * 1.15;
     const largeLandscape = landscape && geom.w >= 700; // 728x90 等。小さい横長は引き伸ばさない
-    // 左右レールはバナーリンクのみ（可視の「広告」文字・枠・CTAなし）
-    if (side) {
-      // 縦長はそのまま。横長フォールバックもレール幅に無理に引き伸ばさない（荒れるため）
-      const cls = landscape ? 'af-banner-only af-banner-only--landscape' : 'af-banner-only';
-      return `<div class="${cls}">${banner}</div>`;
-    }
+    // （side 分岐は上で return 済み）
     // 本文: 728系だけカラム内で最大表示。468系は実寸中央。300x250等は box。
     let cardCls = 'af-card af-card--box';
     if (largeLandscape) cardCls = 'af-card af-card--wide';
@@ -416,6 +414,43 @@ function defaultLeftAds(article) {
     if (entry && entry.url && entry.bannerHtmlSide) return [{ key }];
   }
   return [];
+}
+
+/**
+ * 左右レール用キーを縦長バナー必須で解決する。
+ * AFLeft/AFSide に横長しか無いキー（ふるさと・楽天など）が来たら、テーマ既定の縦長へ差し替える。
+ */
+function resolveRailAds(items, article, which) {
+  const fallbacks = which === 'left' ? defaultLeftAds(article) : defaultSideAds(article);
+  const out = [];
+  const seen = new Set();
+  for (const item of items || []) {
+    const key = item.key;
+    const entry = links[key];
+    if (entry && entry.bannerHtmlSide && entry.url) {
+      if (!seen.has(key)) {
+        seen.add(key);
+        out.push(item);
+      }
+      continue;
+    }
+    for (const fb of fallbacks) {
+      if (!seen.has(fb.key)) {
+        seen.add(fb.key);
+        out.push(fb);
+        break;
+      }
+    }
+  }
+  if (!out.length) {
+    for (const fb of fallbacks) {
+      if (!seen.has(fb.key)) {
+        seen.add(fb.key);
+        out.push(fb);
+      }
+    }
+  }
+  return out;
 }
 
 
@@ -1020,6 +1055,9 @@ for (const a of articles) {
     if (!afPool.length) afPool = defaultAfBodyPool(a);
     if (!sides.length) sides = defaultSideAds(a);
     if (!lefts.length) lefts = defaultLeftAds(a);
+    // マーカーがあっても縦長が無ければ既定の縦長へ（左・右とも横長禁止）
+    sides = resolveRailAds(sides, a, 'side');
+    lefts = resolveRailAds(lefts, a, 'left');
   }
   const bodyMd = stripBodyAfMarkers(leftExtract.body);
   const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(bodyMd, a.file)))));
