@@ -168,6 +168,23 @@ function extractSideAds(md) {
  * 本文（side=false）: bannerHtml のみ（横長バナー優先。skyscraper=bannerHtmlSide は本文に出さない）。
  * バナーありのとき下のテキストCTAは出さない（サイドは枠・バッジもなし。本文はバッジ＋枠のみ。開示はバッジと冒頭PR）。
  */
+/** バナーHTMLの width/height から横長判定（横 > 縦*1.15）。 */
+function isLandscapeBanner(html) {
+  const m =
+    String(html).match(/width=["']?(\d+)["']?[^>]*height=["']?(\d+)["']?/i) ||
+    String(html).match(/height=["']?(\d+)["']?[^>]*width=["']?(\d+)["']?/i);
+  if (!m) return false;
+  let w; let h;
+  if (/width=["']?\d+["']?[^>]*height=/i.test(m[0])) {
+    w = Number(m[1]);
+    h = Number(m[2]);
+  } else {
+    h = Number(m[1]);
+    w = Number(m[2]);
+  }
+  return w > h * 1.15;
+}
+
 function renderAfCard(entry, label, { side = false } = {}) {
   const text = label || entry.label;
   if (!text) throw new Error('AF card: label がありません');
@@ -180,13 +197,16 @@ function renderAfCard(entry, label, { side = false } = {}) {
     ? (entry.bannerHtmlSide || entry.bannerHtml)
     : entry.bannerHtml;
   if (banner) {
+    const wide = isLandscapeBanner(banner);
     // 左右レールはバナーリンクのみ（可視の「広告」文字・枠・CTAなし）
     if (side) {
-      return `<div class="af-banner-only">${banner}</div>`;
+      const cls = wide ? 'af-banner-only af-banner-only--wide' : 'af-banner-only';
+      return `<div class="${cls}">${banner}</div>`;
     }
-    // 本文もバナーがあれば下のテキストリンク（CTA）は出さない。開示はバッジ＋冒頭PR。
+    // 本文: 横長はカラム幅まで拡大、300x250等は実寸中央。下のテキストCTAは出さない。
+    const cardCls = wide ? 'af-card af-card--wide' : 'af-card af-card--box';
     return (
-      `<aside class="af-card">` +
+      `<aside class="${cardCls}">` +
         `<p class="af-card__badge">広告</p>` +
         `<div class="af-card__banner">${banner}</div>` +
       `</aside>`
