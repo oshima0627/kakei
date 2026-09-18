@@ -322,35 +322,36 @@ function collectAfBannerPool(md) {
 
 /**
  * マーカー無し記事向けの本文バナープール（links.json に bannerHtml があるキーのみ）。
- * カテゴリ／スラッグで先頭候補を軽く寄せる（無ければ共通デフォルト順）。
+ * カテゴリ／スラッグでテーマに合うキーだけを返す（全カタログは後付けしない）。
  * URL は組み立てない。bannerHtmlSide のみのキーは本文に入れない。
  */
 function defaultAfBodyPool(article) {
-  const base = [
-    'yayoi-kakuteishinkoku',
-    'mf-kakuteishinkoku',
-    'furusato-nippon',
-    'rakuten-ichiba',
-    'zeirishi-dotcom',
-    'zeirishi-agent',
-    'hoken-total-pro',
-  ];
   const hay = `${article.category || ''} ${article.slug || ''}`;
-  let front = [];
+  let keys = [];
   if (/furusato/.test(hay)) {
-    front = ['furusato-nippon', 'rakuten-ichiba'];
-  } else if (/sozoku/.test(hay)) {
-    front = ['zeirishi-dotcom', 'zeirishi-agent'];
-  } else if (/\bnenkin\b|kafu|izoku/.test(hay) && !/gakusei|kuriage/.test(hay)) {
-    front = ['fp-madoguchi', 'hoken-total-pro'];
-  } else if (/kyoikuhi|ideco|gakusei|kuriage/.test(hay)) {
-    front = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku', 'fp-madoguchi'];
+    keys = ['furusato-nippon', 'rakuten-ichiba'];
+  } else if (/sozoku|shoukibo|seimeihoken/.test(hay)) {
+    keys = ['zeirishi-dotcom', 'zeirishi-agent'];
+  } else if (/kafu|izoku/.test(hay)) {
+    // 遺族・寡婦年金（ライフプラン／保険相談）
+    keys = ['fp-madoguchi', 'hoken-total-pro'];
+  } else if (/kyoikuhi/.test(hay)) {
+    keys = ['fp-madoguchi', 'hoken-total-pro'];
+  } else if (/ideco/.test(hay)) {
+    keys = ['fp-madoguchi', 'mf-kakuteishinkoku'];
+  } else if (/gakusei|kuriage|kurisage/.test(hay)) {
+    keys = ['fp-madoguchi', 'hoken-total-pro'];
+  } else if (/taishoku/.test(hay)) {
+    keys = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku', 'fp-madoguchi', 'hoken-total-pro'];
   } else if (/zeikin|fuyou|iryou|jutaku|kougaku/.test(hay)) {
-    front = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku'];
+    keys = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku'];
+  } else {
+    // テーマ未判定時の短いフォールバック（確定申告ソフトのみ）
+    keys = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku'];
   }
   const seen = new Set();
   const ordered = [];
-  for (const key of [...front, ...base]) {
+  for (const key of keys) {
     if (seen.has(key)) continue;
     seen.add(key);
     const entry = links[key];
@@ -359,18 +360,39 @@ function defaultAfBodyPool(article) {
   return ordered;
 }
 
-/** 右サイド用デフォルト（bannerHtmlSide 必須。無ければ次候補）。 */
-function defaultSideAds() {
-  for (const key of ['mf-kakuteishinkoku', 'yayoi-kakuteishinkoku', 'zeirishi-dotcom']) {
+/**
+ * 右サイド用デフォルト（bannerHtmlSide 必須）。記事テーマで優先キーを寄せる。
+ * 縦長クリエイティブがあるのは yayoi / mf / zeirishi-dotcom のみ。
+ */
+function defaultSideAds(article) {
+  const hay = `${article?.category || ''} ${article?.slug || ''}`;
+  let prefer;
+  if (/sozoku|shoukibo|seimeihoken/.test(hay)) {
+    prefer = ['zeirishi-dotcom', 'mf-kakuteishinkoku', 'yayoi-kakuteishinkoku'];
+  } else {
+    // 税・退職・iDeCo・その他（ふるさと／教育費／遺族年金含む）: 右は MF
+    prefer = ['mf-kakuteishinkoku', 'yayoi-kakuteishinkoku', 'zeirishi-dotcom'];
+  }
+  for (const key of prefer) {
     const entry = links[key];
     if (entry && entry.url && entry.bannerHtmlSide) return [{ key }];
   }
   return [];
 }
 
-/** 左レール用デフォルト（bannerHtmlSide 必須。無ければ次候補）。 */
-function defaultLeftAds() {
-  for (const key of ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku', 'zeirishi-dotcom']) {
+/**
+ * 左レール用デフォルト（bannerHtmlSide 必須）。記事テーマで優先キーを寄せる。
+ */
+function defaultLeftAds(article) {
+  const hay = `${article?.category || ''} ${article?.slug || ''}`;
+  let prefer;
+  if (/sozoku|shoukibo|seimeihoken/.test(hay)) {
+    prefer = ['zeirishi-dotcom', 'yayoi-kakuteishinkoku', 'mf-kakuteishinkoku'];
+  } else {
+    // 左は弥生（右 MF と対になる）。縦長が無いテーマも最終手段で yayoi/mf。
+    prefer = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku', 'zeirishi-dotcom'];
+  }
+  for (const key of prefer) {
     const entry = links[key];
     if (entry && entry.url && entry.bannerHtmlSide) return [{ key }];
   }
@@ -977,8 +999,8 @@ for (const a of articles) {
   let lefts = leftExtract.lefts;
   if (site.affiliateEnabled) {
     if (!afPool.length) afPool = defaultAfBodyPool(a);
-    if (!sides.length) sides = defaultSideAds();
-    if (!lefts.length) lefts = defaultLeftAds();
+    if (!sides.length) sides = defaultSideAds(a);
+    if (!lefts.length) lefts = defaultLeftAds(a);
   }
   const bodyMd = stripBodyAfMarkers(leftExtract.body);
   const parsed = addHeadingIds(wrapFigures(wrapTables(marked.parse(renderSeidoCards(bodyMd, a.file)))));
