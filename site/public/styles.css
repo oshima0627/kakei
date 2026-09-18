@@ -433,15 +433,16 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   overflow: hidden;
 }
 .af-card__banner a {
-  display: block;
+  /* 300x250 などは実寸のまま中央。横長は max-width で本文幅までに収める */
+  display: inline-block;
   line-height: 0;
-  width: 100%;
+  width: auto;
   max-width: 100%;
   text-align: center;
 }
 .af-card__banner img {
   display: block;
-  width: 100%;
+  width: auto;
   max-width: 100%;
   height: auto;
   margin: 0 auto;

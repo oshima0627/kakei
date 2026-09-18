@@ -5,7 +5,7 @@
   "//ルール3": "未登録のキーを本文で使うとビルドが落ちる。「リンクのつもりが素のテキスト」を防ぐため。",
   "//ルール4": "freeText=false のキーは広告主が文言を固定しているリンク。[[AF:キー::別の文言]] で表示文言を差し替えない。",
   "//ルール5": "impression は もしも が発行する計測ピクセル（1×1画像）のURL。build.mjs は今は使っていない（<a> だけ出す）。使うなら build.mjs 側に出力を足す。",
-  "//ルール6": "本文用 bannerHtml は横長（landscape / 728x90・468x60 等）を優先。無い場合のフォールバックは 300x250 で可。縦長スキースクレーパー（bannerHtmlSide / 160x600）はサイドレール専用で本文に出さない。",
+  "//ルール6": "本文用 bannerHtml は横長（728x90・468x60 等）を優先。無い場合は 300x250/正方形を中央表示。縦長（bannerHtmlSide / 160x600）はサイド専用で本文に出さない。",
   "//状態": "2026-09-16 に もしもアフィリエイト（メディアID 687816「家計の制度ログ」）で8件提携し、原稿取得ページの『テキスト』から発行されたURLを転記した。全8件、発行された <a href> と1文字単位で一致することをブラウザ上で照合済み。a_id は提携ごとに違う（5805434〜5805441）。site.json の affiliateEnabled はまだ false（記事に [[AF:]] を置いてから true にする）。",
   "yayoi-kakuteishinkoku": {
     "label": "弥生のクラウド確定申告ソフト（やよいの青色申告 オンライン／白色申告 オンライン）",
@@ -17,12 +17,15 @@
     "promotionLinkId": 32450,
     "promotionName": "「弥生シリーズ」会員登録プロモーション / 弥生株式会社",
     "articles": "医療費控除・住宅ローン減税（初年度）・退職所得など確定申告が要る記事",
-    "note": "報酬300〜2,000円（無料体験300円／セルフプラン1,000円 等）。本人申込OK。PPC出稿・ポイントサイト掲載は禁止。既契約者・無料版→有償版は成果対象外 / 公式バナー300x250（pl_id=32450）を記事カード表示に使用。サイド用160x600（pl_id=32448）は bannerHtmlSide。2026-09-17/09-18取得。",
-    "checkedAt": "2026-09-17",
-    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805434&p_id=914&pc_id=1138&pl_id=32450\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0275/000000032450.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805434&p_id=914&pc_id=1138&pl_id=32450\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "300x250",
+    "note": "報酬300〜2,000円（無料体験300円／セルフプラン1,000円 等）。本人申込OK。PPC出稿・ポイントサイト掲載は禁止。既契約者・無料版→有償版は成果対象外 / 公式バナー300x250（pl_id=32450）を記事カード表示に使用。サイド用160x600（pl_id=32448）は bannerHtmlSide。2026-09-17/09-18取得 / 本文用横長 728x90（pl_id=32447）を bannerHtml に設定。2026-09-18取得。",
+    "checkedAt": "2026-09-18",
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805434&p_id=914&pc_id=1138&pl_id=32447\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0275/000000032447.png\" width=\"728\" height=\"90\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805434&p_id=914&pc_id=1138&pl_id=32447\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "728x90",
     "bannerHtmlSide": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805434&p_id=914&pc_id=1138&pl_id=32448\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0275/000000032448.png\" width=\"160\" height=\"600\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805434&p_id=914&pc_id=1138&pl_id=32448\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSizeSide": "160x600"
+    "bannerSizeSide": "160x600",
+    "bannerHtmlBox": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805434&p_id=914&pc_id=1138&pl_id=32450\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0275/000000032450.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805434&p_id=914&pc_id=1138&pl_id=32450\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeBox": "300x250",
+    "promotionLinkIdBody": 32447
   },
   "mf-kakuteishinkoku": {
     "label": "マネーフォワード クラウド確定申告",
@@ -34,12 +37,15 @@
     "promotionLinkId": 64816,
     "promotionName": "マネーフォワード クラウドの登録プロモーション / 株式会社マネーフォワード",
     "articles": "同上",
-    "note": "報酬500円（法人700円）。本人申込NG（本人はシークレットモードで）。バナーの自社サーバー設置禁止。確定申告LPをリンク先にした場合のみITP対応 / 公式バナー300x250（pl_id=64816）を記事カード表示に使用。サイド用160x600（pl_id=38164）は bannerHtmlSide。2026-09-17/09-18取得。",
-    "checkedAt": "2026-09-17",
-    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805435&p_id=888&pc_id=1087&pl_id=64816\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0253/000000064816.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805435&p_id=888&pc_id=1087&pl_id=64816\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "300x250",
+    "note": "報酬500円（法人700円）。本人申込NG（本人はシークレットモードで）。バナーの自社サーバー設置禁止。確定申告LPをリンク先にした場合のみITP対応 / 公式バナー300x250（pl_id=64816）を記事カード表示に使用。サイド用160x600（pl_id=38164）は bannerHtmlSide。2026-09-17/09-18取得 / 本文用横長 728x90（pl_id=64827）を bannerHtml に設定。2026-09-18取得。",
+    "checkedAt": "2026-09-18",
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805435&p_id=888&pc_id=1087&pl_id=64827\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0253/000000064827.png\" width=\"728\" height=\"90\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805435&p_id=888&pc_id=1087&pl_id=64827\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "728x90",
     "bannerHtmlSide": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805435&p_id=888&pc_id=1087&pl_id=38164\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0253/000000038164.jpg\" width=\"160\" height=\"600\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805435&p_id=888&pc_id=1087&pl_id=38164\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSizeSide": "160x600"
+    "bannerSizeSide": "160x600",
+    "bannerHtmlBox": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805435&p_id=888&pc_id=1087&pl_id=64816\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0253/000000064816.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805435&p_id=888&pc_id=1087&pl_id=64816\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeBox": "300x250",
+    "promotionLinkIdBody": 64827
   },
   "furusato-nippon": {
     "label": "ふるさと納税ニッポン",
@@ -51,10 +57,13 @@
     "promotionLinkId": 41497,
     "promotionName": "ふるさと納税ニッポン｜ふるさと納税サイトの商品購入",
     "articles": "ふるさと納税の上限額・ワンストップ特例",
-    "note": "報酬308円/納税完了（入金確認で承認）。本人申込NG（2025-10-01 以降、寄附者への経済的利益提供が禁止のため）。商標のリスティング広告NG / 公式バナー300x250（pl_id=41497）を記事カード表示に使用。2026-09-17取得。",
-    "checkedAt": "2026-09-17",
-    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805436&p_id=3172&pc_id=7409&pl_id=41497\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/2113/000000041497.jpg\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805436&p_id=3172&pc_id=7409&pl_id=41497\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "300x250"
+    "note": "報酬308円/納税完了（入金確認で承認）。本人申込NG（2025-10-01 以降、寄附者への経済的利益提供が禁止のため）。商標のリスティング広告NG / 公式バナー300x250（pl_id=41497）を記事カード表示に使用。2026-09-17取得 / 本文用横長 469x60（pl_id=41501）を bannerHtml に設定。2026-09-18取得。",
+    "checkedAt": "2026-09-18",
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805436&p_id=3172&pc_id=7409&pl_id=41501\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/2113/000000041501.jpg\" width=\"469\" height=\"60\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805436&p_id=3172&pc_id=7409&pl_id=41501\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "469x60",
+    "bannerHtmlBox": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805436&p_id=3172&pc_id=7409&pl_id=41497\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/2113/000000041497.jpg\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805436&p_id=3172&pc_id=7409&pl_id=41497\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeBox": "300x250",
+    "promotionLinkIdBody": 41501
   },
   "rakuten-ichiba": {
     "label": "楽天市場",
@@ -66,10 +75,11 @@
     "promotionLinkId": 620,
     "promotionName": "楽天市場の商品購入 / 楽天グループ株式会社",
     "articles": "ふるさと納税（楽天ふるさと納税へ）",
-    "note": "報酬2%。本人申込NG。「このリンクから購入してください」等の誘導文言禁止。みんなのレビュー転載禁止。楽天ふるさと納税の個別ページへ飛ばすには『どこでもリンク』で作り直す（未作成） / 公式バナー468x60（pl_id=620）を記事カード表示に使用。2026-09-17取得。",
-    "checkedAt": "2026-09-17",
+    "note": "報酬2%。本人申込NG。「このリンクから購入してください」等の誘導文言禁止。みんなのレビュー転載禁止。楽天ふるさと納税の個別ページへ飛ばすには『どこでもリンク』で作り直す（未作成） / 公式バナー468x60（pl_id=620）を記事カード表示に使用。2026-09-17取得 / 本文用横長 468x60（pl_id=620）を bannerHtml に設定。2026-09-18取得。",
+    "checkedAt": "2026-09-18",
     "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805437&p_id=54&pc_id=54&pl_id=620\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0032/000000000620.gif\" width=\"468\" height=\"60\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805437&p_id=54&pc_id=54&pl_id=620\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "468x60"
+    "bannerSize": "468x60",
+    "promotionLinkIdBody": 620
   },
   "zeirishi-dotcom": {
     "label": "税理士ドットコム（相続税申告の税理士探し）",
@@ -81,12 +91,15 @@
     "promotionLinkId": 30264,
     "promotionName": "【税理士ドットコム】税理士探しの無料問合せ獲得",
     "articles": "小規模宅地等の特例・生命保険金の非課税枠（相続税の申告が要る記事）",
-    "note": "報酬5,000円/問合せ。本人申込NG。承認条件: 税理士紹介の相談であること・過去1年以内の利用なし・電話本人確認1分以上・3営業日以内に確認・1世帯1回。このリンクは相続LP向け（pl_id=18547） / 公式バナー300x250（pl_id=30264）を記事カード表示に使用。サイド用160x600（pl_id=30285）は bannerHtmlSide。2026-09-17/09-18取得。",
-    "checkedAt": "2026-09-17",
-    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805438&p_id=938&pc_id=1198&pl_id=30264\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0290/000000030264.gif\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805438&p_id=938&pc_id=1198&pl_id=30264\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "300x250",
+    "note": "報酬5,000円/問合せ。本人申込NG。承認条件: 税理士紹介の相談であること・過去1年以内の利用なし・電話本人確認1分以上・3営業日以内に確認・1世帯1回。このリンクは相続LP向け（pl_id=18547） / 公式バナー300x250（pl_id=30264）を記事カード表示に使用。サイド用160x600（pl_id=30285）は bannerHtmlSide。2026-09-17/09-18取得 / 本文用横長 728x90（pl_id=30270）を bannerHtml に設定。2026-09-18取得。",
+    "checkedAt": "2026-09-18",
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805438&p_id=938&pc_id=1198&pl_id=30270\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0290/000000030270.gif\" width=\"728\" height=\"90\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805438&p_id=938&pc_id=1198&pl_id=30270\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "728x90",
     "bannerHtmlSide": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805438&p_id=938&pc_id=1198&pl_id=30285\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0290/000000030285.gif\" width=\"160\" height=\"600\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805438&p_id=938&pc_id=1198&pl_id=30285\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSizeSide": "160x600"
+    "bannerSizeSide": "160x600",
+    "bannerHtmlBox": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805438&p_id=938&pc_id=1198&pl_id=30264\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0290/000000030264.gif\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805438&p_id=938&pc_id=1198&pl_id=30264\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeBox": "300x250",
+    "promotionLinkIdBody": 30270
   },
   "zeirishi-agent": {
     "label": "税理士紹介エージェント",
@@ -98,10 +111,13 @@
     "promotionLinkId": 71542,
     "promotionName": "税理士紹介エージェント｜税理士紹介の無料問い合わせ",
     "articles": "同上",
-    "note": "報酬5,000円/問合せ。本人申込NG。承認条件: 本人確認後（通話1分未満・1世帯2回以上・リスティング違反は否認） / 公式バナー300x250（pl_id=71542）を記事カード表示に使用。2026-09-17取得。",
-    "checkedAt": "2026-09-17",
-    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805439&p_id=5475&pc_id=14990&pl_id=71542\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/3108/000000071542.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805439&p_id=5475&pc_id=14990&pl_id=71542\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "300x250"
+    "note": "報酬5,000円/問合せ。本人申込NG。承認条件: 本人確認後（通話1分未満・1世帯2回以上・リスティング違反は否認） / 公式バナー300x250（pl_id=71542）を記事カード表示に使用。2026-09-17取得 / 本文用横長 728x90（pl_id=71546）を bannerHtml に設定。2026-09-18取得。",
+    "checkedAt": "2026-09-18",
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805439&p_id=5475&pc_id=14990&pl_id=71546\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/3108/000000071546.png\" width=\"728\" height=\"90\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805439&p_id=5475&pc_id=14990&pl_id=71546\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "728x90",
+    "bannerHtmlBox": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805439&p_id=5475&pc_id=14990&pl_id=71542\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/3108/000000071542.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805439&p_id=5475&pc_id=14990&pl_id=71542\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeBox": "300x250",
+    "promotionLinkIdBody": 71546
   },
   "fp-madoguchi": {
     "label": "FPの窓口",
@@ -113,8 +129,8 @@
     "promotionLinkId": 70500,
     "promotionName": "FPの窓口｜中立FPによる保険の相談窓口",
     "articles": "遺族年金・iDeCo・退職所得",
-    "note": "報酬5,000円。本人申込OK。⚠️承認条件が厳しい: 両親世帯のみ（ひとり親は対象外）・25〜59歳・世帯収入あり・60日以内に面談しFPの提案に返答した場合のみ。保険の新規加入/見直しの意思がないと否認 / 公式バナー297x297（pl_id=70500）を記事カード表示に使用。2026-09-17取得。",
-    "checkedAt": "2026-09-17",
+    "note": "報酬5,000円。本人申込OK。⚠️承認条件が厳しい: 両親世帯のみ（ひとり親は対象外）・25〜59歳・世帯収入あり・60日以内に面談しFPの提案に返答した場合のみ。保険の新規加入/見直しの意思がないと否認 / 公式バナー297x297（pl_id=70500）を記事カード表示に使用。2026-09-17取得 / 横長バナーなし（297x297のみ）。本文では中央表示。2026-09-18確認。",
+    "checkedAt": "2026-09-18",
     "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805440&p_id=5352&pc_id=14603&pl_id=70500\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/5038/000000070500.png\" width=\"297\" height=\"297\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805440&p_id=5352&pc_id=14603&pl_id=70500\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
     "bannerSize": "297x297"
   },
@@ -128,9 +144,12 @@
     "promotionLinkId": 25537,
     "promotionName": "【保険のトータルプロフェッショナル】専門家FPの無料保険相談申込",
     "articles": "遺族年金・iDeCo・退職所得",
-    "note": "報酬13,800円。本人申込NG。⚠️承認条件が厳しい: 広告主新規・14営業日以内に相談日確定・30日以内に2度目の面談完了。リモート面談のみ/年収300万円未満/保険業関係者などは否認 / 公式バナー300x250（pl_id=25537）を記事カード表示に使用。2026-09-17取得。",
-    "checkedAt": "2026-09-17",
-    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25537\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/1048/000000025537.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25537\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "300x250"
+    "note": "報酬13,800円。本人申込NG。⚠️承認条件が厳しい: 広告主新規・14営業日以内に相談日確定・30日以内に2度目の面談完了。リモート面談のみ/年収300万円未満/保険業関係者などは否認 / 公式バナー300x250（pl_id=25537）を記事カード表示に使用。2026-09-17取得 / 本文用横長 468x60（pl_id=25535）を bannerHtml に設定。2026-09-18取得。",
+    "checkedAt": "2026-09-18",
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25535\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/1048/000000025535.png\" width=\"468\" height=\"60\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25535\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "468x60",
+    "bannerHtmlBox": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25537\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/1048/000000025537.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25537\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeBox": "300x250",
+    "promotionLinkIdBody": 25535
   }
 }
