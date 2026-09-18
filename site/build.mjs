@@ -159,9 +159,9 @@ function extractSideAds(md) {
   return { body, sides };
 }
 
-/** links.json の1件を公式バナー＋CTAカードにする（本文・サイド共用）。
+/** links.json の1件を公式バナーカードにする（本文・サイド共用）。
  * サイド／左レール（side=true）は bannerHtmlSide（縦長）があればそれを使い、無ければ bannerHtml。
- * サイドかつバナーありは枠・バッジ・CTAなしでバナーHTMLだけ出す（景表法の開示は記事冒頭PR表記で担保）。
+ * バナーありのとき下のテキストCTAは出さない（サイドは枠・バッジもなし。本文はバッジ＋枠のみ。開示はバッジと冒頭PR）。
  */
 function renderAfCard(entry, label, { side = false } = {}) {
   const text = label || entry.label;
@@ -176,11 +176,11 @@ function renderAfCard(entry, label, { side = false } = {}) {
     if (side) {
       return `<div class="af-banner-only">${banner}</div>`;
     }
+    // 本文もバナーがあれば下のテキストリンク（CTA）は出さない。開示はバッジ＋冒頭PR。
     return (
       `<aside class="af-card">` +
         `<p class="af-card__badge">広告</p>` +
         `<div class="af-card__banner">${banner}</div>` +
-        `<p class="af-card__cta">${cta}</p>` +
       `</aside>`
     );
   }
