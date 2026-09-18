@@ -172,11 +172,13 @@ function renderAfCard(entry, label, { side = false } = {}) {
   const cls = side ? 'af-card af-card--side' : 'af-card';
   const banner = side && entry.bannerHtmlSide ? entry.bannerHtmlSide : entry.bannerHtml;
   if (banner) {
+    // 左右レールはバナー＋バッジだけで十分。長いCTAは狭い幅で崩れるので省略する。
+    const ctaHtml = side ? '' : `<p class="af-card__cta">${cta}</p>`;
     return (
       `<aside class="${cls}">` +
         `<p class="af-card__badge">広告</p>` +
         `<div class="af-card__banner">${banner}</div>` +
-        `<p class="af-card__cta">${cta}</p>` +
+        ctaHtml +
       `</aside>`
     );
   }
@@ -195,7 +197,8 @@ function sideAdsWidget(sides) {
     }
     return renderAfCard(entry, label, { side: true });
   });
-  return widget('広告', cards.join('\n'));
+  // 紺の widget__title「広告」は出さない。カード内バッジだけで開示する。
+  return `<div class="af-rail" aria-label="広告">${cards.join('\n')}</div>`;
 }
 
 /**
@@ -228,7 +231,8 @@ function leftAdsWidget(lefts) {
     }
     return renderAfCard(entry, label, { side: true });
   });
-  return widget('広告', cards.join('\n'));
+  // 紺の widget__title「広告」は出さない。カード内バッジだけで開示する。
+  return `<div class="af-rail" aria-label="広告">${cards.join('\n')}</div>`;
 }
 
 
