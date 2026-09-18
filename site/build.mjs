@@ -164,8 +164,8 @@ function extractSideAds(md) {
 }
 
 /** links.json の1件を公式バナーカードにする（本文・サイド共用）。
- * サイド／左レール（side=true）は bannerHtmlSide（縦長）があればそれを使い、無ければ bannerHtml。
- * 本文は bannerHtml を優先し、無ければ bannerHtmlSide にフォールバック。
+ * サイド／左レール（side=true）: bannerHtmlSide（160x600 縦長）があればそれ、無ければ bannerHtml。
+ * 本文（side=false）: bannerHtml のみ（横長バナー優先。skyscraper=bannerHtmlSide は本文に出さない）。
  * バナーありのとき下のテキストCTAは出さない（サイドは枠・バッジもなし。本文はバッジ＋枠のみ。開示はバッジと冒頭PR）。
  */
 function renderAfCard(entry, label, { side = false } = {}) {
@@ -175,10 +175,10 @@ function renderAfCard(entry, label, { side = false } = {}) {
     return `<span class="link-todo" title="広告リンク未設定">${esc(text)}</span>`;
   }
   const cta = `<a class="buy" href="${esc(entry.url)}" rel="nofollow sponsored noopener" target="_blank">${esc(text)}</a>`;
-  // 本文: bannerHtml → bannerHtmlSide。サイド: bannerHtmlSide → bannerHtml。
+  // 本文: bannerHtml のみ（縦長フォールバック禁止）。サイド: bannerHtmlSide → bannerHtml。
   const banner = side
     ? (entry.bannerHtmlSide || entry.bannerHtml)
-    : (entry.bannerHtml || entry.bannerHtmlSide);
+    : entry.bannerHtml;
   if (banner) {
     // 左右レールはバナーリンクのみ（可視の「広告」文字・枠・CTAなし）
     if (side) {
@@ -299,9 +299,9 @@ function resolveLinks(html) {
 }
 
 /**
- * 記事の [[AF:]] / [[AFSide:]] / [[AFLeft:]] から、バナー付きキーの出現順ユニークなプールを作る。
- * H2 セクション間への自動挿入に使う。bannerHtml が無くても bannerHtmlSide があれば対象。
- * URL は links.json にあるものだけ（ここで組み立てない）。
+ * 記事の [[AF:]] / [[AFSide:]] / [[AFLeft:]] から、本文用バナー付きキーの出現順ユニークなプールを作る。
+ * H2 セクション間への自動挿入に使う。bannerHtml があるキーのみ（side-only / bannerHtmlSide のみは除外）。
+ * 本文バナーは横長（landscape）優先。URL は links.json にあるものだけ（ここで組み立てない）。
  */
 function collectAfBannerPool(md) {
   const seen = new Set();
@@ -314,7 +314,7 @@ function collectAfBannerPool(md) {
     seen.add(key);
     const entry = links[key];
     if (!entry) continue; // 未登録は extract / strip 側で落とす
-    if (entry.bannerHtml || entry.bannerHtmlSide) pool.push(key);
+    if (entry.bannerHtml) pool.push(key);
   }
   return pool;
 }

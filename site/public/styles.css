@@ -362,19 +362,22 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 
 /* ---------------------------------------------------------------- 広告カード（公式バナー＋CTA）
  *
- * [[AF:]] はビルド時に .af-card になる。もしも発行のバナーHTMLをそのまま載せ、
- * 下にテキストCTA（.buy）を置く。おすすめ比較の見た目にはしない。
+ * [[AF:]] はビルド時に .af-card になる。本文は横長バナー（landscape）優先。
+ * もしも発行のバナーHTMLをそのまま載せ、下にテキストCTA（.buy）を置くこともある。
+ * おすすめ比較の見た目にはしない。サイドレールは .af-banner-only（160x600）。
  */
 .af-card {
   display: block;
-  /* 本文幅いっぱいに広げず、左右に余白を残す */
-  width: min(100%, 340px);
+  /* 横長バナーが本文コンテンツ幅を使えるようにする（正方形に固定しない） */
+  width: 100%;
+  max-width: 100%;
   margin: 1.6rem auto;
   padding: 0.9rem 1rem 1rem;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 6px;
   text-align: center;
+  box-sizing: border-box;
 }
 /* 左右レール用ラッパー（枠・背景なし・可視タイトルなし） */
 .af-rail {
@@ -424,18 +427,24 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 0.75rem;
+  margin: 0 auto;
+  width: 100%;
   max-width: 100%;
   overflow: hidden;
 }
 .af-card__banner a {
-  display: inline-block;
+  display: block;
   line-height: 0;
+  width: 100%;
   max-width: 100%;
+  text-align: center;
 }
 .af-card__banner img {
+  display: block;
+  width: 100%;
   max-width: 100%;
   height: auto;
+  margin: 0 auto;
   vertical-align: top;
 }
 .af-card__cta {
