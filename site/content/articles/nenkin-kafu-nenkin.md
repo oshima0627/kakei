@@ -212,6 +212,7 @@ lead: 第1号として保険料を納めた月数が36月以上ある方が、�
 
 [[AF:fp-madoguchi]]
 
+[[AFLeft:fp-madoguchi]]
 [[AFSide:hoken-total-pro]]
 
 ## 出典一覧（すべて 2026-09-16 に取得）

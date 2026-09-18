@@ -315,6 +315,7 @@ No.1122 は、対象になる医療費の全体にまず枠をはめています
 
 [[AF:yayoi-kakuteishinkoku]]
 
+[[AFLeft:yayoi-kakuteishinkoku]]
 [[AFSide:mf-kakuteishinkoku]]
 
 ## 出典一覧（すべて 2026-09-02 に取得）

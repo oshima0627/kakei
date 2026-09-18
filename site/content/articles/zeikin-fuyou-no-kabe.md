@@ -270,6 +270,7 @@ No.1177 の表は「58万円超85万円以下」から始まっていて、合�
 
 [[AF:yayoi-kakuteishinkoku]]
 
+[[AFLeft:yayoi-kakuteishinkoku]]
 [[AFSide:mf-kakuteishinkoku]]
 
 ## 出典一覧（すべて 2026-09-08 に取得）

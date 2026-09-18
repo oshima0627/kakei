@@ -182,6 +182,7 @@ lead: 窓口で払った自己負担が上限額を超えたとき、その超�
 
 [[AF:yayoi-kakuteishinkoku]]
 
+[[AFLeft:yayoi-kakuteishinkoku]]
 [[AFSide:mf-kakuteishinkoku]]
 
 ## 出典一覧（すべて 2026-09-02 に取得）

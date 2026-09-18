@@ -147,6 +147,7 @@ lead: 控除を引いたうえで、さらに2分の1になる。ただし例外
 
 [[AF:yayoi-kakuteishinkoku]]
 
+[[AFLeft:yayoi-kakuteishinkoku]]
 [[AFSide:mf-kakuteishinkoku]]
 
 

@@ -154,6 +154,7 @@ lead: 事業に使っていた土地（不動産貸付業などを除く）
 
 [[AF:zeirishi-dotcom]]
 
+[[AFLeft:zeirishi-dotcom]]
 [[AFSide:zeirishi-agent]]
 
 ## 出典一覧（2026-09-07 に取得）

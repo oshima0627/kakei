@@ -194,6 +194,7 @@ lead: 子がいなくても出るが、妻と夫で条件が違う。優先順�
 
 [[AF:fp-madoguchi]]
 
+[[AFLeft:fp-madoguchi]]
 [[AFSide:hoken-total-pro]]
 
 ## 出典一覧（すべて 2026-09-07 に取得）

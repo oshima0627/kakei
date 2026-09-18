@@ -183,6 +183,7 @@ lead: 遺産の全体から引く。受取人が誰かは関係しない
 
 [[AF:zeirishi-dotcom]]
 
+[[AFLeft:zeirishi-dotcom]]
 [[AFSide:zeirishi-agent]]
 
 ## 出典一覧（すべて 2026-09-07 に取得）
