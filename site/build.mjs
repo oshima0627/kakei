@@ -168,21 +168,15 @@ function extractSideAds(md) {
  * 本文（side=false）: bannerHtml のみ（横長バナー優先。skyscraper=bannerHtmlSide は本文に出さない）。
  * バナーありのとき下のテキストCTAは出さない（サイドは枠・バッジもなし。本文はバッジ＋枠のみ。開示はバッジと冒頭PR）。
  */
-/** バナーHTMLの width/height から横長判定（横 > 縦*1.15）。 */
-function isLandscapeBanner(html) {
-  const m =
-    String(html).match(/width=["']?(\d+)["']?[^>]*height=["']?(\d+)["']?/i) ||
-    String(html).match(/height=["']?(\d+)["']?[^>]*width=["']?(\d+)["']?/i);
-  if (!m) return false;
-  let w; let h;
-  if (/width=["']?\d+["']?[^>]*height=/i.test(m[0])) {
-    w = Number(m[1]);
-    h = Number(m[2]);
-  } else {
-    h = Number(m[1]);
-    w = Number(m[2]);
-  }
-  return w > h * 1.15;
+/** バナーHTMLから width/height を読む（計測1x1は無視したいので最初の img を対象）。 */
+function bannerGeometry(html) {
+  const m = String(html).match(/<img\b[^>]*>/i);
+  if (!m) return null;
+  const tag = m[0];
+  const w = Number((tag.match(/\bwidth=["']?(\d+)/i) || [])[1] || 0);
+  const h = Number((tag.match(/\bheight=["']?(\d+)/i) || [])[1] || 0);
+  if (!w || !h) return null;
+  return { w, h };
 }
 
 function renderAfCard(entry, label, { side = false } = {}) {
@@ -197,14 +191,19 @@ function renderAfCard(entry, label, { side = false } = {}) {
     ? (entry.bannerHtmlSide || entry.bannerHtml)
     : entry.bannerHtml;
   if (banner) {
-    const wide = isLandscapeBanner(banner);
+    const geom = bannerGeometry(banner);
+    const landscape = geom && geom.w > geom.h * 1.15;
+    const largeLandscape = landscape && geom.w >= 700; // 728x90 等。小さい横長は引き伸ばさない
     // 左右レールはバナーリンクのみ（可視の「広告」文字・枠・CTAなし）
     if (side) {
-      const cls = wide ? 'af-banner-only af-banner-only--wide' : 'af-banner-only';
+      // 縦長はそのまま。横長フォールバックもレール幅に無理に引き伸ばさない（荒れるため）
+      const cls = landscape ? 'af-banner-only af-banner-only--landscape' : 'af-banner-only';
       return `<div class="${cls}">${banner}</div>`;
     }
-    // 本文: 横長はカラム幅まで拡大、300x250等は実寸中央。下のテキストCTAは出さない。
-    const cardCls = wide ? 'af-card af-card--wide' : 'af-card af-card--box';
+    // 本文: 728系だけカラム内で最大表示。468系は実寸中央。300x250等は box。
+    let cardCls = 'af-card af-card--box';
+    if (largeLandscape) cardCls = 'af-card af-card--wide';
+    else if (landscape) cardCls = 'af-card af-card--wide-sm';
     return (
       `<aside class="${cardCls}">` +
         `<p class="af-card__badge">広告</p>` +

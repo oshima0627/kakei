@@ -392,9 +392,32 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   line-height: 0;
 }
 .af-card--wide .af-card__banner > a > img {
+  /* 728x90 など十分な解像度だけ本文幅まで（上限728でボケ抑制） */
   display: block;
-  width: 100% !important; /* HTMLの width="469" より優先 */
+  width: 100% !important;
+  max-width: 728px !important;
+  height: auto !important;
+  margin: 0 auto;
+}
+/* 468x60 など小さい横長: 引き伸ばさず実寸中央（ボケ防止） */
+.af-card--wide-sm {
+  width: fit-content;
   max-width: 100%;
+  position: relative;
+  margin-inline: auto;
+}
+.af-card--wide-sm .af-card__banner {
+  display: flex;
+  justify-content: center;
+}
+.af-card--wide-sm .af-card__banner > a {
+  display: inline-block;
+  line-height: 0;
+}
+.af-card--wide-sm .af-card__banner > a > img {
+  display: block;
+  width: auto !important;
+  max-width: 100% !important;
   height: auto !important;
 }
 /* もしも計測ピクセル（1x1）は拡大しない */
@@ -468,11 +491,17 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   width: 100%;
   line-height: 0;
 }
-.af-banner-only--wide > a > img {
-  display: block;
-  width: 100% !important;
+.af-banner-only--landscape > a {
+  display: inline-block;
   max-width: 100%;
+  line-height: 0;
+}
+.af-banner-only--landscape > a > img {
+  display: block;
+  width: auto !important;
+  max-width: 100% !important;
   height: auto !important;
+  margin: 0 auto;
 }
 
 .af-card__badge {
