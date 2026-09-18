@@ -144,12 +144,12 @@
     "promotionLinkId": 25537,
     "promotionName": "【保険のトータルプロフェッショナル】専門家FPの無料保険相談申込",
     "articles": "遺族年金・iDeCo・退職所得",
-    "note": "報酬13,800円。本人申込NG。⚠️承認条件が厳しい: 広告主新規・14営業日以内に相談日確定・30日以内に2度目の面談完了。リモート面談のみ/年収300万円未満/保険業関係者などは否認 / 公式バナー300x250（pl_id=25537）を記事カード表示に使用。2026-09-17取得 / 本文用横長 468x60（pl_id=25535）を bannerHtml に設定。2026-09-18取得。",
+    "note": "報酬13,800円。本人申込NG。⚠️承認条件が厳しい: 広告主新規・14営業日以内に相談日確定・30日以内に2度目の面談完了。リモート面談のみ/年収300万円未満/保険業関係者などは否認 / 公式バナー300x250（pl_id=25537）を記事カード表示に使用。2026-09-17取得 / 本文用横長 468x60（pl_id=25535）を bannerHtml に設定。2026-09-18取得 / 本文用横長を728x90（pl_id=25536）に更新。2026-09-18。",
     "checkedAt": "2026-09-18",
-    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25535\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/1048/000000025535.png\" width=\"468\" height=\"60\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25535\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSize": "468x60",
-    "bannerHtmlBox": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25537\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/1048/000000025537.png\" width=\"300\" height=\"250\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25537\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
-    "bannerSizeBox": "300x250",
-    "promotionLinkIdBody": 25535
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25536\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/1048/000000025536.png\" width=\"728\" height=\"90\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25536\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "728x90",
+    "bannerHtmlBox": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25535\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/1048/000000025535.png\" width=\"468\" height=\"60\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25535\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeBox": "468x60",
+    "promotionLinkIdBody": 25536
   }
 }
