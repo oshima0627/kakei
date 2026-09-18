@@ -1100,8 +1100,43 @@ function articleCards(list) {
     .join('')}</ul>`;
 }
 
+
+/**
+ * トップページ用の広告（homepage に [[AF:]] が無いので固定キーで差し込む）。
+ * affiliateEnabled=false のときは全部空。URL は links.json の既存キーのみ（組み立てない）。
+ * 左レール: 縦長のみ（af-banner-only）。右サイド: 縦長を about の前。本文: 横長 af-card。
+ */
+function homeAds() {
+  if (!site.affiliateEnabled) {
+    return { left: '', side: '', body: '' };
+  }
+  const sideCard = (key) => {
+    const entry = links[key];
+    if (!entry || !entry.url) return '';
+    if (!(entry.bannerHtmlSide || entry.bannerHtml)) return '';
+    return renderAfCard(entry, entry.label, { side: true });
+  };
+  const bodyCard = (key) => {
+    const entry = links[key];
+    if (!entry || !entry.url || !entry.bannerHtml) return '';
+    return renderAfCard(entry, entry.label, { side: false });
+  };
+  const wrapRail = (html) =>
+    html ? `<div class="af-rail" aria-label="広告">${html}</div>` : '';
+
+  // 左: 弥生（bannerHtmlSide 160x600）／右: MF（同）／本文: 横長 1〜2（728x90 等）
+  const left = wrapRail(sideCard('yayoi-kakuteishinkoku'));
+  const side = wrapRail(sideCard('mf-kakuteishinkoku'));
+  const bodyParts = [
+    bodyCard('yayoi-kakuteishinkoku'),
+    bodyCard('furusato-nippon'),
+  ].filter(Boolean);
+  return { left, side, body: bodyParts.join('\n') };
+}
+
 // ---- トップページ
 
+const homeAf = homeAds();
 writeFile(
   'index.html',
   render(baseTpl, {
@@ -1119,9 +1154,13 @@ writeFile(
       inLanguage: site.lang,
     }),
     breadcrumb: '',
-    sidebarLeft: '',
-    sidebar: aboutWidget + categoryWidget,
-    content: `<h1>${esc(site.name)}</h1><p class="lead">${esc(site.description)}</p>${articleCards(byRecent)}`,
+    sidebarLeft: homeAf.left,
+    sidebar: homeAf.side + aboutWidget + categoryWidget,
+    content:
+      `<h1>${esc(site.name)}</h1>` +
+      `<p class="lead">${esc(site.description)}</p>` +
+      (homeAf.body ? homeAf.body + '\n' : '') +
+      articleCards(byRecent),
     year: String(new Date().getFullYear()),
   }),
 );
