@@ -31,7 +31,7 @@
   --surface: #f5f6f8;
   --warn-bg: #fff9e8;
   --warn-line: #e7cd7a;
-  --content: 900px;
+  --content: 1080px;       /* 中央寄せの左右余白を本文に回す（旧900） */
   --side: 260px;
   --rail: 180px;           /* 160バナー＋カード余白の空気 */
 }
@@ -106,7 +106,7 @@ a:hover { text-decoration: none; }
 /* 左レールは広幅のみ。狭い幅では DOM に残しても display:none でグリッドに参加させない */
 .l-rail { display: none; font-size: .85rem; }
 
-@media (min-width: 1100px) {
+@media (min-width: 1280px) {
   .l-rail:not(:empty) {
     display: block;
     position: sticky;
@@ -117,8 +117,9 @@ a:hover { text-decoration: none; }
     max-width: calc(var(--content) + var(--side) + var(--rail, 180px) + 60px);
     gap: 30px;
   }
-  .site-header__inner,
-  .site-footer__inner {
+  /* ヘッダー／フッターも .l-wrap と同じ幅に揃える（レール無しページで広げすぎない） */
+  body:has(.l-rail:not(:empty)) .site-header__inner,
+  body:has(.l-rail:not(:empty)) .site-footer__inner {
     max-width: calc(var(--content) + var(--side) + var(--rail, 180px) + 60px);
   }
 }
