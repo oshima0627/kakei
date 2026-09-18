@@ -367,9 +367,9 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
  * おすすめ比較の見た目にはしない。サイドレールは .af-banner-only（160x600）。
  */
 .af-card {
+  /* バナー実寸に合わせて縮め、本文カラム内で中央寄せ（横長・300x250とも） */
   display: block;
-  /* 横長バナーが本文コンテンツ幅を使えるようにする（正方形に固定しない） */
-  width: 100%;
+  width: fit-content;
   max-width: 100%;
   margin: 1.6rem auto;
   padding: 0.9rem 1rem 1rem;
