@@ -1,21 +1,25 @@
 ---
-title: 103万と106万は別制度｜年収の壁を公式の金額だけで整理
-description: 公式サイトは税と社会保険でページが分かれます。この記事は103・106・130・150・160万について、国税庁・厚労省・年金機構の原文に書かれた金額と要件だけを1表に揃えます。出典URLと確認日つき。
+title: 103万は税・106万は社保｜年収の壁を2026年の公式で1表
+description: 税の壁は国税庁、社保の壁は厚労省・年金機構。103・106・130・150・160万について、2026年時点の公式の金額と要件だけを1表に揃えます。独自の目安額は入れません。
 slug: zeikin/fuyou-no-kabe
 category: zeikin
 eyecatch: /img/og/fuyou-no-kabe.png
 eyecatchAlt: 巨大な数字103・106・130・150・160を並べた年収の壁の図。下に細い棒があり、白が税の壁、青が社会保険の壁。タイトルは「年収の壁」、一文で「税と社保を分けて確認」。
 published: 2026-09-01
-updated: 2026-09-18
+updated: 2026-09-25
 sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1800.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1177.htm | https://www.nta.go.jp/users/gensen/2025kiso/index.htm | https://www.nta.go.jp/users/gensen/2026kiso/index.htm | https://www.keisan.nta.go.jp/r7yokuaru/cat2/cat22/cat22b/cid1238.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2025/20250417syotoku.html | https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm | https://www.mof.go.jp/public_relations/finance/202604/202604c.html | https://www.mhlw.go.jp/tekiyoukakudai/jugyouin/taisho/ | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000147284_00021.html | https://www.mhlw.go.jp/stf/taiou_001_00002.html | https://www.nenkin.go.jp/service/kounen/tekiyo/hihokensha1/20141202.html | https://www.nenkin.go.jp/oshirase/taisetu/2025/202508/0819.html | https://www.nenkin.go.jp/oshirase/taisetu/jigyosho/2026/202605/0501.html | https://www.mhlw.go.jp/stf/newpage_75950.html | https://www.mhlw.go.jp/content/11200000/001571192.pdf
 checkedAt: 2026-09-16
 revisionAt: 2026-10-01
 ---
 
-検索結果に並ぶ国税庁・厚労省・年金機構のページは、だいたい**制度ごと**に分かれています。
-一方で「103万」「106万」「130万」は、税と社会保険が近い金額で並んでいるだけなので、公式を1つ開いただけでは取り違えやすいです。
+「103万円の壁」と「106万円の壁」は別制度です。
+税の壁は**国税庁**、社会保険の壁は**厚生労働省・日本年金機構**のページに分かれています。
+近い金額が並んでいるだけなので、公式を1つ開いただけでは取り違えやすいです。
 
-この記事の役割は単純です。103・106・130・150・160万について、**公式ページに実際に書いてある文言と金額だけ**を1つの表に揃えること。おすすめ額や暗算の目安は入れません。2026-09-16 に賃金要件まわりの厚労省ページを再取得して確認しました（本文の金額・要件は前回から変わっていません）。推論を書く場合は推論だと明記します。
+この記事は、103・106・130・150・160万について、**2026年時点の公式ページに書いてある金額と要件だけ**を1つの表に揃えます。
+独自の目安額や暗算の目安は入れません。
+2026-09-16 に賃金要件まわりの厚労省ページを再取得して確認しました（本文の金額・要件は前回から変わっていません）。
+推論を書く場合は推論だと明記します。
 
 ## 先に結論 ― 5つの壁の一覧
 

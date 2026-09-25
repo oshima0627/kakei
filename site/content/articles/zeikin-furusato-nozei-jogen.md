@@ -1,20 +1,23 @@
 ---
-title: 総務省に早見表はない｜ふるさと納税の上限は3本の式
-description: 控除上限の公式早見表はありません。総務省が書いているのは所得税・住民税の3本の計算式と、それぞれの上限です。実質負担2,000円を超える条件も原文で確認。出典URLと確認日つき。
+title: ふるさと納税の限度額早見表｜総務省公式にあるのは3本の式
+description: 総務省の公式に円単位の限度額早見表はありません。載っているのは所得税・住民税の3本の計算式と各上限だけ。目安額ではなく原文の式を並べます。出典URLと確認日つき。
 slug: zeikin/furusato-nozei-jogen
 category: zeikin
 eyecatch: /img/og/furusato-nozei-jogen.png
 eyecatchAlt: 控除を1本に積み上げた図。下から(1)(2)(3)が大きく書かれ、上に黄色い破線の天井。タイトルは「控除上限は3本の式」、一文で「黄色い破線が天井」。
 published: 2026-09-01
-updated: 2026-09-18
+updated: 2026-09-25
 sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1150.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm
 checkedAt: 2026-09-01
 ---
 
-「自分の上限は何万円か」を知りたくて公式を開いても、総務省のふるさと納税ポータルに**円単位の上限額は書かれていません**。
-書かれているのは金額ではなく、所得税・住民税にまたがる**3本の計算式**と、それぞれに付いた別々の上限です。
+「ふるさと納税の限度額早見表」を総務省の公式で探しても、**円単位の早見表はありません**。
+載っているのは金額表ではなく、所得税・住民税にまたがる**3本の計算式**と、それぞれに付いた別々の上限です。
 
-この記事は、シミュレーターの目安額ではなく、その3本の式と上限を総務省・国税庁の原文のまま並べます。2026-09-01 に各ページを取得して確認しました。年収から逆算した「目安額」は載せません。載せられない理由も、総務省自身の文言で示します。
+この記事は、シミュレーターの目安額ではなく、その3本の式と上限を総務省・国税庁の原文のまま並べます。
+2026-09-01 に各ページを取得して確認しました。
+年収から逆算した「目安額」は載せません。
+載せられない理由も、総務省自身の文言で示します。
 
 ## 先に結論 ― 上限は1つではなく3つある
 
