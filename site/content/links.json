@@ -6,7 +6,7 @@
   "//ルール4": "freeText=false のキーは広告主が文言を固定しているリンク。[[AF:キー::別の文言]] で表示文言を差し替えない。",
   "//ルール5": "impression は もしも が発行する計測ピクセル（1×1画像）のURL。build.mjs は今は使っていない（<a> だけ出す）。使うなら build.mjs 側に出力を足す。",
   "//ルール6": "本文用 bannerHtml は横長（728x90・468x60 等）を優先。無い場合は 300x250/正方形を中央表示。縦長（bannerHtmlSide / 160x600）はサイド専用で本文に出さない。",
-  "//状態": "2026-09-16 に もしもアフィリエイト（メディアID 687816「家計の制度ログ」）で8件提携し、原稿取得ページの『テキスト』から発行されたURLを転記した。全8件、発行された <a href> と1文字単位で一致することをブラウザ上で照合済み。a_id は提携ごとに違う（5805434〜5805441）。site.json の affiliateEnabled はまだ false（記事に [[AF:]] を置いてから true にする）。",
+  "//状態": "2026-09-25 に提携中を再確認。新規反映: garden-gakushi(5006)、financial-academy(4628)。ドッグフード工房(7748)は家計制度テーマ外のため未登録。既存: 弥生914 / MF888 / ふるさと3172 / 楽天54 / 税理士ドットコム938 / 税理士紹介5475 / FP窓口5352 / 保険トータル1831。",
   "yayoi-kakuteishinkoku": {
     "label": "弥生のクラウド確定申告ソフト（やよいの青色申告 オンライン／白色申告 オンライン）",
     "url": "//af.moshimo.com/af/c/click?a_id=5805434&p_id=914&pc_id=1138&pl_id=32450",
@@ -151,5 +151,39 @@
     "bannerHtmlBox": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25535\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/1048/000000025535.png\" width=\"468\" height=\"60\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805441&p_id=1831&pc_id=3531&pl_id=25535\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
     "bannerSizeBox": "468x60",
     "promotionLinkIdBody": 25536
+  },
+  "garden-gakushi": {
+    "label": "ガーデン（学資金の無料相談）",
+    "url": "//af.moshimo.com/af/c/click?a_id=5805443&p_id=5006&pc_id=13414&pl_id=66401",
+    "impression": "//i.moshimo.com/af/i/impression?a_id=5805443&p_id=5006&pc_id=13414&pl_id=66401",
+    "freeText": true,
+    "asp": "もしもアフィリエイト",
+    "promotionId": 5006,
+    "promotionLinkId": 66401,
+    "promotionName": "ガーデン｜学資金の無料相談・面談完了",
+    "articles": "教育費（大学・高校無償化、児童手当、奨学金）",
+    "note": "2026-09-25 提携確認。本文は横長468x60（引き伸ばさない）。サイド用160x600あり。ドッグフード工房(7748)はテーマ外のため未登録。",
+    "checkedAt": "2026-09-25",
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805443&p_id=5006&pc_id=13414&pl_id=66401\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0656/000000066401.png\" width=\"468\" height=\"60\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805443&p_id=5006&pc_id=13414&pl_id=66401\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "468x60",
+    "bannerHtmlSide": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805443&p_id=5006&pc_id=13414&pl_id=66404\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0656/000000066404.png\" width=\"160\" height=\"600\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805443&p_id=5006&pc_id=13414&pl_id=66404\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSizeSide": "160x600",
+    "promotionLinkIdBody": 66401
+  },
+  "financial-academy": {
+    "label": "ファイナンシャルアカデミー（株式投資スクール 無料体験セミナー）",
+    "url": "//af.moshimo.com/af/c/click?a_id=5808549&p_id=4628&pc_id=12131&pl_id=61792",
+    "impression": "//i.moshimo.com/af/i/impression?a_id=5808549&p_id=4628&pc_id=12131&pl_id=61792",
+    "freeText": true,
+    "asp": "もしもアフィリエイト",
+    "promotionId": 4628,
+    "promotionLinkId": 61792,
+    "promotionName": "ファイナンシャルアカデミー｜『株式投資スクール 無料体験セミナー』 新規受講生募集",
+    "articles": "資産形成・iDeCo・退職所得まわり",
+    "note": "2026-09-25 提携確認。本文728x90。縦長は120x600のみで160x600が無いため bannerHtmlSide は未設定（左右レールは弥生/MFのまま）。",
+    "checkedAt": "2026-09-25",
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5808549&p_id=4628&pc_id=12131&pl_id=61792\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/4189/000000061792.jpg\" width=\"728\" height=\"90\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5808549&p_id=4628&pc_id=12131&pl_id=61792\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "728x90",
+    "promotionLinkIdBody": 61792
   }
 }

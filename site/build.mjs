@@ -353,13 +353,13 @@ function defaultAfBodyPool(article) {
     // 遺族・寡婦年金（ライフプラン／保険相談）
     keys = ['fp-madoguchi', 'hoken-total-pro'];
   } else if (/kyoikuhi/.test(hay)) {
-    keys = ['fp-madoguchi', 'hoken-total-pro'];
+    keys = ['garden-gakushi', 'fp-madoguchi', 'hoken-total-pro'];
   } else if (/ideco/.test(hay)) {
-    keys = ['fp-madoguchi', 'mf-kakuteishinkoku'];
+    keys = ['financial-academy', 'fp-madoguchi', 'mf-kakuteishinkoku'];
   } else if (/gakusei|kuriage|kurisage/.test(hay)) {
-    keys = ['fp-madoguchi', 'hoken-total-pro'];
+    keys = ['garden-gakushi', 'fp-madoguchi', 'hoken-total-pro'];
   } else if (/taishoku/.test(hay)) {
-    keys = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku', 'fp-madoguchi', 'hoken-total-pro'];
+    keys = ['financial-academy', 'yayoi-kakuteishinkoku', 'mf-kakuteishinkoku', 'fp-madoguchi', 'hoken-total-pro'];
   } else if (/zeikin|fuyou|iryou|jutaku|kougaku/.test(hay)) {
     keys = ['yayoi-kakuteishinkoku', 'mf-kakuteishinkoku'];
   } else {
