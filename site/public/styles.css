@@ -31,9 +31,10 @@
   --surface: #f5f6f8;
   --warn-bg: #fff9e8;
   --warn-line: #e7cd7a;
-  --content: 1080px;       /* 中央寄せの左右余白を本文に回す（旧900） */
+  --content: 1080px;       /* 本文カラムの目安（シェル幅の上限には使わない） */
   --side: 260px;
   --rail: 180px;           /* 160バナー＋カード余白の空気 */
+  --shell-pad-x: 0.75rem;  /* 外側ガターを最小化（旧 1.15rem） */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -71,10 +72,11 @@ a:hover { text-decoration: none; }
 }
 
 .site-header__inner {
-  max-width: calc(var(--content) + var(--side) + 24px);
+  max-width: none;         /* 旧: calc(content+side+24) = 1364px */
+  width: 100%;
   margin-inline: auto;
   min-height: 94px;
-  padding: 0 1.15rem;
+  padding: 0 var(--shell-pad-x);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -94,9 +96,10 @@ a:hover { text-decoration: none; }
 /* ---------------------------------------------------------------- レイアウト */
 
 .l-wrap {
-  max-width: calc(var(--content) + var(--side) + 24px);
+  max-width: none;         /* 旧: calc(content+side+24) = 1364px。viewport 幅いっぱいに広げる */
+  width: 100%;
   margin-inline: auto;
-  padding: 2rem 1.15rem 4rem;
+  padding: 2rem var(--shell-pad-x) 4rem;
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--side);
   gap: 40px;
@@ -114,14 +117,10 @@ a:hover { text-decoration: none; }
   }
   .l-wrap:has(.l-rail:not(:empty)) {
     grid-template-columns: var(--rail, 180px) minmax(0, 1fr) var(--side);
-    max-width: calc(var(--content) + var(--side) + var(--rail, 180px) + 60px);
+    /* シェルは viewport 幅のまま。レール／サイド固定、本文が伸びる */
     gap: 30px;
   }
-  /* ヘッダー／フッターも .l-wrap と同じ幅に揃える（レール無しページで広げすぎない） */
-  body:has(.l-rail:not(:empty)) .site-header__inner,
-  body:has(.l-rail:not(:empty)) .site-footer__inner {
-    max-width: calc(var(--content) + var(--side) + var(--rail, 180px) + 60px);
-  }
+  /* ヘッダー／フッターは .l-wrap と同じく max-width:none なので幅揃えの上書きは不要 */
 }
 
 @media (max-width: 900px) {
@@ -679,9 +678,10 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 }
 
 .site-footer__inner {
-  max-width: calc(var(--content) + var(--side) + 24px);
+  max-width: none;         /* 旧: calc(content+side+24) = 1364px */
+  width: 100%;
   margin-inline: auto;
-  padding: 1.8rem 1.15rem 3rem;
+  padding: 1.8rem var(--shell-pad-x) 3rem;
 }
 
 .sns { font-size: .82rem; margin: 0 0 .7rem; }
