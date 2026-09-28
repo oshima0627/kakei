@@ -346,7 +346,7 @@ function defaultAfBodyPool(article) {
   const hay = `${article.category || ''} ${article.slug || ''}`;
   let keys = [];
   if (/furusato/.test(hay)) {
-    keys = ['furusato-nippon', 'rakuten-ichiba'];
+    keys = ['furusato-nippon', 'pokemaru-furusato', 'rakuten-ichiba'];
   } else if (/sozoku|shoukibo|seimeihoken/.test(hay)) {
     keys = ['zeirishi-dotcom', 'zeirishi-agent'];
   } else if (/kafu|izoku/.test(hay)) {

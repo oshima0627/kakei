@@ -6,7 +6,7 @@
   "//ルール4": "freeText=false のキーは広告主が文言を固定しているリンク。[[AF:キー::別の文言]] で表示文言を差し替えない。",
   "//ルール5": "impression は もしも が発行する計測ピクセル（1×1画像）のURL。build.mjs は今は使っていない（<a> だけ出す）。使うなら build.mjs 側に出力を足す。",
   "//ルール6": "本文用 bannerHtml は横長（728x90・468x60 等）を優先。無い場合は 300x250/正方形を中央表示。縦長（bannerHtmlSide / 160x600）はサイド専用で本文に出さない。",
-  "//状態": "2026-09-25 に提携中を再確認。新規反映: garden-gakushi(5006)、financial-academy(4628)。ドッグフード工房(7748)は家計制度テーマ外のため未登録。既存: 弥生914 / MF888 / ふるさと3172 / 楽天54 / 税理士ドットコム938 / 税理士紹介5475 / FP窓口5352 / 保険トータル1831。",
+  "//状態": "2026-09-28 に提携中を再確認。新規反映: pokemaru-furusato(3830)。既存: garden-gakushi(5006)、financial-academy(4628)、弥生914 / MF888 / ふるさと3172 / 楽天54 / 税理士ドットコム938 / 税理士紹介5475 / FP窓口5352 / 保険トータル1831。ドッグフード工房(7748)・Amazon(170)はテーマ外/方針により未登録。",
   "yayoi-kakuteishinkoku": {
     "label": "弥生のクラウド確定申告ソフト（やよいの青色申告 オンライン／白色申告 オンライン）",
     "url": "//af.moshimo.com/af/c/click?a_id=5805434&p_id=914&pc_id=1138&pl_id=32450",
@@ -80,6 +80,22 @@
     "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805437&p_id=54&pc_id=54&pl_id=620\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/0032/000000000620.gif\" width=\"468\" height=\"60\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805437&p_id=54&pc_id=54&pl_id=620\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
     "bannerSize": "468x60",
     "promotionLinkIdBody": 620
+  },
+  "pokemaru-furusato": {
+    "label": "ポケマルふるさと納税",
+    "url": "//af.moshimo.com/af/c/click?a_id=5805442&p_id=3830&pc_id=9459&pl_id=53752",
+    "impression": "//i.moshimo.com/af/i/impression?a_id=5805442&p_id=3830&pc_id=9459&pl_id=53752",
+    "freeText": true,
+    "asp": "もしもアフィリエイト",
+    "promotionId": 3830,
+    "promotionLinkId": 53752,
+    "promotionName": "ポケマルふるさと納税｜産直サイト「ポケットマルシェ (ポケマル)」が運営するふるさと納税サイトからのふるさと納税申込み",
+    "articles": "ふるさと納税（上限・ワンストップなど）",
+    "note": "2026-09-28 提携確認。公式に728x90/468x60/160x600なし。本文は592x203を実寸中央（引き伸ばさない）。サイド縦長なし。Amazon(170)とドッグフード(7748)はテーマ外/方針により未登録。",
+    "checkedAt": "2026-09-28",
+    "bannerHtml": "<a href=\"//af.moshimo.com/af/c/click?a_id=5805442&p_id=3830&pc_id=9459&pl_id=53752\" rel=\"nofollow\" referrerpolicy=\"no-referrer-when-downgrade\" attributionsrc><img src=\"//image.moshimo.com/af-img/1309/000000053752.jpg\" width=\"592\" height=\"203\" style=\"border:none;\"></a><img src=\"//i.moshimo.com/af/i/impression?a_id=5805442&p_id=3830&pc_id=9459&pl_id=53752\" width=\"1\" height=\"1\" style=\"border:none;\" loading=\"lazy\">",
+    "bannerSize": "592x203",
+    "promotionLinkIdBody": 53752
   },
   "zeirishi-dotcom": {
     "label": "税理士ドットコム（相続税申告の税理士探し）",
