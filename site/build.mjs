@@ -1250,7 +1250,7 @@ function articleCards(list) {
 /**
  * トップページ用の広告（homepage に [[AF:]] が無いので固定キーで差し込む）。
  * affiliateEnabled=false のときは全部空。URL は links.json の既存キーのみ（組み立てない）。
- * 左レール: 縦長のみ（af-banner-only）。右サイド: 縦長を about の前。本文: 横長 af-card。
+ * 左レール: 縦長のみ（af-banner-only）。右サイド: 縦長を about の前。本文: 横長 af-card は最大1本（連続禁止）。
  */
 function homeAds() {
   if (!site.affiliateEnabled) {
@@ -1270,14 +1270,12 @@ function homeAds() {
   const wrapRail = (html) =>
     html ? `<div class="af-rail" aria-label="広告">${html}</div>` : '';
 
-  // 左: 弥生（bannerHtmlSide 160x600）／右: MF（同）／本文: 横長 1〜2（728x90 等）
+  // 左: 弥生（bannerHtmlSide 160x600）／右: MF（同）／本文: 横長は1本だけ（連続スタック禁止）
   const left = wrapRail(sideCard('yayoi-kakuteishinkoku'));
   const side = wrapRail(sideCard('mf-kakuteishinkoku'));
-  const bodyParts = [
-    bodyCard('yayoi-kakuteishinkoku'),
-    bodyCard('furusato-nippon'),
-  ].filter(Boolean);
-  return { left, side, body: bodyParts.join('\n') };
+  // トップ本文は max 1。2本並べると intro 直下で広告が連なり UX が悪い。
+  const body = bodyCard('yayoi-kakuteishinkoku');
+  return { left, side, body };
 }
 
 // ---- トップページ
