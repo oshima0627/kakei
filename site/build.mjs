@@ -179,7 +179,7 @@ function bannerGeometry(html) {
   return { w, h };
 }
 
-function renderAfCard(entry, label, { side = false } = {}) {
+function renderAfCard(entry, label, { side = false, eager = false } = {}) {
   const text = label || entry.label;
   if (!text) throw new Error('AF card: label がありません');
   if (!site.affiliateEnabled || !entry.url) {
@@ -192,8 +192,10 @@ function renderAfCard(entry, label, { side = false } = {}) {
     if (!banner) return ''; // 縦長が無い案件はレールに出さない（呼び出し側で代替キーへ）
     return `<div class="af-banner-only">${banner}</div>`;
   }
-  const banner = entry.bannerHtml;
+  let banner = entry.bannerHtml;
   if (banner) {
+    // ファーストビュー用だけ lazy を外す。計測1x1が遅延のままだと、見えているのにimpに乗らない。
+    if (eager) banner = banner.replace(/\sloading=(["'])lazy\1/gi, '');
     const geom = bannerGeometry(banner);
     const landscape = geom && geom.w > geom.h * 1.15;
     const largeLandscape = landscape && geom.w >= 700; // 728x90 等。小さい横長は引き伸ばさない
@@ -346,7 +348,8 @@ function defaultAfBodyPool(article) {
   const hay = `${article.category || ''} ${article.slug || ''}`;
   let keys = [];
   if (/furusato/.test(hay)) {
-    keys = ['furusato-nippon', 'pokemaru-furusato', 'rakuten-ichiba'];
+    // ニッポンは469x60しか無い。同じふるさとで面積の大きいポケマル（592x203・実寸）を上部の1枚にする。
+    keys = ['pokemaru-furusato', 'furusato-nippon', 'rakuten-ichiba'];
   } else if (/sozoku|shoukibo|seimeihoken/.test(hay)) {
     keys = ['zeirishi-dotcom', 'zeirishi-agent'];
   } else if (/kafu|izoku/.test(hay)) {
@@ -480,13 +483,14 @@ const AF_H2_SKIP_RE = /出典|確認できなかった|未確認|広告を含み
 
 /**
  * consecutive な content H2 のあいだに、プールのバナー広告を1本ずつ挟む（回転）。
- * 先頭 H2 の前（導入文の直後）には入れない。プールが空なら何もしない。
+ * 記事上部の1枚は呼び出し側で先に出す。startIndex はその次のキーから回し、直上と同じバナーが続かないようにする。
+ * プールが空なら何もしない。
  */
-function insertAdsBetweenH2s(html, pool) {
+function insertAdsBetweenH2s(html, pool, startIndex = 0) {
   if (!pool.length) return html;
   const parts = html.split(/(?=<h2\b)/i);
   if (parts.length < 2) return html;
-  let rotate = 0;
+  let rotate = startIndex;
   const out = [parts[0]];
   for (let i = 1; i < parts.length; i++) {
     const prev = parts[i - 1];
@@ -1064,7 +1068,25 @@ for (const a of articles) {
   const sideAdsHtml = sideAdsWidget(sides);
   const leftAdsHtml = leftAdsWidget(lefts);
   assertNoRawEmphasis(parsed.html, a.file);
-  const html = insertAdsBetweenH2s(breakJapaneseSentences(resolveLinks(parsed.html)), afPool);
+  // 上部1枚: テーマプールの先頭（その案件の bannerHtml。728は幅いっぱい、468/592は実寸）。アイキャッチより前。
+  // 左レール（.l-rail）は 1280px 未満で display:none。縦長160は本文へ移さず、テーマの横長をここに出す。
+  const leadKey = afPool[0] || '';
+  const leadEntry = leadKey ? links[leadKey] : null;
+  const leadAdHtml = leadEntry && leadEntry.bannerHtml
+    ? renderAfCard(leadEntry, leadEntry.label, { side: false, eager: true })
+    : '';
+  const html = insertAdsBetweenH2s(
+    breakJapaneseSentences(resolveLinks(parsed.html)),
+    afPool,
+    afPool.length > 1 ? 1 : 0,
+  );
+  // 広告が1つも描画されない記事に「広告が含まれます」とは書かない（台帳にバナーが無い検査用も含む）。
+  const articleHasAd =
+    Boolean(leadAdHtml || sideAdsHtml || leftAdsHtml) ||
+    html.includes('class="af-card') ||
+    html.includes('class="buy"') ||
+    html.includes('af-banner-only');
+  const articlePr = site.affiliateEnabled ? (articleHasAd ? prNoticeHtml : '') : prNoticeHtml;
   const cname = catName(a.category);
 
   // 関連記事は同じカテゴリを優先し、足りない分だけ他カテゴリで埋める。
@@ -1090,10 +1112,12 @@ for (const a of articles) {
     `<p class="dates"><time datetime="${esc(a.published)}">公開 ${esc(a.published)}</time>${
       a.updated !== a.published ? ` ／ <time datetime="${esc(a.updated)}">更新 ${esc(a.updated)}</time>` : ''
     }</p>` +
-    eyecatch +
     // PR表記: affiliateEnabled 時は全記事に広告（マーカー or デフォルト）を出すので常に出す。
     // affiliateEnabled=false のあいだは pending 版の注記を全記事に出す。
-    prNoticeHtml +
+    // 広告1枚は見出し直下（アイキャッチの前）。画像と目次の下に置くとモバイルではフォールド下になる。
+    articlePr +
+    leadAdHtml +
+    eyecatch +
     (hasToc(parsed.headings) ? `<nav class="toc"><p class="toc__title">目次</p>${tocList(parsed.headings)}</nav>` : '') +
     html +
     shareButtons(a.title, a.url) +
@@ -1265,7 +1289,7 @@ function homeAds() {
   const bodyCard = (key) => {
     const entry = links[key];
     if (!entry || !entry.url || !entry.bannerHtml) return '';
-    return renderAfCard(entry, entry.label, { side: false });
+    return renderAfCard(entry, entry.label, { side: false, eager: true });
   };
   const wrapRail = (html) =>
     html ? `<div class="af-rail" aria-label="広告">${html}</div>` : '';

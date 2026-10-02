@@ -106,7 +106,8 @@ a:hover { text-decoration: none; }
   align-items: start;
 }
 
-/* 左レールは広幅のみ。狭い幅では DOM に残しても display:none でグリッドに参加させない */
+/* 左レールは広幅のみ。狭い幅では DOM に残しても display:none でグリッドに参加させない。
+ * 1280px 未満では縦長160は見えない。本文上部の横長1枚が代わり（縦長の引き伸ばしはしない）。 */
 .l-rail { display: none; font-size: .85rem; }
 
 @media (min-width: 1280px) {
@@ -419,14 +420,22 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   max-width: 100% !important;
   height: auto !important;
 }
-/* もしも計測ピクセル（1x1）は拡大しない */
+/* もしも計測ピクセル（1x1）は拡大しない。
+ * 画面外（left:-9999px）に出すと loading=lazy が交差せず、バナーが見えても imp が飛ばない。
+ * バナー枠の内側に 1px で置き、見えたときだけ読む。 */
+.af-card,
+.af-banner-only { position: relative; }
 .af-card__banner > img[width="1"],
 .af-banner-only > img[width="1"] {
   width: 1px !important;
   height: 1px !important;
   border: 0 !important;
   position: absolute;
-  left: -9999px;
+  left: 0;
+  bottom: 0;
+  margin: 0 !important;
+  opacity: 0;
+  pointer-events: none;
   overflow: hidden;
 }
 /* 300x250・正方形: 実寸のまま中央 */
