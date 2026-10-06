@@ -132,6 +132,7 @@ const analyticsHtml = site.webAnalyticsToken
  *   [[AF:example::無料で申し込む]] … 表示文言だけ差し替える（固定ページ等・resolveLinks 経路）
  *   [[AFSide:example]]            … 右サイドバーへ出す（本文には出さない・連続掲載を避ける）
  *   [[AFLeft:example]]            … 左レールへ出す（本文には出さない・右と別キー）
+ *   [[AFHere:example]]            … 段落単独で書いた位置に本文バナーを1枚（直後のH2間自動挿入は飛ばす）
  *
  * 記事本文では、[[AF:]] / [[AFSide:]] / [[AFLeft:]] のバナー付きキーを出現順プールにし、
  * consecutive な content H2 のあいだにバナーカード（バッジ「広告」＋バナーのみ）を1本ずつ挟む。
@@ -281,6 +282,9 @@ function breakJapaneseSentences(html) {
     // ブロック要素を内包する場合は触らない
     if (/<(?:div|aside|ul|ol|table|pre|blockquote)\b/i.test(inner)) return null;
     let out = inner;
+    // 原稿で句点のあと改行して書いた文（1文1行）も <br> にする。
+    // marked（breaks: false）はソースの改行を空白として扱うため、これが無いと画面上は1行につながっていた。
+    out = out.replace(/([。！？][」』）]?)[ \t]*\n(?=\S)/g, '$1<br>\n');
     // 句点のあとで必ず改行（次の文が行の途中から始まらないように）
     out = out.replace(/([。！？])(?!(?:<\/|$|<br\s*\/?>))(?=\S)/g, '$1<br>');
     out = out.replace(/([。！？][」』）])(?!(?:<\/|$|<br\s*\/?>))(?=\S)/g, '$1<br>');
@@ -352,15 +356,21 @@ function defaultAfBodyPool(article) {
     keys = ['pokemaru-furusato', 'furusato-nippon', 'rakuten-ichiba'];
   } else if (/sozoku|shoukibo|seimeihoken/.test(hay)) {
     keys = ['zeirishi-dotcom', 'zeirishi-agent'];
-  } else if (/kafu|izoku/.test(hay)) {
-    // 遺族・寡婦年金（ライフプラン／保険相談）
+  } else if (/izoku/.test(hay)) {
+    // FP相談（fp-madoguchi / hoken-total-pro）は遺族年金と退職所得の2記事だけ（2026-10-06 方針）。
     keys = ['fp-madoguchi', 'hoken-total-pro'];
+  } else if (/kafu/.test(hay)) {
+    // 寡婦年金・死亡一時金: FP相談は出さない。テーマの合う既存案件が無いので本文バナーは空。
+    keys = [];
   } else if (/kyoikuhi/.test(hay)) {
-    keys = ['garden-gakushi', 'fp-madoguchi', 'hoken-total-pro'];
+    // 教育費: 学資金相談だけ。FP相談は出さない。
+    keys = ['garden-gakushi'];
   } else if (/ideco/.test(hay)) {
-    keys = ['financial-academy', 'fp-madoguchi', 'mf-kakuteishinkoku'];
+    // iDeCo: 資産形成スクールと、掛金控除の確定申告（MF）。FP相談は出さない。
+    keys = ['financial-academy', 'mf-kakuteishinkoku'];
   } else if (/gakusei|kuriage|kurisage/.test(hay)) {
-    keys = ['garden-gakushi', 'fp-madoguchi', 'hoken-total-pro'];
+    // 学生納付特例・繰上げ繰下げ: 学資・FP相談はテーマ外。合う既存案件が無いので本文バナーは空。
+    keys = [];
   } else if (/taishoku/.test(hay)) {
     keys = ['financial-academy', 'yayoi-kakuteishinkoku', 'mf-kakuteishinkoku', 'fp-madoguchi', 'hoken-total-pro'];
   } else if (/zeikin|fuyou|iryou|jutaku|kougaku/.test(hay)) {
@@ -478,6 +488,33 @@ function stripBodyAfMarkers(md) {
   return body;
 }
 
+/**
+ * 本文の決まった位置に1枚だけバナーを置く: 段落単独の [[AFHere:キー]]。
+ * 末尾固まりの [[AF:]] と違い剥がさず、その場で bannerHtml のカードにする（H2間プールには入らない）。
+ * 直後の H2 間には自動挿入しない（insertAdsBetweenH2s が AF_INLINE_MARK を見て飛ばす）ので、広告が連続しない。
+ * 未登録・bannerHtml の無いキーはビルドを落とす（URL は links.json の発行分だけ）。
+ */
+const AF_INLINE_MARK = '<!--af-inline:';
+function renderInlineAds(html) {
+  return html.replace(/<p>\s*\[\[AFHere:([^\]]+)\]\]\s*<\/p>/g, (_, raw) => {
+    const key = raw.trim();
+    const entry = links[key];
+    if (!entry) {
+      throw new Error(`[[AFHere:${key}]] が content/links.json にありません / 対処: content/links.json にキーを足す`);
+    }
+    if (!entry.bannerHtml) {
+      throw new Error(`[[AFHere:${key}]] に本文用 bannerHtml がありません / 対処: 横長バナーのあるキーを使う`);
+    }
+    return `${AF_INLINE_MARK}${key}-->` + renderAfCard(entry, entry.label, { side: false });
+  });
+}
+
+/** 段落単独でない [[AFHere:]]（文中に書いた等）が素のテキストで残っていたらビルドを落とす。 */
+function assertNoRawInlineAd(html, file) {
+  const m = html.match(/\[\[AFHere:[^\]]*\]\]/);
+  if (m) throw new Error(`${file}: ${m[0]} は段落単独の行に書いてください（前後を空行にする）`);
+}
+
 /** 直後の H2 が見出しスキップ対象なら、その直前には広告を挟まない。 */
 const AF_H2_SKIP_RE = /出典|確認できなかった|未確認|広告を含みます|選択肢（広告|相談窓口の例/;
 
@@ -486,23 +523,33 @@ const AF_H2_SKIP_RE = /出典|確認できなかった|未確認|広告を含み
  * 記事上部の1枚は呼び出し側で先に出す。startIndex はその次のキーから回し、直上と同じバナーが続かないようにする。
  * プールが空なら何もしない。
  */
-function insertAdsBetweenH2s(html, pool, startIndex = 0) {
+function insertAdsBetweenH2s(html, pool, startIndex = 0, leadKey = '') {
   if (!pool.length) return html;
   const parts = html.split(/(?=<h2\b)/i);
   if (parts.length < 2) return html;
   let rotate = startIndex;
+  // 直前に出した広告のキー（上部の1枚・[[AFHere:]] を含む）。同じバナーを2回続けて出さない。
+  // プールが1キーだけの記事で、同じバナーが全H2間に並ぶのを防ぐ（2キー以上の回転では起きない）。
+  let lastKey = leadKey;
   const out = [parts[0]];
   for (let i = 1; i < parts.length; i++) {
     const prev = parts[i - 1];
     const next = parts[i];
     const prevIsContent = /^<h2\b/i.test(prev);
     const nextIsContent = /^<h2\b/i.test(next);
-    if (prevIsContent && nextIsContent) {
+    const inline = prev.match(/<!--af-inline:([^>]*?)-->/g);
+    if (inline) lastKey = inline[inline.length - 1].slice(AF_INLINE_MARK.length, -3);
+    if (prevIsContent && nextIsContent && !inline) {
       const hm = next.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/i);
       const h2text = hm ? hm[1].replace(/<[^>]+>/g, '') : '';
       if (!AF_H2_SKIP_RE.test(h2text)) {
         const key = pool[rotate % pool.length];
         rotate += 1;
+        if (key === lastKey) {
+          out.push(next);
+          continue;
+        }
+        lastKey = key;
         const entry = links[key];
         if (!entry) {
           throw new Error(
@@ -1038,6 +1085,23 @@ const common = {
   ogImage: ORIGIN + site.defaultOgImage,
 };
 
+/**
+ * パンくずの構造化データ（BreadcrumbList）。見た目の crumbs() と同じ items から作り、食い違わせない。
+ * 最後の項目（現在ページ）は path を持たないので、canonical の URL を item に入れる。
+ */
+function breadcrumbLd(items, currentUrl) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.label,
+      item: it.path ? ORIGIN + it.path : currentUrl,
+    })),
+  };
+}
+
 function crumbs(items) {
   const parts = items.map((it, i) =>
     i === items.length - 1 ? `<span>${esc(it.label)}</span>` : `<a href="${it.path}">${esc(it.label)}</a>`,
@@ -1076,9 +1140,10 @@ for (const a of articles) {
     ? renderAfCard(leadEntry, leadEntry.label, { side: false, eager: true })
     : '';
   const html = insertAdsBetweenH2s(
-    breakJapaneseSentences(resolveLinks(parsed.html)),
+    renderInlineAds(breakJapaneseSentences(resolveLinks(parsed.html))),
     afPool,
     afPool.length > 1 ? 1 : 0,
+    leadAdHtml ? leadKey : '',
   );
   // 広告が1つも描画されない記事に「広告が含まれます」とは書かない（台帳にバナーが無い検査用も含む）。
   const articleHasAd =
@@ -1126,6 +1191,12 @@ for (const a of articles) {
       ? `<section class="related"><h2 class="related__title">関連記事</h2>${postListHtml(related, 'related__list')}</section>`
       : '') +
     `</article>`;
+  assertNoRawInlineAd(articleHtml, a.file);
+  const articleCrumbs = [
+    { path: '/', label: 'ホーム' },
+    { path: `/${a.category}/`, label: cname },
+    { label: a.title },
+  ];
   assertAdDisclosure(articleHtml, a.file);
 
   writeFile(
@@ -1139,7 +1210,7 @@ for (const a of articles) {
       // og:image は PNG（front matter の ogImage）を優先する。
       // 本文の図版（eyecatch）は SVG のままでよいが、SNS のカードは SVG を受け付けない。
       ogImage: ORIGIN + (a.ogImage || a.eyecatch || site.defaultOgImage),
-      jsonLd: JSON.stringify({
+      jsonLd: JSON.stringify([{
         '@context': 'https://schema.org',
         '@type': 'Article',
         headline: a.title,
@@ -1154,12 +1225,8 @@ for (const a of articles) {
           ? { author: { '@type': 'Person', name: site.author.name, url: ORIGIN + site.author.url } }
           : {}),
         publisher: { '@type': 'Organization', name: site.name },
-      }),
-      breadcrumb: crumbs([
-        { path: '/', label: 'ホーム' },
-        { path: `/${a.category}/`, label: cname },
-        { label: a.title },
-      ]),
+      }, breadcrumbLd(articleCrumbs, a.url)]),
+      breadcrumb: crumbs(articleCrumbs),
       sidebarLeft: leftAdsHtml,
       sidebar:
         (hasToc(parsed.headings) ? widget('目次', `<div class="toc toc--side">${tocList(parsed.headings)}</div>`) : '') +
@@ -1228,13 +1295,13 @@ for (const c of site.categories) {
       description: `${esc(c.name)}に関する記事の一覧です。${esc(site.tagline)}——金額・要件には、出典URLと確認日を添えています。`,
       canonical: url,
       ogType: 'website',
-      jsonLd: JSON.stringify({
+      jsonLd: JSON.stringify([{
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
         name: `${c.name}の記事一覧`,
         url,
         inLanguage: site.lang,
-      }),
+      }, breadcrumbLd([{ path: '/', label: 'ホーム' }, { label: c.name }], url)]),
       breadcrumb: crumbs([{ path: '/', label: 'ホーム' }, { label: c.name }]),
       // カテゴリが1つの間、このページはトップページと中身がほぼ同じになる。
       // 重複コンテンツとして competing させたくないので noindex にしておく

@@ -1,12 +1,12 @@
 ---
-title: ふるさと納税の限度額早見表｜総務省公式にあるのは3本の式
-description: 総務省の公式に円単位の限度額早見表はありません。載っているのは所得税・住民税の3本の計算式と各上限だけ。目安額ではなく原文の式を並べます。出典URLと確認日つき。
+title: ふるさと納税の限度額早見表｜上限を決める総務省の3本の式と確かめ先
+description: ふるさと納税の限度額（控除上限）は、総務省が示す所得税・住民税の3本の計算式で決まります。多くの人で先に上限になるのは住民税所得割額の2割。実質2,000円を超える条件と正確な額の確かめ先を、総務省・国税庁の原文で。出典URLと確認日つき。
 slug: zeikin/furusato-nozei-jogen
 category: zeikin
 eyecatch: /img/og/furusato-nozei-jogen.png
 eyecatchAlt: 控除を1本に積み上げた図。下から(1)(2)(3)が大きく書かれ、上に黄色い破線の天井。タイトルは「控除上限は3本の式」、一文で「黄色い破線が天井」。
 published: 2026-09-01
-updated: 2026-09-25
+updated: 2026-10-06
 sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1150.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm
 checkedAt: 2026-09-01
 ---
@@ -150,6 +150,11 @@ lead: ふるさと納税だけに認められている上乗せ。ここが実�
 
 シミュレーターの数字が使えないという意味ではありません。ただしそれは**入力した条件でのその計算機の出力**であって、公式が保証した金額ではない、という区別です。この記事が金額の目安表を載せないのは、公式ページに書かれていないものを書かないためです。
 
+上限の範囲で寄附先を探す場合の申込先の例を1つ置きます（広告を含みます）。
+どこから申し込んでも、上の3本の式で決まる控除の上限は変わりません。
+
+[[AFHere:furusato-nippon]]
+
 ## 手続き ― 確定申告とワンストップ特例
 
 ### 確定申告する場合
@@ -202,6 +207,9 @@ lead: 確定申告をしないで控除を受けるための特例
 > 確定申告を行う方は、ふるさと納税ワンストップ特例の申請が 無効 となるため、ワンストップ特例の申請をした分も含めて寄附金控除額を計算する必要があります。
 
 **医療費控除などのために後から確定申告をすると、出してあるワンストップ特例の申請は無効になります**。その場合はふるさと納税の分も確定申告に入れ直す必要があります。同じページには、入れ忘れた場合の救済も書かれています。
+
+ワンストップ特例の対象者と、申請が無効になる場合は[ワンストップ特例の記事](/zeikin/furusato-onestop/)で総務省・国税庁の原文から整理しています。
+医療費控除の下限額や対象になる親族は[医療費控除の記事](/zeikin/iryouhi-koujo/)にまとめています。
 
 > また、ワンストップ特例の申請をした方が、誤って寄附金控除の適用を受けずに確定申告をした場合は、更正の請求により寄附金控除の適用を受けることができます(注2)。
 

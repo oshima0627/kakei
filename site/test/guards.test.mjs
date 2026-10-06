@@ -314,3 +314,23 @@ test('約物を強調の内側に入れた太字はビルドが通る', () => {
   const r = runBuild('raw-emphasis-ok', { KAKEI_TODAY: '2026-09-01' });
   assert.equal(r.code, 0, r.stderr);
 });
+
+test('[[AFHere:]] に未登録のキーを書くとビルドが落ちる', () => {
+  const r = runBuild('af-inline-unknown', { KAKEI_TODAY: '2026-09-01' });
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /\[\[AFHere:not-registered\]\] が content\/links\.json にありません/);
+});
+
+test('記事ページに BreadcrumbList の構造化データが出る（見た目のパンくずと同じ項目）', () => {
+  const r = runBuild('seido-ok', { KAKEI_TODAY: '2026-09-01' });
+  assert.equal(r.code, 0, r.stderr);
+  const html = fs.readFileSync(path.join(SITE, 'test/.out/seido-ok/zeikin/seido-ok/index.html'), 'utf8');
+  const m = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  assert.ok(m, 'JSON-LD がない');
+  const ld = JSON.parse(m[1]);
+  const bc = (Array.isArray(ld) ? ld : [ld]).find((x) => x['@type'] === 'BreadcrumbList');
+  assert.ok(bc, 'BreadcrumbList がない');
+  assert.equal(bc.itemListElement.length, 3);
+  assert.equal(bc.itemListElement[2].name, '正しい制度カードの記事');
+  assert.match(bc.itemListElement[2].item, /\/zeikin\/seido-ok\/$/);
+});
