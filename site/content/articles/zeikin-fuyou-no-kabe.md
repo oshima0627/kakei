@@ -3,8 +3,8 @@ title: 160・178万は税・106万は社保｜年収の壁を2026年の公式で
 description: 税の壁は国税庁（令和7年分160万・令和8年分から178万）、社保の壁は厚労省・年金機構。103・106・130・150・160・178万について、2026年時点の公式の金額と要件だけを1表に揃えます。独自の目安額は入れません。
 slug: zeikin/fuyou-no-kabe
 category: zeikin
-eyecatch: /img/og/fuyou-no-kabe.png
-eyecatchAlt: 巨大な数字103・106・130・150・160を並べた年収の壁の図。下に細い棒があり、白が税の壁、青が社会保険の壁。タイトルは「年収の壁」、一文で「税と社保を分けて確認」。
+eyecatch: /img/eyecatch/zeikin-fuyou-no-kabe.jpg
+eyecatchAlt: キッチンカウンターにたたんだエプロンと封筒、電卓が置かれ、壁にカレンダーが掛かる写真。
 published: 2026-09-01
 updated: 2026-10-06
 sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1800.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1177.htm | https://www.nta.go.jp/users/gensen/2026kiso/index.htm | https://www.mhlw.go.jp/tekiyoukakudai/jugyouin/taisho/ | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000147284_00021.html | https://www.mhlw.go.jp/stf/taiou_001_00002.html | https://www.mhlw.go.jp/stf/newpage_76324.html | https://www.mhlw.go.jp/hourei/doc/tsuchi/T260915T0020.pdf | https://www.nenkin.go.jp/service/kounen/tekiyo/hihokensha1/20141202.html | https://www.nenkin.go.jp/oshirase/taisetu/2025/202508/0819.html | https://www.nenkin.go.jp/oshirase/taisetu/jigyosho/2026/202605/0501.html | https://www.mhlw.go.jp/stf/newpage_75950.html | https://www.mhlw.go.jp/content/11200000/001753404.pdf | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/minimumichiran/index.html

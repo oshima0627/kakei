@@ -73,7 +73,7 @@ test('eyecatch の画像が public に無いとビルドが落ちる（パスの
 test('og:image になる画像が PNG でないとビルドが落ちる（SNSのカードは SVG を受け付けない）', () => {
   const r = runBuild('eyecatch-not-png');
   assert.notEqual(r.code, 0);
-  assert.match(r.stderr, /PNG ではありません/);
+  assert.match(r.stderr, /PNG\/JPG ではありません/);
 });
 
 test('eyecatchAlt が無いとビルドが落ちる（書き忘れると黙って alt="" になっていた）', () => {

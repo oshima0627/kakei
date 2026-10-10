@@ -926,10 +926,10 @@ function assertEyecatch(meta, file) {
   }
   // og:image は front matter の ogImage が優先。実際にSNSへ出るほうを見る。
   const card = meta.ogImage || src;
-  if (!card.toLowerCase().endsWith('.png')) {
+  if (!/\.(png|jpe?g)$/i.test(card)) {
     throw new Error(
-      `${file}: og:image になる画像が PNG ではありません → ${card}` +
-        ' / 対処: SNSのカードは SVG を受け付けない。PNG を指す（本文の図版だけ SVG にしたいなら ogImage に PNG を書く）',
+      `${file}: og:image になる画像が PNG/JPG ではありません → ${card}` +
+        ' / 対処: SNSのカードは SVG を受け付けない。PNG か JPG を指す（本文の図版だけ SVG にしたいなら ogImage に PNG を書く）',
     );
   }
 }

@@ -3,8 +3,8 @@ title: ふるさと納税の限度額早見表｜上限を決める総務省の3
 description: ふるさと納税の限度額（控除上限）は、総務省が示す所得税・住民税の3本の計算式で決まります。多くの人で先に上限になるのは住民税所得割額の2割。実質2,000円を超える条件と正確な額の確かめ先を、総務省・国税庁の原文で。出典URLと確認日つき。
 slug: zeikin/furusato-nozei-jogen
 category: zeikin
-eyecatch: /img/og/furusato-nozei-jogen.png
-eyecatchAlt: 控除を1本に積み上げた図。下から(1)(2)(3)が大きく書かれ、上に黄色い破線の天井。タイトルは「控除上限は3本の式」、一文で「黄色い破線が天井」。
+eyecatch: /img/eyecatch/zeikin-furusato-nozei-jogen.jpg
+eyecatchAlt: テーブルに箱入りのカニ、米、果物と電卓が並ぶ写真。
 published: 2026-09-01
 updated: 2026-10-06
 sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1150.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm

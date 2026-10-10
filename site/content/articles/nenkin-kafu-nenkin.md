@@ -3,8 +3,8 @@ title: 寡婦年金と死亡一時金 ― 遺族基礎年金が出ない第1号�
 description: 寡婦年金は婚姻10年以上の妻が60歳から65歳まで、死亡一時金は生計同一の遺族への一時金です。どちらも国民年金第1号の独自給付で、遺族基礎年金とは別制度。併給はできず選択になります。納付要件・金額・時効を日本年金機構と国民年金法の原文で確認しました。
 slug: nenkin/kafu-nenkin
 category: nenkin
-eyecatch: /img/og/kafu-nenkin.png
-eyecatchAlt: 左に寡婦年金（白い帯と60〜65）、右に死亡一時金（青い箱に1×）、中央に黄色いORの二択図。タイトルは「寡婦年金か死亡一時金」、一文で「どちらか一方を選ぶ」。
+eyecatch: /img/eyecatch/nenkin-kafu-nenkin.jpg
+eyecatchAlt: 仕切りのある相談窓口のカウンターに、用紙トレイと発券機が並ぶ写真。
 published: 2026-09-16
 updated: 2026-09-17
 sources: https://www.nenkin.go.jp/service/jukyu/seido/sonota-kyufu/1go-dokuji/20140422-03.html | https://www.nenkin.go.jp/service/jukyu/seido/sonota-kyufu/1go-dokuji/20140422-02.html | https://www.nenkin.go.jp/service/jukyu/seido/sonota-kyufu/1go-dokuji/20140422-01.html | https://www.nenkin.go.jp/service/pamphlet/kyufu.files/LK03-3.pdf | https://www.nenkin.go.jp/service/jukyu/tetsuduki/sonota-kyufu/20140422.html | https://www.nenkin.go.jp/service/jukyu/tetsuduki/sonota-kyufu/20140708.html | https://laws.e-gov.go.jp/law/334AC0000000141

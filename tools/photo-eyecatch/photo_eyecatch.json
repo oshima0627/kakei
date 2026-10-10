@@ -1,0 +1,268 @@
+{
+ "kyoikuhi-daigaku-mushouka": {
+  "kicker": "大学無償化",
+  "lines": [
+   "無償になる範囲は",
+   "どこまで？"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: a Japanese university campus entrance in spring, cherry blossoms, brick and concrete lecture building, a desk in foreground with a blank application envelope, calculator and a student's backpack, no readable text, no people faces, soft daylight, lower-left area of the frame calm and darker for a title band"
+ },
+ "kyoikuhi-hoiku-mushouka": {
+  "kicker": "幼保無償化",
+  "lines": [
+   "無料になるのは",
+   "利用料だけ"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of a Japanese nursery school (hoikuen) entrance: rows of small children's shoes in wooden cubby shoe racks, little yellow hats and colorful backpacks on hooks, bright wooden floor, no people, no readable text, lower-left area calm for a title band"
+ },
+ "kyoikuhi-jidouteate": {
+  "kicker": "児童手当",
+  "lines": [
+   "第3子月3万円の",
+   "数え方"
+  ],
+  "band": [
+   680,
+   380,
+   1200,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of a Japanese family living room table: three pairs of children's slippers of different sizes, a bank passbook-style booklet closed, a few yen coins and 10000 yen notes partially shown without readable text, kids' drawings blurred in background, warm evening light, no faces, right side of frame darker and empty for a title band"
+ },
+ "kyoikuhi-koukou-mushouka": {
+  "kicker": "高校無償化",
+  "lines": [
+   "中身は",
+   "就学支援金"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of an empty Japanese high school classroom: rows of wooden desks with steel frames, green chalkboard (blank), sunlight through windows with cream curtains, a school bag on one desk, no people, no writing, lower-left area calm for a title band"
+ },
+ "kyoikuhi-shogakukin-henkan": {
+  "kicker": "奨学金の返還",
+  "lines": [
+   "減額・猶予でも",
+   "総額は減らない"
+  ],
+  "band": [
+   680,
+   380,
+   1200,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of a young adult's small Japanese apartment desk at night: a laptop showing an abstract bank screen with no readable text, a closed envelope, calculator, mug, desk lamp warm light, hands not visible, right side darker empty space for a title band"
+ },
+ "nenkin-gakusei-nofu-tokurei": {
+  "kicker": "学生納付特例",
+  "lines": [
+   "期間には入り",
+   "年金額には入らない"
+  ],
+  "band": [
+   0,
+   380,
+   560,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: a Japanese university student's desk with a blue pension handbook-like booklet (no readable text), a blank application form, ballpoint pen and student ID card face down, textbooks, natural light, no faces, lower-left calm area for a title band"
+ },
+ "nenkin-izoku-nenkin": {
+  "kicker": "遺族年金",
+  "lines": [
+   "子がいるかで",
+   "分かれる"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of a quiet Japanese home: a small butsudan altar area with white chrysanthemums and incense in soft focus, a low table in front with neatly stacked documents and a pen, tatami room, gentle morning light, no people, no readable text, lower-left calm area for a title band"
+ },
+ "nenkin-kafu-nenkin": {
+  "kicker": "寡婦年金・死亡一時金",
+  "lines": [
+   "第1号向けの",
+   "給付"
+  ],
+  "band": [
+   680,
+   380,
+   1200,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of a Japanese pension office (nenkin jimusho) consultation counter: low partitioned counter booths, a numbered queue ticket machine, blank forms and a pen tray on the counter, waiting chairs, no people faces, no readable signs, right side calmer area for a title band"
+ },
+ "nenkin-kuriage-kurisage": {
+  "kicker": "繰上げ・繰下げ",
+  "lines": [
+   "繰上げは",
+   "取り消せない"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: an older Japanese person's hands (no face) holding reading glasses over a kitchen table with a pension notice postcard-style envelope (no readable text), a calendar out of focus, cup of green tea, warm light, lower-left calm area for a title band"
+ },
+ "shisan-ideco-jougen": {
+  "kicker": "iDeCo",
+  "lines": [
+   "掛金上限は",
+   "2026年12月から変わる"
+  ],
+  "band": [
+   0,
+   380,
+   600,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of a Japanese office worker's desk: laptop with an abstract rising line chart (no numbers or text), a small potted plant, coins stacked in growing columns, salary slip envelope, clean daylight, no faces, lower-left calm area for a title band"
+ },
+ "shisan-taishoku-shotoku": {
+  "kicker": "退職所得控除",
+  "lines": [
+   "勤続20年で",
+   "増え方が変わる"
+  ],
+  "band": [
+   680,
+   380,
+   1200,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: a cleared Japanese office desk on the last day of work, a bouquet of flowers wrapped in paper, a cardboard box with personal items, a closed envelope, evening light through office windows, no people, no readable text, right side calmer area for a title band"
+ },
+ "sozoku-seimeihoken-hikazei": {
+  "kicker": "生命保険金の非課税枠",
+  "lines": [
+   "受取人を",
+   "間違えると使えない"
+  ],
+  "band": [
+   0,
+   380,
+   580,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of a Japanese living room table with an insurance policy folder (blank cover), a hanko seal and red ink pad, a pen and calculator, soft daylight, no people, no readable text, lower-left calm area for a title band"
+ },
+ "sozoku-shoukibo-takuchi": {
+  "kicker": "小規模宅地等の特例",
+  "lines": [
+   "誰が相続しても",
+   "使えるわけではない"
+  ],
+  "band": [
+   0,
+   380,
+   580,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of a traditional Japanese two-story detached house in a suburban residential area with a small garden, tiled roof, block wall, blue sky, no people, no readable nameplate, lower-left area (road/wall) calm for a title band"
+ },
+ "zeikin-furusato-nozei-jogen": {
+  "kicker": "ふるさと納税",
+  "lines": [
+   "上限は",
+   "3本の式で決まる"
+  ],
+  "band": [
+   680,
+   0,
+   1200,
+   250
+  ],
+  "prompt": "Photorealistic 16:9 photo: Japanese regional gift produce boxes on a kitchen table - crab, rice bags, fruit - with a calculator and a gensen choshu style slip face down, warm daylight, no readable text or logos, right side calmer empty area for a title band"
+ },
+ "zeikin-furusato-onestop": {
+  "kicker": "ワンストップ特例",
+  "lines": [
+   "無効に",
+   "なる場合"
+  ],
+  "band": [
+   0,
+   0,
+   520,
+   250
+  ],
+  "prompt": "Photorealistic 16:9 photo: a Japanese My Number card-like plastic card (blank, no face, no text) next to a blank application form, envelope and pen on a wooden desk, a smartphone face down, soft daylight, lower-left calm area for a title band"
+ },
+ "zeikin-fuyou-no-kabe": {
+  "kicker": "年収の壁",
+  "lines": [
+   "160・178万と106万",
+   "2026年版"
+  ],
+  "band": [
+   0,
+   380,
+   600,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: a Japanese part-time worker's shift calendar and a salary payslip (no readable numbers) on a kitchen counter, a calculator, an apron folded, warm home light, no faces, lower-left calm area for a title band"
+ },
+ "zeikin-iryouhi-koujo": {
+  "kicker": "医療費控除",
+  "lines": [
+   "下限は10万円とは",
+   "限らない"
+  ],
+  "band": [
+   680,
+   0,
+   1200,
+   250
+  ],
+  "prompt": "Photorealistic 16:9 photo: Japanese pharmacy medicine bags, clinic receipts (no readable text) gathered with a clip, an okusuri techo booklet (blank cover), calculator on a dining table, soft daylight, no people, right side calmer area for a title band"
+ },
+ "zeikin-jutaku-loan-koujo": {
+  "kicker": "住宅ローン減税",
+  "lines": [
+   "0.7％だけでは",
+   "決まらない"
+  ],
+  "band": [
+   0,
+   0,
+   520,
+   250
+  ],
+  "prompt": "Photorealistic 16:9 photo of a newly built modern Japanese detached house exterior at dusk with warm interior lights, small front parking space, a set of house keys on a document folder in the foreground, no people, no readable text, lower-left calm area for a title band"
+ },
+ "zeikin-kougaku-ryouyouhi": {
+  "kicker": "高額療養費",
+  "lines": [
+   "2026年8月から",
+   "年間上限"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo of a Japanese hospital billing/accounting counter (kaikei madoguchi): a counter with a tray for cards, a number display board without readable digits, waiting chairs in soft focus, clean bright lighting, no people faces, no readable signs, lower-left calm area for a title band"
+ }
+}
