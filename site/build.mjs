@@ -1177,6 +1177,9 @@ for (const a of articles) {
     `<p class="dates"><time datetime="${esc(a.published)}">公開 ${esc(a.published)}</time>${
       a.updated !== a.published ? ` ／ <time datetime="${esc(a.updated)}">更新 ${esc(a.updated)}</time>` : ''
     }</p>` +
+    `<p class="verify"><span class="badge badge--checked">✓確認日 <time datetime="${esc(a.checkedAt)}">${esc(a.checkedAt)}</time></span>` +
+    `<span class="badge">出典${sourceCount(a)}件</span></p>` +
+    pointsBox(a) +
     // PR表記: affiliateEnabled 時は全記事に広告（マーカー or デフォルト）を出すので常に出す。
     // affiliateEnabled=false のあいだは pending 版の注記を全記事に出す。
     // 広告1枚は見出し直下（アイキャッチの前）。画像と目次の下に置くとモバイルではフォールド下になる。
@@ -1311,6 +1314,7 @@ for (const c of site.categories) {
       sidebar: aboutWidget + widget('新着記事', postListHtml(byRecent.slice(0, 5))) + categoryWidget,
       content:
         `<h1>${esc(c.name)}の記事一覧</h1>` +
+        categoryTabs(c.slug) +
         `<p class="lead">${esc(c.name)}に関する記事の一覧です。金額・要件には、出典URLと確認日を添えています。</p>` +
         articleCards(list),
       year: String(new Date().getFullYear()),
@@ -1320,18 +1324,45 @@ for (const c of site.categories) {
 
 // ---- 記事カード（トップ・カテゴリー共通）
 
+/** sources（| 区切り）の件数。カードと記事上部の「出典○件」に使う。 */
+function sourceCount(a) {
+  return String(a.sources || '').split('|').map((s) => s.trim()).filter(Boolean).length;
+}
+
+/**
+ * 任意の front matter `points`（| 区切り）。要点ボックスは値があるときだけ出す。
+ * ⚠️ 新しい事実を書かない。本文（結論の節など）の文をそのまま写す。
+ */
+function pointsBox(a) {
+  const pts = String(a.points || '').split('|').map((s) => s.trim()).filter(Boolean);
+  if (!pts.length) return '';
+  return `<div class="points"><p class="points__title">要点</p><ul>${pts.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>`;
+}
+
+/** カテゴリタブ（既存のカテゴリページへのリンク。JS なし）。current は slug、トップは '' */
+function categoryTabs(current) {
+  if (!showCategoryNav) return '';
+  const tab = (href, label, on) =>
+    `<a class="tabs__item${on ? ' is-current' : ''}" href="${href}"${on ? ' aria-current="page"' : ''}>${esc(label)}</a>`;
+  return `<nav class="tabs" aria-label="カテゴリー">${tab('/', 'すべて', current === '')}${site.categories
+    .map((c) => tab(`/${c.slug}/`, c.name, current === c.slug))
+    .join('')}</nav>`;
+}
+
+
 function articleCards(list) {
   if (!list.length) return '<p>記事はまだありません。</p>';
-  return `<ul class="article-list">${list
+  return `<ul class="card-grid">${list
     .map(
       (a) =>
-        `<li><a class="article-list__link" href="/${a.slug}/">` +
-        (a.eyecatch ? `<img class="article-list__thumb" src="${a.eyecatch}" alt="" width="1200" height="630" loading="lazy" decoding="async">` : '') +
-        `<span class="article-list__body">` +
-        `<span class="article-list__cat">${esc(catName(a.category))}</span>` +
-        `<span class="article-list__title">${esc(a.title)}</span>` +
-        `<span class="article-list__desc">${esc(a.description)}</span>` +
-        `<time datetime="${esc(a.updated)}">${esc(a.updated)}</time>` +
+        `<li class="card"><a class="card__link" href="/${a.slug}/">` +
+        (a.eyecatch ? `<img class="card__thumb" src="${a.eyecatch}" alt="" width="1200" height="630" loading="lazy" decoding="async">` : '') +
+        `<span class="card__body">` +
+        `<span class="card__cat">${esc(catName(a.category))}</span>` +
+        `<span class="card__title">${esc(a.title)}</span>` +
+        `<span class="card__desc">${esc(a.description)}</span>` +
+        `<span class="card__meta"><span class="card__checked">✓確認日 <time datetime="${esc(a.checkedAt)}">${esc(a.checkedAt)}</time></span>` +
+        `<span class="card__sources">出典${sourceCount(a)}件</span></span>` +
         `</span></a></li>`,
     )
     .join('')}</ul>`;
@@ -1392,9 +1423,11 @@ writeFile(
     sidebarLeft: homeAf.left,
     sidebar: homeAf.side + aboutWidget + categoryWidget,
     content:
-      `<h1>${esc(site.name)}</h1>` +
-      `<p class="lead">${esc(site.description)}</p>` +
+      `<section class="hero"><h1>${esc(site.name)}</h1>` +
+      `<p class="hero__tagline">${esc(site.tagline)}</p>` +
+      `<p class="lead">${esc(site.description)}</p></section>` +
       (homeAf.body ? homeAf.body + '\n' : '') +
+      categoryTabs('') +
       articleCards(byRecent),
     year: String(new Date().getFullYear()),
   }),
