@@ -1,6 +1,6 @@
 ---
-title: 奨学金の減額返還・猶予では、返す総額は減らない
-description: 日本学生支援機構（JASSO）の減額返還制度と返還期限猶予は、どちらも返す総額を減らす制度ではありません。JASSO 自身が両方のページにそう書いています。総額が消えるのは死亡または精神・身体の障害による返還免除だけで、他の免除は廃止済みです。収入の基準・上限年数・申請できる条件を原文で確認しました。出典URLと確認日つきです。
+title: 奨学金の減額返還・猶予で返す総額は減る？JASSOの答えは「減らない」
+description: 奨学金の減額返還・返還期限猶予は返す総額を減らさないとJASSO自身が明記。総額が消えるのは死亡・障害による返還免除だけ。収入の基準・上限年数・申請条件をJASSOの原文で確認。
 slug: kyoikuhi/shogakukin-henkan
 category: kyoikuhi
 eyecatch: /img/eyecatch/kyoikuhi-shogakukin-henkan.jpg
