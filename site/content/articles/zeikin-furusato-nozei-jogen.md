@@ -6,18 +6,17 @@ category: zeikin
 eyecatch: /img/eyecatch/zeikin-furusato-nozei-jogen.jpg
 eyecatchAlt: テーブルに箱入りのカニ、米、果物と電卓が並ぶ写真。
 published: 2026-09-01
-updated: 2026-10-06
-sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1150.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm
-checkedAt: 2026-09-01
+updated: 2026-10-13
+sources: https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html | https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html | https://www.soumu.go.jp/main_content/000816463.pdf | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1150.htm | https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm
+checkedAt: 2026-10-13
 ---
 
-「ふるさと納税の限度額早見表」を総務省の公式で探しても、**円単位の早見表はありません**。
-載っているのは金額表ではなく、所得税・住民税にまたがる**3本の計算式**と、それぞれに付いた別々の上限です。
+総務省が公表している限度額の目安は、資料「ふるさと納税制度とは」の**年収4段階×家族構成3通りの表**だけです。
+ふるさと納税ポータルサイトの「税金の控除について」に載っているのは金額表ではなく、所得税・住民税にまたがる**3本の計算式**と、それぞれに付いた別々の上限です。
 
-この記事は、シミュレーターの目安額ではなく、その3本の式と上限を総務省・国税庁の原文のまま並べます。
-2026-09-01 に各ページを取得して確認しました。
-年収から逆算した「目安額」は載せません。
-載せられない理由も、総務省自身の文言で示します。
+この記事は、総務省の目安表を数字を変えずにそのまま載せ、そのうえで3本の式と上限を総務省・国税庁の原文のまま並べます。
+2026-09-01 に各ページを取得して確認し、目安表は 2026-10-13 に取得しました。
+この記事が独自に計算した目安額は載せません。
 
 ## 先に結論 ― 上限は1つではなく3つある
 
@@ -131,6 +130,30 @@ lead: ふるさと納税だけに認められている上乗せ。ここが実�
 
 > ただし、税の軽減については、「1月～12月」の年単位となりますので、例えば本年の1月にふるさと納税を行った場合は、その年の12月までの1年が経過した後に、その1年間の所得に対する課税の中で取り扱われることになります。
 
+## 総務省の目安表（年収×家族構成）
+
+総務省の資料「ふるさと納税制度とは」（PDF）の2ページ目に、次の表があります。
+数字は資料のまま転記しています（給与収入は年額）。
+
+> 【全額（※）控除されるふるさと納税額（年間上限の目安）】（※）2,000円を除く
+
+| 給与収入 | 独身 | 夫婦＋子１人 | 夫婦＋子２人 |
+|---|---|---|---|
+| 500万円 | 6.1万円 | 4.0万円 | 2.8万円 |
+| 750万円 | 11.8万円 | 8.7万円 | 7.6万円 |
+| 1,000万円 | 18.0万円 | 15.7万円 | 14.4万円 |
+| 2,000万円 | 56.9万円 | 55.2万円 | 53.6万円 |
+
+出典: 総務省「ふるさと納税制度とは」 https://www.soumu.go.jp/main_content/000816463.pdf
+
+表の見出しにあるとおり、金額は「2,000円を除く」額で、名前のとおり**目安**です。
+同じ資料の注記には、所得税の税率が年収で変わることが書かれています。
+
+> ※２ 所得税の限界税率であり、年収により0～45％の間で変動する。
+
+資料には、子の年齢や配偶者の収入、社会保険料など、表の前提条件は書かれていません。
+表にない年収や家族構成の金額を、この記事で補うこともしません。
+
 ## 総務省は「上限額はいくらか」に金額で答えていない
 
 ここがこの記事でいちばん伝えたい点です。控除上限の金額について、総務省のよくある質問（Q5「控除の上限額はどうすればわかりますか？」）はこう答えています。
@@ -148,7 +171,7 @@ lead: ふるさと納税だけに認められている上乗せ。ここが実�
 
 **制度を所管している総務省が、金額を出す主体は自分ではなく市区町村だと書いている**ということです。式の中に出てくる「住民税所得割額」は、その人の所得と各種控除が確定して初めて決まる数字で、寄附をする時点では確定していません。年収だけでは決まらないのは、この構造のためです。
 
-シミュレーターの数字が使えないという意味ではありません。ただしそれは**入力した条件でのその計算機の出力**であって、公式が保証した金額ではない、という区別です。この記事が金額の目安表を載せないのは、公式ページに書かれていないものを書かないためです。
+シミュレーターの数字が使えないという意味ではありません。ただしそれは**入力した条件でのその計算機の出力**であって、公式が保証した金額ではない、という区別です。上の目安表も、前提条件が書かれていない以上、自分の上限そのものではありません。
 
 上限の範囲で寄附先を探す場合の申込先の例を1つ置きます（広告を含みます）。
 どこから申し込んでも、上の3本の式で決まる控除の上限は変わりません。
@@ -255,7 +278,8 @@ lead: 確定申告をしないで控除を受けるための特例
 
 このサイトは、公式ページで確認できたものと確認できていないものを分けて書いています。以下は**未確認**です。
 
-- **年収別の控除上限額の目安表。** 総務省のふるさと納税ポータルサイト内で、今回取得したページ（概要・流れ・税金の控除について・よくある質問・制度改正について）には目安表が載っていませんでした。上に書いたとおり、総務省は具体的な金額を市区町村に問い合わせるよう案内しています
+- **目安表の前提条件と、表にない年収・家族構成の金額。** 総務省の資料の表は4段階×3通りだけで、前提条件の記載はありません。ポータルサイト内で今回取得したページ（概要・流れ・税金の控除について・よくある質問・制度改正について）にも目安表は載っていませんでした
+- **住民税決定通知書から上限を逆算する手順。** 今回取得した総務省・国税庁のページには、決定通知書のどの欄を使うかの説明がありませんでした。公式の手順が確認できないので書きません
 - **住民税所得割額の求め方。** 式に出てくる「住民税所得割額」と「人的控除差調整額」の計算方法は、今回取得したページの範囲では説明されていません。確認していないので書きません
 - **返礼品の調達費用の割合やポイント付与に関する規制。** 指定制度の基準は総務省告示と通知で定められていますが、今回はその原文を取得していません。この記事では触れません
 - **ワンストップ特例の申請書そのものの提出期限。** 上に引いたのは変更届出書の期限（翌年1月10日）です。申請書自体の期限は、今回取得したページの中には明示がありませんでした
@@ -275,13 +299,14 @@ lead: 確定申告をしないで控除を受けるための特例
 
 ## 出典
 
-すべて 2026-09-01 に取得して確認しました。
+総務省の資料「ふるさと納税制度とは」は 2026-10-13、それ以外は 2026-09-01 に取得して確認しました。
 
 - 総務省 ふるさと納税ポータルサイト「ふるさと納税の概要」 https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/about.html
 - 総務省 ふるさと納税ポータルサイト「税金の控除について」 https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html
 - 総務省 ふるさと納税ポータルサイト「ふるさと納税の流れ」 https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/procedure.html
 - 総務省 ふるさと納税ポータルサイト「よくある質問」 https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/faq/index.html
 - 総務省 ふるさと納税ポータルサイト「制度改正について（2015年4月1日）」 https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/topics/20150401.html
+- 総務省「ふるさと納税制度とは」（PDF・目安表は2ページ目） https://www.soumu.go.jp/main_content/000816463.pdf
 - 国税庁 タックスアンサー No.1155 ふるさと納税(寄附金控除) https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm
 - 国税庁 タックスアンサー No.1150 一定の寄附金を支払ったとき(寄附金控除) https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1150.htm
 - 国税庁 タックスアンサー No.1490 一時所得 https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1490.htm
