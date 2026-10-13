@@ -4,7 +4,7 @@ description: iDeCoの拠出限度額は2026年12月分（2027年1月引き落と
 slug: shisan/ideco-kaisei-tetsuzuki
 category: shisan
 eyecatch: /img/eyecatch/shisan-ideco-kaisei-tetsuzuki.jpg
-eyecatchAlt: 机の上のノートパソコンに右肩上がりのグラフが映り、高さの違う硬貨の山と封筒が並ぶ写真。左下に「掛金を増やすには届出が必要」の文字帯。
+eyecatchAlt: 窓辺の机に白紙とペン、電卓、棒グラフを映したノートパソコンと壁掛けカレンダー
 published: 2026-10-13
 updated: 2026-10-13
 sources: https://www.ideco-koushiki.jp/news/procedure/ | https://www.ideco-koushiki.jp/library/pdf/notice202612-02.pdf | https://www.ideco-koushiki.jp/library/pdf/notice202612-01.pdf | https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/nenkin/nenkin/kyoshutsu/2025kaisei.html

@@ -4,7 +4,7 @@ description: 生命保険料控除の上限は合計12万円。新契約は各4�
 slug: zeikin/seimei-hokenryo-koujo
 category: zeikin
 eyecatch: /img/eyecatch/zeikin-seimei-hokenryo-koujo.jpg
-eyecatchAlt: 木の机に白い紙袋とメモ帳、電卓が並ぶ写真。左下に「上限は最高12万円 新旧で計算が違う」の文字帯。
+eyecatchAlt: 木の机に置いたはがきと封筒、電卓、ペン、老眼鏡
 published: 2026-10-13
 updated: 2026-10-13
 sources: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1140.htm | https://www.nta.go.jp/users/gensen/nencho/index/kyuyosyotokusya.htm
