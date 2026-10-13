@@ -334,3 +334,27 @@ test('記事ページに BreadcrumbList の構造化データが出る（見た�
   assert.equal(bc.itemListElement[2].name, '正しい制度カードの記事');
   assert.match(bc.itemListElement[2].item, /\/zeikin\/seido-ok\/$/);
 });
+
+test('左右レールは縦長（160x600/120x600/300x600）のみ・追従/内部スクロールなし', () => {
+  const r = spawnSync(process.execPath, ['build.mjs'], { cwd: SITE, encoding: 'utf8' });
+  assert.equal(r.status, 0, r.stderr);
+  const dist = path.join(SITE, 'dist');
+  const files = [];
+  const walk = (d) => { for (const f of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, f.name); if (f.isDirectory()) walk(p); else if (f.name === 'index.html') files.push(p); } };
+  walk(dist);
+  const ok = new Set(['160x600', '120x600', '300x600']);
+  for (const f of files) {
+    const html = fs.readFileSync(f, 'utf8');
+    for (const rail of html.match(/<div class="af-rail"[\s\S]*?<\/div>\s*<\/div>/g) || []) {
+      for (const m of rail.matchAll(/<img\b[^>]*\bwidth="(\d+)"[^>]*\bheight="(\d+)"/g)) {
+        if (m[1] === '1') continue;
+        assert.ok(ok.has(`${m[1]}x${m[2]}`), `${f}: レールに ${m[1]}x${m[2]}`);
+      }
+    }
+  }
+  const css = fs.readFileSync(path.join(SITE, 'public/styles.css'), 'utf8');
+  for (const sel of ['.l-rail', '.l-side', '.af-rail']) {
+    const re = new RegExp(sel.replace('.', '\\.') + '[^{]*\\{[^}]*(position:\\s*sticky|overflow(-y)?:\\s*(auto|scroll))');
+    assert.doesNotMatch(css, re, `${sel} に sticky/overflow`);
+  }
+});

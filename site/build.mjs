@@ -188,6 +188,13 @@ function lazyAdImgs(html) {
 /** 1記事あたりの広告画像の上限（本文＋左右レール）。レール2枚＋本文3枚＝5。 */
 const AF_MAX_BODY_ADS = 3;
 
+/** レール可の縦長（160x600 / 120x600 / 300x600）か。 */
+const RAIL_SIZES = new Set(['160x600', '120x600', '300x600']);
+function isVerticalBanner(html) {
+  const g = bannerGeometry(html);
+  return Boolean(g && RAIL_SIZES.has(`${g.w}x${g.h}`));
+}
+
 function renderAfCard(entry, label, { side = false, eager = false } = {}) {
   const text = label || entry.label;
   if (!text) throw new Error('AF card: label がありません');
@@ -199,6 +206,7 @@ function renderAfCard(entry, label, { side = false, eager = false } = {}) {
   if (side) {
     const banner = entry.bannerHtmlSide;
     if (!banner) return ''; // 縦長が無い案件はレールに出さない（呼び出し側で代替キーへ）
+    if (!isVerticalBanner(banner)) return ''; // 正方形・横長はレールに出さない（160x600/120x600/300x600のみ）
     return `<div class="af-banner-only">${lazyAdImgs(banner)}</div>`;
   }
   let banner = entry.bannerHtml;
@@ -414,7 +422,7 @@ function defaultSideAds(article) {
   }
   for (const key of prefer) {
     const entry = links[key];
-    if (entry && entry.url && entry.bannerHtmlSide) return [{ key }];
+    if (entry && entry.url && entry.bannerHtmlSide && isVerticalBanner(entry.bannerHtmlSide)) return [{ key }];
   }
   return [];
 }
@@ -433,7 +441,7 @@ function defaultLeftAds(article) {
   }
   for (const key of prefer) {
     const entry = links[key];
-    if (entry && entry.url && entry.bannerHtmlSide) return [{ key }];
+    if (entry && entry.url && entry.bannerHtmlSide && isVerticalBanner(entry.bannerHtmlSide)) return [{ key }];
   }
   return [];
 }
@@ -449,7 +457,7 @@ function resolveRailAds(items, article, which) {
   for (const item of items || []) {
     const key = item.key;
     const entry = links[key];
-    if (entry && entry.bannerHtmlSide && entry.url) {
+    if (entry && entry.bannerHtmlSide && isVerticalBanner(entry.bannerHtmlSide) && entry.url) {
       if (!seen.has(key)) {
         seen.add(key);
         out.push(item);

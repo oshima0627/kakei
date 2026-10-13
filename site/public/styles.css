@@ -113,8 +113,7 @@ a:hover { text-decoration: none; }
 @media (min-width: 1280px) {
   .l-rail:not(:empty) {
     display: block;
-    position: sticky;
-    top: 5rem;
+    /* 2026-10-13: 追従なし。レールは本文と一緒にスクロールする */
   }
   .l-wrap:has(.l-rail:not(:empty)) {
     grid-template-columns: var(--rail, 180px) minmax(0, 1fr) var(--side);
@@ -632,7 +631,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .l-side { font-size: .9rem; }
 
 @media (min-width: 901px) {
-  .l-side { position: sticky; top: 5rem; }
+  .l-side { position: static; } /* 2026-10-13: 追従なし・内部スクロールなし */
 }
 
 /* 本文へのスキップリンク。ふだんは画面外に置き、キーボードでフォーカスしたときだけ出す。
