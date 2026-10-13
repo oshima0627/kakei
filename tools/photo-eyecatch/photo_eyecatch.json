@@ -264,5 +264,33 @@
    630
   ],
   "prompt": "Photorealistic 16:9 photo of a Japanese hospital billing/accounting counter (kaikei madoguchi): a counter with a tray for cards, a number display board without readable digits, waiting chairs in soft focus, clean bright lighting, no people faces, no readable signs, lower-left calm area for a title band"
+ },
+ "shisan-ideco-kaisei-tetsuzuki": {
+  "kicker": "iDeCo 2026年12月改正",
+  "lines": [
+   "掛金を増やすには",
+   "届出が必要"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: a Japanese office worker's desk at home, a paper pension contribution change form (no readable text), a pen, a calculator, a laptop showing an abstract rising bar chart, a wall calendar turned to December with no readable text, warm morning light, no people faces, lower-left area of the frame calm and darker for a title band"
+ },
+ "zeikin-seimei-hokenryo-koujo": {
+  "kicker": "生命保険料控除",
+  "lines": [
+   "上限は最高12万円",
+   "新旧で計算が違う"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: a Japanese year-end tax adjustment scene on a wooden desk, several life insurance deduction certificate postcards and an envelope (no readable text), a calculator, a pen and reading glasses, a small family photo frame blurred in the background, soft daylight, no people faces, lower-left area of the frame calm and darker for a title band"
  }
 }
