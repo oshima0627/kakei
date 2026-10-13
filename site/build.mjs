@@ -180,6 +180,14 @@ function bannerGeometry(html) {
   return { w, h };
 }
 
+/** 広告の img をすべて遅延読み込みにする（ASP発行HTMLの属性追加のみ。URL・サイズは変えない）。 */
+function lazyAdImgs(html) {
+  return String(html).replace(/<img\b(?![^>]*\bloading=)/gi, '<img loading="lazy"');
+}
+
+/** 1記事あたりの広告画像の上限（本文＋左右レール）。レール2枚＋本文3枚＝5。 */
+const AF_MAX_BODY_ADS = 3;
+
 function renderAfCard(entry, label, { side = false, eager = false } = {}) {
   const text = label || entry.label;
   if (!text) throw new Error('AF card: label がありません');
@@ -191,12 +199,13 @@ function renderAfCard(entry, label, { side = false, eager = false } = {}) {
   if (side) {
     const banner = entry.bannerHtmlSide;
     if (!banner) return ''; // 縦長が無い案件はレールに出さない（呼び出し側で代替キーへ）
-    return `<div class="af-banner-only">${banner}</div>`;
+    return `<div class="af-banner-only">${lazyAdImgs(banner)}</div>`;
   }
   let banner = entry.bannerHtml;
   if (banner) {
     // ファーストビュー用だけ lazy を外す。計測1x1が遅延のままだと、見えているのにimpに乗らない。
     if (eager) banner = banner.replace(/\sloading=(["'])lazy\1/gi, '');
+    else banner = lazyAdImgs(banner);
     const geom = bannerGeometry(banner);
     const landscape = geom && geom.w > geom.h * 1.15;
     const largeLandscape = landscape && geom.w >= 700; // 728x90 等。小さい横長は引き伸ばさない
@@ -523,8 +532,10 @@ const AF_H2_SKIP_RE = /出典|確認できなかった|未確認|広告を含み
  * 記事上部の1枚は呼び出し側で先に出す。startIndex はその次のキーから回し、直上と同じバナーが続かないようにする。
  * プールが空なら何もしない。
  */
-function insertAdsBetweenH2s(html, pool, startIndex = 0, leadKey = '') {
+function insertAdsBetweenH2s(html, pool, startIndex = 0, leadKey = '', maxAds = AF_MAX_BODY_ADS) {
   if (!pool.length) return html;
+  // [[AFHere:]] で置いた本文広告も上限に数える
+  let placed = (html.match(/<!--af-inline:/g) || []).length;
   const parts = html.split(/(?=<h2\b)/i);
   if (parts.length < 2) return html;
   let rotate = startIndex;
@@ -542,7 +553,7 @@ function insertAdsBetweenH2s(html, pool, startIndex = 0, leadKey = '') {
     if (prevIsContent && nextIsContent && !inline) {
       const hm = next.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/i);
       const h2text = hm ? hm[1].replace(/<[^>]+>/g, '') : '';
-      if (!AF_H2_SKIP_RE.test(h2text)) {
+      if (!AF_H2_SKIP_RE.test(h2text) && placed < maxAds) {
         const key = pool[rotate % pool.length];
         rotate += 1;
         if (key === lastKey) {
@@ -557,6 +568,7 @@ function insertAdsBetweenH2s(html, pool, startIndex = 0, leadKey = '') {
               ' / 対処: content/links.json にキーを足す',
           );
         }
+        placed += 1;
         out.push(renderAfCard(entry, entry.label, { side: false }));
       }
     }
@@ -1136,14 +1148,14 @@ for (const a of articles) {
   // 左レール（.l-rail）は 1280px 未満で display:none。縦長160は本文へ移さず、テーマの横長をここに出す。
   const leadKey = afPool[0] || '';
   const leadEntry = leadKey ? links[leadKey] : null;
-  const leadAdHtml = leadEntry && leadEntry.bannerHtml
-    ? renderAfCard(leadEntry, leadEntry.label, { side: false, eager: true })
-    : '';
+  // 2026-10-13: h1 直下（アイキャッチ前）の1枚は廃止。最初の本文広告は1つ目のH2セクションの後（H2間挿入）に出す。
+  void leadEntry;
+  const leadAdHtml = '';
   const html = insertAdsBetweenH2s(
     renderInlineAds(breakJapaneseSentences(resolveLinks(parsed.html))),
     afPool,
-    afPool.length > 1 ? 1 : 0,
-    leadAdHtml ? leadKey : '',
+    0,
+    '',
   );
   // 広告が1つも描画されない記事に「広告が含まれます」とは書かない（台帳にバナーが無い検査用も含む）。
   const articleHasAd =

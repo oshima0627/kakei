@@ -33,11 +33,12 @@
 </header>
 
 <div class="l-wrap">
-  <aside class="l-rail">{{sidebarLeft}}</aside>
   <main class="l-main" id="main" tabindex="-1">
     {{breadcrumb}}
     {{content}}
   </main>
+  <!-- 左レールは DOM 上は本文の後（h1 より前に広告を置かない）。表示位置は CSS の grid-column で左へ。 -->
+  <aside class="l-rail">{{sidebarLeft}}</aside>
 
   <aside class="l-side">
     {{sidebar}}

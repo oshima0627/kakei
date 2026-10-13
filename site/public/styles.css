@@ -121,6 +121,9 @@ a:hover { text-decoration: none; }
     /* シェルは viewport 幅のまま。レール／サイド固定、本文が伸びる */
     gap: 30px;
   }
+  .l-wrap:has(.l-rail:not(:empty)) > .l-rail { grid-column: 1; grid-row: 1; }
+  .l-wrap:has(.l-rail:not(:empty)) > .l-main { grid-column: 2; grid-row: 1; }
+  .l-wrap:has(.l-rail:not(:empty)) > .l-side { grid-column: 3; grid-row: 1; }
   /* ヘッダー／フッターは .l-wrap と同じく max-width:none なので幅揃えの上書きは不要 */
 }
 
