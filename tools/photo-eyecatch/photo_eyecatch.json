@@ -292,5 +292,33 @@
    630
   ],
   "prompt": "Photorealistic 16:9 photo: a Japanese year-end tax adjustment scene on a wooden desk, several life insurance deduction certificate postcards and an envelope (no readable text), a calculator, a pen and reading glasses, a small family photo frame blurred in the background, soft daylight, no people faces, lower-left area of the frame calm and darker for a title band"
+ },
+ "zeikin-furusato-kakutei-shinkoku": {
+  "kicker": "ふるさと納税の確定申告",
+  "lines": [
+   "ワンストップとの",
+   "違いと手順"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: a wooden desk in soft daylight, a blank tax return form on a clipboard (no readable text), a blank certificate paper, a pen, a laptop showing an abstract blank web form, a small desk calendar with no readable text, a ceramic cup. No people, no faces, no readable text. The lower-left area is calm, plain and darker for a title band."
+ },
+ "shisan-ideco-nenmatsu-chosei": {
+  "kicker": "iDeCoの年末調整",
+  "lines": [
+   "控除証明書の",
+   "提出のしかた"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: an office worker's desk in late autumn light, a blank envelope, a blank form on a clipboard with no readable text, a pen, a calculator, a small desk calendar with no readable text. No people, no faces, no readable text. The lower-left area is calm, plain and darker for a title band."
  }
 }
