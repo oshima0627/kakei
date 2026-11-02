@@ -320,5 +320,33 @@
    630
   ],
   "prompt": "Photorealistic 16:9 photo: an office worker's desk in late autumn light, a blank envelope, a blank form on a clipboard with no readable text, a pen, a calculator, a small desk calendar with no readable text. No people, no faces, no readable text. The lower-left area is calm, plain and darker for a title band."
+ },
+ "sozoku-sozokuzei-kiso-koujo": {
+  "kicker": "相続税の基礎控除",
+  "lines": [
+   "申告が必要に",
+   "なる条件"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: a Japanese living room table in soft daylight, a blank document folder, a closed calculator, a pen, reading glasses, a small potted plant, a blank notepad with no readable text. No people, no faces, no readable text, no logos. The lower-left area is calm, plain and darker for a title band."
+ },
+ "sozoku-sozoku-touki-gimuka": {
+  "kicker": "相続登記の義務化",
+  "lines": [
+   "3年以内と",
+   "過料10万円以下"
+  ],
+  "band": [
+   0,
+   380,
+   520,
+   630
+  ],
+  "prompt": "Photorealistic 16:9 photo: a quiet residential plot in a Japanese suburb with an old single-story wooden house with a tiled roof and a small garden, a few boundary stones visible, overcast soft light, a blank wooden sign with no readable text. No people, no faces, no readable text, no logos. The lower-left area is calm, plain and darker for a title band."
  }
 }
