@@ -1,6 +1,6 @@
 # HANDOFF
 
-最終更新: **2026-10-28**
+最終更新: **2026-11-02**
 
 **このファイルだけ読めば再開できる**状態を保つこと。古くなった記述は消して書き直す。履歴は git log にある。
 
@@ -8,7 +8,7 @@
 
 ## 現在の状況
 
-**公開済み。記事は 23 本。**
+**公開済み。記事は 25 本。**
 
 | | |
 |---|---|
@@ -16,9 +16,16 @@
 | 公開URL | **https://kakei.nexeed-lab.com/** |
 | リポジトリ | github.com/oshima0627/kakei（private）。`main` が本番 |
 | デプロイ | **`main` への push で自動**（Cloudflare Workers Builds）。約1〜2分 |
-| 記事 | **23 本**（`zeikin` 8 ／ `kyoikuhi` 5 ／ `nenkin` 4 ／ `shisan` 4 ／ `sozoku` 2） |
+| 記事 | **25 本**（`zeikin` 8 ／ `kyoikuhi` 5 ／ `nenkin` 4 ／ `shisan` 4 ／ `sozoku` 4） |
 | 広告 | `affiliateEnabled` は `true`。もしも（media 687816）で発行した11本が `links.json` にある。寸法帳(689246)・ドッグフード(7748)・Amazon(170)は使わない |
 | 計測 | Cloudflare Web Analytics 稼働中 |
+
+## 2026-11-02 に入れたもの
+
+- 新記事: `sozoku/sozokuzei-kiso-koujo`（相続税の基礎控除と申告が必要な条件）、`sozoku/sozoku-touki-gimuka`（相続登記の義務化と過料）。どちらも写真アイキャッチ。commit af36bee。
+- `sozoku` 4本の間で相互リンク（既存2本は本文だけ追記）。
+- revisionAt: 基礎控除 2027-01-01、相続登記 2027-04-01。この日を過ぎるとビルドが落ちるので、出典を取り直して checkedAt と一緒に更新する。
+- 記録は `/workspace/kakei-research/growth-actions-2026-10-28.md` の §7。第2週以降の計画は同ファイル §3。
 
 ## 2026-10-28 に入れたもの
 
